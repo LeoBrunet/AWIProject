@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Recette App</title>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta charset="UTF-8">
+  <link href="../css/login.css" rel="stylesheet"/>
+  <link href="../css/font.css" rel="stylesheet"/>
+  <link href="../css/form.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="split left">
+  <span class="logo1">Recette</span>
+  <span class="logo2" style="margin: -5px">App.</span>
+  <p class="slogan">
+    Stockez toutes vos recettes,
+    gérez vos stocks,
+    calculez vos coûts.
+    Simplifiez-vous la vie.
+  <p>
+    <img class="svg" src="../images/chef.png">
+    <span class="ref">Art by <u><a href="https://www.vecteezy.com/vector-art/463845-chef-prepares-roast-chicken">misfitblue</a></u></span>
+</div>
+
+<div class="split right">
+  <div class="centered">
+    <div class="left-align">
+      <span class="title">Inscrivez-vous à Recette<strong class="logo2 green">App.</strong></span>
+      <button class="google">
+        <img src="../images/google.png">
+        <span>Inscription avec Google</span>
+      </button>
+
+      <hr>
+      <form>
+        <div class="form-container">
+          <div style="display: block; width: 43%;">
+            <label for="firstname">Prénom</label>
+            <input id="firstname" name="firstname" required type="text">
+          </div>
+          <div style="display: block; width: 43%; margin-left: 10%">
+            <label for="lastname">Nom</label>
+            <input id="lastname" name="lastname" required type="text">
+          </div>
+        </div>
+        <div class="form-element">
+          <label for="email">Adresse Mail</label>
+          <input id="email" name="email" required type="text">
+        </div>
+        <div class="form-element">
+          <label for="password">Mot de passe</label>
+          <input id="password" name="password" required type="password">
+        </div>
+        <button class="submit google">
+          <span>Inscription</span>
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+  <span class="register">Déja membre? <u><a href="login.html">Connexion</a></u></span>
+</div>
+</body>
+</html>

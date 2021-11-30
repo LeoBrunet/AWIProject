@@ -1,0 +1,116 @@
+body {
+   font-family: "Segoe UI";
+   font-size: 1.563vw;
+   margin: 0;
+   height: 100%;
+}
+span {
+  font-family: "Segoe UI Semibold";
+}
+label {
+  font-family: "Segoe UI Semibold";
+}
+
+/* Split the screen */
+.split {
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  margin: 0;
+}
+
+/* Control the left side */
+.left {
+  position: absolute;
+  width: 20%;
+  left: 0;
+  overflow: hidden;
+}
+
+/* Control the right side */
+.right {
+  width: 78%;
+  right: 0;
+  padding-left: 2%;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  height: 92%;
+}
+
+/* If you want the content centered horizontally and vertically */
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.left-banner {
+  height: 25%;
+  width: 80%;
+  background: #0F0E2D;
+  padding-top: 10%;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.menu {
+  position: relative;
+  height: 67.5%;
+  box-shadow: inset -1px 0px 0px 0px #7070702B;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  padding-left: 10%;
+}
+
+.slogan-home {
+  color: #0F0E2D;
+  font-size: 1.2vw;
+}
+
+.new-recipe {
+  width: 100%;
+  left: 10%;
+  height: 30%;
+  background-color: #599442;
+  border-radius: 10px;
+  border-color: #00000000;
+  font-size: 1.354vw;
+  color: white;
+  margin-top: 15%;
+}
+
+.menu-title {
+  font-family: 'Segoe UI';
+  font-weight: 300;
+  font-size: 1.354vw;
+}
+.menu-container {
+  margin-top: 5%;
+  font-size: 1.2vw;
+}
+.menu-elem {
+  font-family: 'Segoe UI';
+  display: flex;
+  align-items: center;
+  margin-top: 1.354vw;
+}
+.menu-elem img {
+  margin-right: 1vw;
+  width: 1.2vw;
+}
+.selected-icon {
+  box-shadow: inset -5px 0px 0px 0px #599442;
+  color: #599442;
+  font-weight: bold;
+}
+.account-menu {
+  position: absolute;
+  width: 90%;
+  bottom: 5%;
+}
+.recipe-text p {
+  margin: 0;
+}

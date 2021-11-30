@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RecetteApp</title>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta charset="UTF-8">
+  <link href="../css/home.css" rel="stylesheet"/>
+  <link href="../css/home_right.css" rel="stylesheet"/>
+  <link href="../css/font.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&display=swap" rel="stylesheet">
+  <script
+    crossorigin="anonymous"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="../js/home.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="split left">
+  <div class="left-banner">
+    <div class="margin-top">
+      <span class="logo1">Recette</span>
+      <span class="logo2 green" style="margin: -5px">App.</span>
+    </div>
+    <span class="slogan-home light-grey" style="display: block;">Fiches techniques de cuisine.</span>
+    <button class="new-recipe"><span>Nouvelle Recette</span></button>
+  </div>
+  <div class="menu light-grey">
+    <span class="menu-title">MENU</span>
+    <div class="menu-container">
+      <div class="menu-elem"><img src="../images/home.png"></img>Acueuil</div>
+      <div class="menu-elem selected-icon"><img src="../images/green-recipe.png"></img>Recettes</div>
+      <div class="menu-elem"><img src="../images/stock.png"></img>Stock</div>
+    </div>
+    <div class="account-menu">
+      <span class="menu-title">COMPTE</span>
+      <div class="menu-container bottom">
+        <div class="menu-elem"><img src="../images/user.png"></img>Votre compte</div>
+        <div class="menu-elem"><img src="../images/help.png"></img>Aide & Assistance</div>
+        <div class="menu-elem"><img src="../images/logout.png"></img>Déconnexion</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="split right">
+  <span class="welcome light-grey">Bonjour Nicolas,</span>
+  <span class="logo2 big">Vos Recettes</span>
+  <div class="search">
+    <input name="search" placeholder="&#x1F50E;&#xFE0E;  Rechercher des recettes" type="text">
+  </div>
+  <div class="banner" horizontal id="banner" layout>
+    <div class="banner-elem">
+      <a class="banner-img-shadow" href="#"><img class="banner-recipe-img" src="../images/fish_chips.png"></a>
+      <div class="inside-banner-elem">
+        <div class="banner-status">RÉCENT</div>
+        <div class="banner-recipe-infos">
+          <div class="banner-title">Fish & Chips</div>
+          <div class="banner-time"><!--<img src="images/clock.png">-->15 min &#183; 10 €/part</div>
+          <!--<div class="banner-cost">10 €/part</div>-->
+          <p class="banner-desc">Petite recette anglaise alliant des frites
+            croustillantes et un poisson au citron, thym, romarin, plein de choses quoi</p>
+        </div>
+      </div>
+    </div>
+    <div class="banner-elem">
+      <a class="banner-img-shadow" href="#"><img class="banner-recipe-img" src="../images/gratin.jpg"></a>
+      <div class="inside-banner-elem">
+        <div class="banner-status">RÉCENT</div>
+        <div class="banner-recipe-infos">
+          <div class="banner-title">Gratin d'aubergines, gambas et du chorizo</div>
+          <div class="banner-time"><!--<img src="images/clock.png">-->15 min &#183; 10 €/part</div>
+          <!--<div class="banner-cost">10 €/part</div>-->
+          <p class="banner-desc">Petite recette anglaise alliant des frites
+            croustillantes et un poisson au citron, thym, romarin, plein de choses quoi</p>
+        </div>
+      </div>
+    </div>
+    <div class="banner-elem">
+      <a class="banner-img-shadow" href="#"><img class="banner-recipe-img" src="../images/fish_chips.png"></a>
+      <div class="inside-banner-elem">
+        <div class="banner-status">RÉCENT</div>
+        <div class="banner-recipe-infos">
+          <div class="banner-title">Fish & Chips</div>
+          <div class="banner-time"><!--<img src="images/clock.png">-->15 min &#183; 10 €/part</div>
+          <!--<div class="banner-cost">10 €/part</div>-->
+          <p class="banner-desc">Petite recette anglaise alliant des frites
+            croustillantes et un poisson au citron, thym, romarin, plein de choses quoi</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="categories-layout" id="category">
+    <div class="categories-text">
+      <span class="welcome light-grey fs25">Catégrories</span>
+      <span class="welcome green">Voir toutes les catégories     <img src="../images/arrow.png"></img></span>
+    </div>
+    <div class="categories">
+      <div class="category selected-category">
+        <img class="category-img" src="../images/fish_cat.png">
+        <p class="category-text">Poisson</p>
+      </div>
+      <div class="category">
+        <img class="category-img" src="../images/clock_cat.png">
+        <p class="category-text">Rapide & Facile</p>
+      </div>
+      <div class="category">
+        <img class="category-img" src="../images/bf_cat.png">
+        <p class="category-text">Petit Déjeuner</p>
+      </div>
+      <div class="category">
+        <img class="category-img" src="../images/healthy_cat.png">
+        <p class="category-text">Healthy</p>
+      </div>
+
+
+      <div class="category">
+        <img class="category-img" src="../images/fish_cat.png">
+        <p class="category-text">Poisson</p>
+      </div>
+      <div class="category">
+        <img class="category-img" src="../images/clock_cat.png">
+        <p class="category-text">Rapide & Facile</p>
+      </div>
+      <div class="category">
+        <img class="category-img" src="../images/bf_cat.png">
+        <p class="category-text">Petit Déjeuner</p>
+      </div>
+      <div class="category">
+        <img class="category-img" src="../images/healthy_cat.png">
+        <p class="category-text">Healthy</p>
+      </div>
+
+
+      <div class="category">
+        <img class="category-img" src="../images/bf_cat.png">
+        <p class="category-text">Petit Déjeuner</p>
+      </div>
+      <div class="category">
+        <img class="category-img" src="../images/healthy_cat.png">
+        <p class="category-text">Healthy</p>
+      </div>
+
+    </div>
+  </div>
+  <div class="recipes">
+    <div class="recipe">
+      <img class="recipe-img" src="../images/fish_chips.png">
+      <div class="recipe-text">
+        <p class="bold grey">Fish & Chips</p>
+        <p class="recipe-desc light-grey fs15">Petite recette anglaise alliant des frites
+          croustillantes et un poisson au citron, thym, romarin, plein de choses quoi</p>
+        <hr/>
+        <div style="display: flex; justify-content: space-between; font-family: 'Segoe UI Semibold'">
+          <p class="grey fs15">15 min</p>
+          <p class="grey fs15">10 €/pers</p>
+        </div>
+
+      </div>
+    </div>
+    <div class="recipe">
+      <img class="recipe-img" src="../images/fish_chips.png"">
+      <div class="recipe-text">
+        <p class="bold grey">Fish & Chips</p>
+        <p class="recipe-desc light-grey fs15">Petite recette anglaise alliant des frites
+          croustillantes et un poisson au citron, thym, romarin, plein de choses quoi</p>
+        <hr/>
+        <div style="display: flex; justify-content: space-between; font-family: 'Segoe UI Semibold'">
+          <p class="grey fs15">15 min</p>
+          <p class="grey fs15">10 €/pers</p>
+        </div>
+
+      </div>
+    </div>
+    <div class="recipe">
+      <img class="recipe-img" src="../images/fish_chips.png"">
+      <div class="recipe-text">
+        <p class="bold grey">Fish & Chips</p>
+        <p class="recipe-desc light-grey fs15">Petite recette anglaise alliant des frites
+          croustillantes et un poisson au citron, thym, romarin, plein de choses quoi</p>
+        <hr/>
+        <div style="display: flex; justify-content: space-between; font-family: 'Segoe UI Semibold'">
+          <p class="grey fs15">15 min</p>
+          <p class="grey fs15">10 €/pers</p>
+        </div>
+
+      </div>
+    </div>
+    <div class="recipe">
+      <img class="recipe-img" src="../images/fish_chips.png"">
+      <div class="recipe-text">
+        <p class="bold grey">Fish & Chips</p>
+        <p class="recipe-desc light-grey fs15">Petite recette anglaise alliant des frites
+          croustillantes et un poisson au citron, thym, romarin, plein de choses quoi</p>
+        <hr/>
+        <div style="display: flex; justify-content: space-between; font-family: 'Segoe UI Semibold'">
+          <p class="grey fs15">15 min</p>
+          <p class="grey fs15">10 €/pers</p>
+        </div>
+
+      </div>
+    </div>
+    <div class="recipe">
+      <img class="recipe-img" src="../images/fish_chips.png"">
+      <div class="recipe-text">
+        <p class="bold grey">Fish & Chips</p>
+        <p class="recipe-desc light-grey fs15">Petite recette anglaise alliant des frites
+          croustillantes et un poisson au citron, thym, romarin, plein de choses quoi</p>
+        <hr/>
+        <div style="display: flex; justify-content: space-between; font-family: 'Segoe UI Semibold'">
+          <p class="grey fs15">15 min</p>
+          <p class="grey fs15">10 €/pers</p>
+        </div>
+
+      </div>
+    </div>
+    <div class="recipe">
+      <img class="recipe-img" src="../images/fish_chips.png"">
+      <div class="recipe-text">
+        <p class="bold grey">Fish & Chips</p>
+        <p class="recipe-desc light-grey fs15">Petite recette anglaise alliant des frites
+          croustillantes et un poisson au citron, thym, romarin, plein de choses quoi</p>
+        <hr/>
+        <div style="display: flex; justify-content: space-between; font-family: 'Segoe UI Semibold'">
+          <p class="grey fs15">15 min</p>
+          <p class="grey fs15">10 €/pers</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RecetteApp</title>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta charset="UTF-8">
+  <link href="../css/font.css" rel="stylesheet"/>
+  <link href="../css/form.css" rel="stylesheet"/>
+  <link href="../css/new_recipe_menu.css" rel="stylesheet"/>
+  <link href="../css/new_recipe_left.css" rel="stylesheet"/>
+  <link href="../css/new_recipe_right.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="split menu">
+  <div class="top-menu">
+    <pre class="logo">Logo.</pre>
+  </div>
+  <div class="bottom-menu">
+    <pre class="menu-title">MENU</pre>
+    <div class="menu-container">
+      <img src="../images/home.png"></img>
+      <img src="../images/recipe.png"></img>
+      <img src="../images/stock.png"></img>
+    </div>
+    <div class="menu-container account">
+      <img src="../images/user.png"></img>
+      <img src="../images/help.png"></img>
+      <img src="../images/logout.png"></img>
+    </div>
+  </div>
+</div>
+<div class="split left">
+  <div class="new-recipe-page-title logo2 big">Nouvelle recette</div>
+  <div class="form">
+    <div class="form-element">
+      <label for="name">Nom de la recette</label>
+      <input id="name" maxlength="100" name="name" required type="text">
+    </div>
+    <div class="form-element">
+      <label for="desc">Description</label>
+      <textarea id="desc" name="desc" required rows="5" type="text"></textarea>
+    </div>
+    <div class="form-container">
+      <div class="form-container-name">
+        <label for="firstname">Prénom de l'auteur</label>
+        <input id="firstname" name="firstname" required type="text">
+      </div>
+      <div class="form-container-name">
+        <label for="lastname">Nom de l'auteur</label>
+        <input id="lastname" name="lastname" required type="text">
+      </div>
+    </div>
+    <div class="form-element">
+      <label>Photo</label>
+      <input class="photo-container" name="recipe-photo" type="file">
+
+      </input>
+    </div>
+    <button class="submit google">
+      <span>Suivant</span>
+    </button>
+  </div>
+</div>
+<div class="split right">
+  <object class="pdf-recipe" data='../pdf/RAPPORT.pdf' type="application/pdf">
+    <iframe src='../pdf/RAPPORT.pdf'>
+      <p>This browser does not support PDF!</p>
+    </iframe>
+  </object>
+</div>
+</body>
+</html>

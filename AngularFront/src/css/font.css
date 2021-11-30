@@ -1,0 +1,42 @@
+.logo1 {
+	font-weight: 500;
+	color: white;
+	font-size: 1.563vw;
+}
+.logo2 {
+	font-weight: bold;
+	color: #0F0E2D;
+	font-size: 1.563vw;
+	font-family: 'Segoe UI';
+}
+.slogan {
+	font-weight: bold;
+	color: #0F0E2D;
+	font-size: 2.083vw;
+}
+.big {
+	font-size: 2.604vw;
+	/*50px*/
+}
+.ref {
+	color: #0F0E2D;
+	font-size: 1.042vw;
+}
+.bold {
+	font-weight: bold;
+}
+.grey {
+	color: #0F0E2D;
+}
+.light-grey {
+	color: #8D8D9F;
+}
+.green {
+	color: #599442;
+}
+.fs25 {
+	font-size: 1.302vw;
+}
+.fs15 {
+	font-size: 0.781vw;
+}

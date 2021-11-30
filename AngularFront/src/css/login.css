@@ -1,0 +1,140 @@
+body {
+   font-family: "Segoe UI";
+   font-size: 1.563vw;
+   margin: 0;
+}
+span {
+  font-family: "Segoe UI Semibold";
+}
+label {
+  font-family: "Segoe UI Semibold";
+}
+/* Split the screen */
+.split {
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  margin: 0;
+  /*padding-top: 20px;*/
+}
+
+/* Control the left side */
+.left {
+  width: 35%;
+  left: 0;
+  background-color: #599442;
+  padding: 20px;
+}
+
+/* Control the right side */
+.right {
+  width: 60%;
+  right: 0;
+  text-align: center;
+}
+
+/* If you want the content centered horizontally and vertically */
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.svg {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, -10%);
+  text-align: center;
+  max-height: 60%;
+  max-width: 100%;
+}
+.ref {
+  position: absolute;
+  bottom: 50px;
+  z-index: 1;
+}
+.title {
+  font-family: 'Segoe UI';
+  font-weight: bold;
+}
+.google {
+  width: 100%;
+  height: 10vh;
+  background-color: #4286F5;
+  border-radius: 10px;
+  border-color: #00000000;
+  font-size: 1.042vw;
+  font-weight: bold;
+  color: white;
+  margin-top: 5%;
+}
+
+.google img {
+  height: 40%;
+  top: 30%; left: 0%; float: left; margin-left: 10px;
+}
+
+.google span {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "Segoe UI Semibold";
+}
+
+.submit {
+  background: #599442;
+  width: 60%;
+}
+
+.left-align {
+  text-align: left;
+}
+
+hr {
+    box-sizing: content-box;
+    height: 0;
+    overflow: visible;
+    border: 0;
+    background: #8D8D9F;
+    height: 1px;
+    text-align: center;
+    color: #8D8D9F;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+hr:after {
+    background: #fff;
+    content: "OU";
+    padding: 0 1vw;
+    position: relative;
+    top: -1.302vw;
+    font-size: 1.042vw;
+}
+
+.form-container {
+  display: flex;
+}
+
+.form-container input {
+  height: 20%;
+  padding: 10% 10%; 
+}
+
+.form-element {
+  display: block; 
+  width: 100%;
+  margin-top: 2%;
+}
+
+.register {
+  position: absolute;
+  right: 2%;
+  top: 2%;
+  font-size: 1.042vw;
+  font-family: 'Roboto', sans-serif;
+}

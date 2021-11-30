@@ -1,0 +1,77 @@
+body {
+  margin: 0;
+  overflow: hidden;
+}
+/* Split the screen */
+.split {
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  margin: 0;
+}
+
+/* Control the menu side */
+.menu {
+  position: absolute;
+  width: 6%;
+}
+/* Control the left side */
+.left {
+  position: absolute;
+  width: 50%;
+  left: 6%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+/* Control the right side */
+.right {
+  position: absolute;
+  width: 44%;
+  right: 0;
+}
+
+.top-menu {
+  position: relative;
+  height: 25%;
+  width: 100%;
+  background: #599442;
+}
+.logo {
+  position: relative;
+  font-size: 1.563vw; 
+  font-family:'Segoe UI Semibold'; 
+  color: white;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0;
+}
+
+.bottom-menu {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  height: 75%;
+  width: 100%;
+  box-shadow: inset -1px 0px 0px 0px #7070702b;
+}
+.menu-title {
+  font-family: 'Segoe UI';
+  font-weight: 300;
+  font-size: 1.354vw;
+}
+.menu-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 1.823vw;
+}
+.account {
+  position: absolute;
+  bottom: 5%;
+}
