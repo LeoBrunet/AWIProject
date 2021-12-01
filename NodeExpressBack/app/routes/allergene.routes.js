@@ -1,4 +1,3 @@
-const allergenes = require("../controllers/allergene.controller.js");
 module.exports = app => {
     const allergenes = require("../controllers/allergene.controller.js");
 
