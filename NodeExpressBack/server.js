@@ -24,6 +24,8 @@ app.get("/", (req, res) => {
 });
 
 require("./app/routes/utilisateur.routes")(app);
+require("./app/routes/allergene.routes")(app);
+
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
