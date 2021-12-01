@@ -1,6 +1,7 @@
 /NodeExpressBack/node_modules/
 /AngularFront/node_modules/
 
+
 #gitignore AngularFront
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
@@ -47,3 +48,4 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+/AngularFront/.angular/
