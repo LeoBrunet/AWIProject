@@ -18,14 +18,15 @@ app.use(express.urlencoded({ extended: true }));
 const db = require("./app/models");
 db.sequelize.sync();
 
-db.sequelize.sync({ force: true }).then(() => {
-    console.log("Drop and re-sync db.");
-});
-
 // simple route
 app.get("/", (req, res) => {
     res.json({ message: "Welcome to our application." });
 });
+
+require("./app/routes/utilisateur.routes")(app);
+require("./app/routes/allergene.routes")(app);
+require("./app/routes/categorie.routes")(app);
+
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
