@@ -11,6 +11,9 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD,{
             rejectUnauthorized: false
         }
     },
+    define: {
+        timestamps: false
+    },
     pool: {
         max: dbConfig.pool.max,
         min: dbConfig.pool.min,
