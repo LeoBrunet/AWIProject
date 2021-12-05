@@ -11,6 +11,9 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD,{
             rejectUnauthorized: false
         }
     },
+    define: {
+        timestamps: false
+    },
     pool: {
         max: dbConfig.pool.max,
         min: dbConfig.pool.min,
@@ -28,6 +31,7 @@ db.tutorials = require("./tutorial.model.js")(sequelize, Sequelize);
 db.utilisateurs = require("./utilisateur.model.js")(sequelize, Sequelize);
 db.allergenes = require("./allergene.model.js")(sequelize, Sequelize);
 db.categories = require("./categorie.model.js")(sequelize, Sequelize);
+db.categories = require("./type_ingredient.model.js")(sequelize, Sequelize);
 
 
 module.exports = db;

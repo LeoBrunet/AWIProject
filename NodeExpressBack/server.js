@@ -26,6 +26,7 @@ app.get("/", (req, res) => {
 require("./app/routes/utilisateur.routes")(app);
 require("./app/routes/allergene.routes")(app);
 require("./app/routes/categorie.routes")(app);
+require("./app/routes/type_ingredient.routes")(app);
 
 
 // set port, listen for requests
