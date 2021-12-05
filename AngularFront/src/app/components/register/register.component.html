@@ -1,17 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Recette App</title>
-  <meta content="width=device-width, initial-scale=1" name="viewport"/>
-  <meta charset="UTF-8">
-  <link href="../assets/css/login.css" rel="stylesheet"/>
-  <link href="../assets/css/font.css" rel="stylesheet"/>
-  <link href="../assets/css/form.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&display=swap" rel="stylesheet">
-</head>
-<body>
 <div class="split left">
   <span class="logo1">Recette</span>
   <span class="logo2" style="margin: -5px">App.</span>
@@ -35,26 +21,26 @@
       </button>
 
       <hr>
-      <form>
+      <form [formGroup]="registerFormGroup">
         <div class="form-container">
           <div style="display: block; width: 43%;">
             <label for="firstname">Prénom</label>
-            <input id="firstname" name="firstname" required type="text">
+            <input id="firstname" name="firstname" required formControlName="firstNameUser" type="text">
           </div>
           <div style="display: block; width: 43%; margin-left: 10%">
             <label for="lastname">Nom</label>
-            <input id="lastname" name="lastname" required type="text">
+            <input id="lastname" name="lastname" required formControlName="nameUser" type="text">
           </div>
         </div>
         <div class="form-element">
           <label for="email">Adresse Mail</label>
-          <input id="email" name="email" required type="text">
+          <input id="email" name="email" required formControlName="email" type="text">
         </div>
         <div class="form-element">
           <label for="password">Mot de passe</label>
-          <input id="password" name="password" required type="password">
+          <input id="password" name="password" required formControlName="password" type="password">
         </div>
-        <button class="submit google">
+        <button class="submit google" (click)="register()">
           <span>Inscription</span>
         </button>
       </form>
@@ -62,7 +48,5 @@
     </div>
   </div>
 
-  <span class="register">Déja membre? <u><a href="login.html">Connexion</a></u></span>
+  <span class="register">Déja membre? <u><a href="/login">Connexion</a></u></span>
 </div>
-</body>
-</html>

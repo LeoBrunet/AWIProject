@@ -1,0 +1,77 @@
+<div class="split menu">
+  <div class="top-menu">
+    <pre class="logo">Logo.</pre>
+  </div>
+  <div class="bottom-menu">
+    <pre class="menu-title">MENU</pre>
+    <div class="menu-container">
+      <img src="../../../assets/images/home.png"/>
+      <img src="../../../assets/images/recipe.png">
+      <img src="../../../assets/images/stock.png">
+    </div>
+    <div class="menu-container account">
+      <img src="../../../assets/images/user.png">
+      <img src="../../../assets/images/help.png">
+      <img src="../../../assets/images/logout.png">
+    </div>
+  </div>
+</div>
+<div class="split left">
+  <div class="new-recipe-page-title logo2 big">Nouvelle recette</div>
+  <div [formGroup]="recipeFormGroup" (ngSubmit)="submit()" class="form">
+    <div class="form-element">
+      <label for="name">Nom de la recette</label>
+      <input id="name" maxlength="100" name="name" formControlName="name" type="text" required>
+    </div>
+    <div class="form-element">
+      <label for="desc">Description</label>
+      <textarea id="desc" name="desc" required rows="5" formControlName="desc" type="text"></textarea>
+    </div>
+    <!--<div class="form-container">
+      <div class="form-container-name">
+        <label for="firstname">Prénom de l'auteur</label>
+        <input id="firstname" name="firstname" required type="text">
+      </div>
+      <div class="form-container-name">
+        <label for="lastname">Nom de l'auteur</label>
+        <input id="lastname" name="lastname" required type="text">
+      </div>
+    </div>-->
+    <div class="form-container">
+      <div class="form-container-name">
+        <label for="recipe-photo">Photo</label>
+        <input id="recipe-photo" class="photo-container" name="recipe-photo" formControlName="image" type="file">
+      </div>
+      <div class="form-container-name">
+        <label for="nb-diners">Nombre de couvert</label>
+        <input id="nb-diners" name="nb-diners" formControlName="nb_diners" type="number">
+      </div>
+    </div>
+
+    <button type="submit" class="submit google" (click)="openPDF()">
+      <span>Enregister et continuer</span>
+    </button>
+  </div>
+  <div id="recipeToPDF" style="display: block; width: 100%">
+    <div class="new-recipe-page-title logo2">Fish & chips</div>
+    <div style="display: flex">
+      <div style="width: 60%; margin: 2%; font-family:'Segoe UI',sans-serif">
+        <p>Nous avons dû ajouter des Use Case à notre projet existant afin de compléter notre
+          application. La répartition des tâches a dû être modifiée en fonction de l’implication de
+          chacun</p>
+        <p style="font-family: 'Segoe UI Semibold',sans-serif">Léo Brunet</p>
+        <p>2 personnes</p>
+      </div>
+
+      <img src="../../../assets/images/fish_chips.png"
+           style="position: absolute;width: 30%; right: 0; margin: 2%; border-radius: 2%">
+    </div>
+  </div>
+</div>
+<div class="split right">
+  <object class="pdf-recipe" data='../../../assets/pdf/test.pdf' type="application/pdf">
+    <iframe src='../../../assets/pdf/test.pdf'>
+      <p>This browser does not support PDF!</p>
+    </iframe>
+  </object>
+</div>

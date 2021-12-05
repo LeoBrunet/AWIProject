@@ -1,0 +1,42 @@
+<div class="split left">
+  <span class="logo1">Recette</span>
+  <span class="logo2" style="margin: -5px">App.</span>
+  <p class="slogan">
+    Stockez toutes vos recettes,
+    gérez vos stocks,
+    calculez vos coûts.
+    Simplifiez-vous la vie.
+  <p>
+    <img class="svg" src="../../../assets/images/chef.png">
+    <span class="ref">Art by <u><a href="https://www.vecteezy.com/vector-art/463845-chef-prepares-roast-chicken">misfitblue</a></u></span>
+</div>
+
+<div class="split right">
+  <div class="centered">
+    <div class="left-align">
+      <span class="title">Connectez-vous à Recette<strong class="logo2 green">App.</strong></span>
+      <button class="google">
+        <img src="../../../assets/images/google.png"/>
+        <span>Connexion avec Google</span>
+      </button>
+
+      <hr>
+      <form [formGroup] = "loginFormGroup">
+        <div class="form-element">
+          <label for="email">Adresse Mail</label>
+          <input id="email" name="email" formControlName="email" required type="text">
+        </div>
+        <div class="form-element">
+          <label for="password">Mot de passe</label>
+          <input id="password" name="password" formControlName="password" required type="password">
+        </div>
+        <button class="submit google" (click)="login()">
+          <span>Connexion</span>
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+  <span class="register">Pas encore membre? <u><a href = "/register"><!--/*[routerLink] = "['/register']"*/-->Inscription</a></u></span>
+</div>
