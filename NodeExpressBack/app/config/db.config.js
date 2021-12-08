@@ -1,9 +1,9 @@
 module.exports = {
-    HOST: "ec2-63-32-7-190.eu-west-1.compute.amazonaws.com",
+    HOST: "postgresql-nicolas-ig.alwaysdata.net",
     PORT : 5432,
-    USER: "gxugbenthkdabm",
-    PASSWORD: "e3ee7fe92e2fc3672bb628d7ec6402da5650ac8630d6cb060240ec95ba1ce8e1",
-    DB: "d63l8l0a8t50uq",
+    USER: "nicolas-ig",
+    PASSWORD: "gikcok-tasCih-9zepwu",
+    DB: "nicolas-ig_awi",
     dialect: "postgres",
     SSL: true,
     pool: {

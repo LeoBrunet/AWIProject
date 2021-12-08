@@ -1,14 +1,14 @@
 const {DataTypes} = require("sequelize");
 module.exports = (sequelize, Sequelize) => {
-    const Allergene = sequelize.define('allergene', {
-        code_allergene:{
+    const Allergen = sequelize.define('allergen', {
+        codeAllergen:{
             type: DataTypes.INTEGER,
             primaryKey : true
         },
-        libelle_allergene:{
+        label:{
             type: DataTypes.STRING
         }
     });
 
-    return Allergene;
+    return Allergen;
 };

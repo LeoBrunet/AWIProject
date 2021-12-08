@@ -1,11 +1,11 @@
 const {DataTypes} = require("sequelize");
 module.exports = (sequelize, Sequelize) => {
-    const Type_ingredient = sequelize.define('type_ingredient', {
-        libelle_type:{
+    const Category = sequelize.define('category', {
+        label:{
             type: DataTypes.STRING,
             primaryKey : true
         }
     });
 
-    return Type_ingredient;
+    return Category;
 };

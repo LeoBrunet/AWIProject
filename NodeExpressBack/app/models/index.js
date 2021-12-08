@@ -27,11 +27,10 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.tutorials = require("./tutorial.model.js")(sequelize, Sequelize);
-db.utilisateurs = require("./utilisateur.model.js")(sequelize, Sequelize);
-db.allergenes = require("./allergene.model.js")(sequelize, Sequelize);
-db.categories = require("./categorie.model.js")(sequelize, Sequelize);
-db.categories = require("./type_ingredient.model.js")(sequelize, Sequelize);
-
+db.user = require("./user.model.js")(sequelize, Sequelize);
+db.allergen = require("./allergen.model.js")(sequelize, Sequelize);
+db.category = require("./category.model.js")(sequelize, Sequelize);
+db.ingredientType = require("./ingredientType.js")(sequelize, Sequelize);
+db.recipe = require("./recipe.model.js")(sequelize, Sequelize);
 
 module.exports = db;

@@ -1,101 +1,101 @@
 const db = require("../models");
-const Utilisateur = db.utilisateurs;
+const User = db.user;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new Utilisateur
+// Create and Save a new User
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.nom_utilisateur || !req.body.prenom_utilisateur || !req.body.mail) {
+    if (!req.body.nameUser || !req.body.firstNameUser || !req.body.mail) {
         res.status(400).send({
             message: "Content can not be empty!"
         });
         return;
     }
 
-    // Create a Utilisateur
-    const utilisateur = {
-        nom_utilisateur: req.body.nom_utilisateur,
-        prenom_utilisateur: req.body.prenom_utilisateur,
+    // Create a User
+    const user = {
+        nameUser: req.body.nameUser,
+        firstNameUser: req.body.firstNameUser,
         mail : req.body.mail
     };
 
-    // Save Utilisateur in the database
-    Utilisateur.create(utilisateur)
+    // Save User in the database
+    User.create(user)
         .then(data => {
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while creating the Utilisateur."
+                    err.message || "Some error occurred while creating the User."
             });
         });
 };
 
-// Retrieve all Utilisateurs from the database.
+// Retrieve all Users from the database.
 exports.findAll = (req, res) => {
-    Utilisateur.findAll()
+    User.findAll()
         .then(data => {
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
-                message : err.message || "Some error occurred while retrieving utilisateurs."
+                message : err.message || "Some error occurred while retrieving users."
             })
         })
 };
 
-// Find a single Utilisateur with an id
+// Find a single User with an id
 exports.findOne = (req, res) => {
-    const num_utilisateur = req.params.id;
-    Utilisateur.findByPk(num_utilisateur)
+    const numUser = req.params.id;
+    User.findByPk(numUser)
         .then(data => {
             if (data) {
                 res.send(data);
             } else {
                 res.status(404).send({
-                    message: `Cannot find Utilisateur with id=${num_utilisateur}.`
+                    message: `Cannot find User with numUser=${numUser}.`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Error retrieving Utilisateur with id=" + num_utilisateur
+                message: "Error retrieving User with numUser=" + numUser
             });
         });
 };
 
-// Update a Utilisateur by the id in the request
+// Update a User by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
 
-    Utilisateur.update(req.body, {
-        where: { num_utilisateur: id }
+    User.update(req.body, {
+        where: { numUser: id }
     })
         .then(num => {
             if (num == 1) {
                 res.send({
-                    message: "Utilisateur was updated successfully."
+                    message: "User was updated successfully."
                 });
             } else {
                 res.send({
-                    message: `Cannot update Utilisateur with id=${id}. Maybe Utilisateur was not found or req.body is empty!`
+                    message: `Cannot update User with numUser=${id}. Maybe User was not found or req.body is empty!`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Error updating Utilisateur with id=" + id
+                message: "Error updating User with numUser=" + id
             });
         });
 };
 
-// Delete a Utilisateur with the specified id in the request
+// Delete a User with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
 
-    Utilisateur.destroy({
-        where: { num_utilisateur: id }
+    User.destroy({
+        where: { numUser: id }
     })
         .then(num => {
             if (num == 1) {
@@ -104,13 +104,13 @@ exports.delete = (req, res) => {
                 });
             } else {
                 res.send({
-                    message: `Cannot delete Utilisateur with id=${id}. Maybe Tutorial was not found!`
+                    message: `Cannot delete User with numUser=${id}. Maybe User was not found!`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Could not delete Utilisateur with id=" + id
+                message: "Could not delete User with numUser=" + id
             });
         });
 };
