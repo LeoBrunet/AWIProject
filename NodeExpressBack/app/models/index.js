@@ -37,4 +37,7 @@ db.recipe = require("./recipe.model.js")(sequelize, Sequelize);
 db.user.hasMany(db.recipe,{foreignKey: "numUser"});
 db.recipe.belongsTo(db.user,{foreignKey: "numUser"});
 
+db.category.hasMany(db.recipe, {foreignKey: "labelCategory"});
+db.recipe.belongsTo(db.category, {foreignKey: "labelCategory"});
+
 module.exports = db;
