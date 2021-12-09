@@ -12,9 +12,6 @@ module.exports = (sequelize, Sequelize) => {
         nb_diner: {
             type: DataTypes.INTEGER
         },
-        author :{
-            type: DataTypes.INTEGER
-        },
         image :{
             type: DataTypes.STRING
         }

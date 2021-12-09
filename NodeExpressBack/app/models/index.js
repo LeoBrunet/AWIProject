@@ -33,4 +33,8 @@ db.category = require("./category.model.js")(sequelize, Sequelize);
 db.ingredientType = require("./ingredientType.js")(sequelize, Sequelize);
 db.recipe = require("./recipe.model.js")(sequelize, Sequelize);
 
+//CLE ETRANGERE
+db.user.hasMany(db.recipe,{foreignKey: "numUser"});
+db.recipe.belongsTo(db.user,{foreignKey: "numUser"});
+
 module.exports = db;
