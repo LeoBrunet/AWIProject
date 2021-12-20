@@ -70,7 +70,14 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
     const id = req.params.id;
 
-    User.update(req.body, {
+    const user = {
+        nameUser: req.body.nameUser,
+        firstNameUser: req.body.firstNameUser,
+        mail : req.body.mail,
+        password : req.body.password
+    };
+
+    User.update(user, {
         where: { numUser: id }
     })
         .then(num => {

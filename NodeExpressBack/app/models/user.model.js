@@ -39,10 +39,10 @@ module.exports = (sequelize, Sequelize) => {
                         user.password = bcrypt.hashSync(user.password, salt);
                     }
                 },
-                beforeUpdate:async (user) => {
-                    if (user.password) {
+                beforeBulkUpdate:async (user) => {
+                    if (user.attributes.password) {
                         const salt = await bcrypt.genSaltSync(10, 'a');
-                        user.password = bcrypt.hashSync(user.password, salt);
+                        user.attributes.password = bcrypt.hashSync(user.attributes.password, salt);
                     }
                 }
             },

@@ -1,8 +1,8 @@
 const db = require("../models");
-const IngredientType = db.ingredientType;
+const IngredientTypeController = db.ingredientType;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new IngredientType
+// Create and Save a new IngredientTypeController
 exports.create = (req, res) => {
     // Validate request
     if (!req.body.label) {
@@ -12,27 +12,27 @@ exports.create = (req, res) => {
         return;
     }
 
-    // Create a IngredientType
+    // Create a IngredientTypeController
     const type = {
         label: req.body.label,
     };
 
-    // Save IngredientType in the database
-    IngredientType.create(type)
+    // Save IngredientTypeController in the database
+    IngredientTypeController.create(type)
         .then(data => {
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while creating the IngredientType."
+                    err.message || "Some error occurred while creating the IngredientTypeController."
             });
         });
 };
 
 // Retrieve all IngredientTypes from the database.
 exports.findAll = (req, res) => {
-    IngredientType.findAll()
+    IngredientTypeController.findAll()
         .then(data => {
             res.send(data);
         })
@@ -43,10 +43,10 @@ exports.findAll = (req, res) => {
         })
 };
 
-// Find a single IngredientType with an id
+// Find a single IngredientTypeController with an id
 exports.findOne = (req, res) => {
     const label = req.params.id;
-    IngredientType.findByPk(label)
+    IngredientTypeController.findByPk(label)
         .then(data => {
             if (data) {
                 res.send(data);
@@ -58,22 +58,22 @@ exports.findOne = (req, res) => {
         })
         .catch(err => {
             res.status(500).send({
-                message: "Error retrieving IngredientType with label=" + label
+                message: "Error retrieving IngredientTypeController with label=" + label
             });
         });
 };
 
-// Update a IngredientType by the id in the request
+// Update a IngredientTypeController by the id in the request
 exports.update = (req, res) => {
     const label = req.params.id;
 
-    IngredientType.update(req.body, {
+    IngredientTypeController.update(req.body, {
         where: { label: label }
     })
         .then(num => {
             if (num == 1) {
                 res.send({
-                    message: "IngredientType was updated successfully."
+                    message: "IngredientTypeController was updated successfully."
                 });
             } else {
                 res.send({
@@ -83,22 +83,22 @@ exports.update = (req, res) => {
         })
         .catch(err => {
             res.status(500).send({
-                message: "Error updating IngredientType with label=" + label
+                message: "Error updating IngredientTypeController with label=" + label
             });
         });
 };
 
-// Delete a IngredientType with the specified id in the request
+// Delete a IngredientTypeController with the specified id in the request
 exports.delete = (req, res) => {
     const label = req.params.id;
 
-    IngredientType.destroy({
+    IngredientTypeController.destroy({
         where: { label: label }
     })
         .then(num => {
             if (num == 1) {
                 res.send({
-                    message: "IngredientType was deleted successfully!"
+                    message: "IngredientTypeController was deleted successfully!"
                 });
             } else {
                 res.send({
@@ -108,7 +108,7 @@ exports.delete = (req, res) => {
         })
         .catch(err => {
             res.status(500).send({
-                message: "Could not delete IngredientType with label=" + label
+                message: "Could not delete IngredientTypeController with label=" + label
             });
         });
 };

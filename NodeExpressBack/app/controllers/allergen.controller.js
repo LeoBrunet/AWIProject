@@ -14,7 +14,7 @@ exports.create = (req, res) => {
 
     // Create a Allergen
     const allergen = {
-        codeAllergen: req.body.codeAllergene,
+        codeAllergen: req.body.codeAllergen,
         label: req.body.label,
     };
 
@@ -46,20 +46,20 @@ exports.findAll = (req, res) => {
 
 // Find a single Allergen with an id
 exports.findOne = (req, res) => {
-    const code_allergen = req.params.id;
-    Allergen.findByPk(code_allergen)
+    const codeAllergen = req.params.id;
+    Allergen.findByPk(codeAllergen)
         .then(data => {
             if (data) {
                 res.send(data);
             } else {
                 res.status(404).send({
-                    message: `Cannot find Allergen with code=${code_allergen}.`
+                    message: `Cannot find Allergen with code=${codeAllergen}.`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Error retrieving Allergen with code=" + code_allergen
+                message: "Error retrieving Allergen with code=" + codeAllergen
             });
         });
 };
