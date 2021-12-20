@@ -2,18 +2,17 @@ import {Component, OnInit} from "@angular/core";
 import {FormControl, FormGroup} from "@angular/forms";
 import { UserService } from "src/services/UserService";
 import {User} from "../../model/user";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'login',
   templateUrl: 'register.component.html',
-  styleUrls: ['../../../assets/css/font.css',
-    '../../../assets/css/form.css',
-    '../../../assets/css/login.css']
+  styleUrls: ['../../../assets/css/login.css']
 })
 export class RegisterComponent implements OnInit {
   registerFormGroup : FormGroup;
 
-  constructor(private userService : UserService) {}
+  constructor(private userService : UserService, private router : Router) {}
 
   ngOnInit(): void {
     this.registerFormGroup = new FormGroup({
@@ -36,5 +35,7 @@ export class RegisterComponent implements OnInit {
       this.registerFormGroup.get('email')?.value,
       this.registerFormGroup.get('password')?.value
     ))
+
+    this.router.navigate(['/login']);
   }
 }

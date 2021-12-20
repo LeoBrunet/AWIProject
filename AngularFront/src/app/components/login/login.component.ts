@@ -1,18 +1,17 @@
 import {Component, OnInit} from "@angular/core";
 import {FormControl, FormGroup} from "@angular/forms";
 import {UserService} from "../../../services/UserService";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'login',
   templateUrl: 'login.component.html',
-  styleUrls: ['../../../assets/css/font.css',
-    '../../../assets/css/form.css',
-    '../../../assets/css/login.css']
+  styleUrls: ['../../../assets/css/login.css']
 })
 export class LoginComponent implements OnInit {
   loginFormGroup : FormGroup;
 
-  constructor(private userService : UserService) {}
+  constructor(private userService : UserService, private  router : Router) {}
 
   ngOnInit(): void {
     this.loginFormGroup = new FormGroup({
@@ -24,8 +23,8 @@ export class LoginComponent implements OnInit {
   login(){
     console.log(this.loginFormGroup.get('email')?.value);
     console.log(this.loginFormGroup.get('password')?.value);
-
-    this.userService.findByEmail(this.loginFormGroup.get('email')?.value)
+    this.router.navigate(['/home-recipe']);
+    //this.userService.findByEmail(this.loginFormGroup.get('email')?.value)
   }
 
 }
