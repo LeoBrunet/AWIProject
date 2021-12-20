@@ -1,4 +1,4 @@
-<div class="split menu">
+<div class="split menu" style="overflow-y: hidden">
   <div class="top-menu">
     <pre class="logo">Logo.</pre>
   </div>
@@ -6,7 +6,7 @@
     <pre class="menu-title">MENU</pre>
     <div class="menu-container">
       <img src="../../../assets/images/home.png"/>
-      <img src="../../../assets/images/recipe.png">
+      <a href="/home-recipe"><img src="../../../assets/images/recipe.png"></a>
       <img src="../../../assets/images/stock.png">
     </div>
     <div class="menu-container account">
@@ -21,7 +21,8 @@
   <div [formGroup]="recipeFormGroup" (ngSubmit)="submit()" class="form">
     <div class="form-element">
       <label for="name">Nom de la recette</label>
-      <input id="name" maxlength="100" name="name" formControlName="name" type="text" required>
+      <input id="name" maxlength="100" name="name" formControlName="name" type="text" placeholder="Fish & chips"
+             required>
     </div>
     <div class="form-element">
       <label for="desc">Description</label>
@@ -44,34 +45,35 @@
       </div>
       <div class="form-container-name">
         <label for="nb-diners">Nombre de couvert</label>
-        <input id="nb-diners" name="nb-diners" formControlName="nb_diners" type="number">
+        <input id="nb-diners" name="nb-diners" formControlName="nb_diners" type="number" min="0" placeholder="2">
       </div>
     </div>
 
-    <button type="submit" class="submit google" (click)="openPDF()">
-      <span>Enregister et continuer</span>
-    </button>
+    <div style="display: flex; justify-content: space-between">
+
+      <button type="submit" class="submit google preview" (click)="openPDF()">
+        <span>Aperçu</span>
+      </button>
+      <button type="submit" class="submit google" (click)="openPDF()">
+        <span>Enregister et continuer</span>
+      </button>
+    </div>
   </div>
-  <div id="recipeToPDF" style="display: block; width: 100%">
+</div>
+<div id="recipeToPDF" class="split right pdf-container">
+  <div class="pdf-page">
     <div class="new-recipe-page-title logo2">Fish & chips</div>
-    <div style="display: flex">
-      <div style="width: 60%; margin: 2%; font-family:'Segoe UI',sans-serif">
-        <p>Nous avons dû ajouter des Use Case à notre projet existant afin de compléter notre
-          application. La répartition des tâches a dû être modifiée en fonction de l’implication de
-          chacun</p>
-        <p style="font-family: 'Segoe UI Semibold',sans-serif">Léo Brunet</p>
+    <div class="pdf-content">
+      <div class="pdf-text-content fs25">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ex nisl, congue nec pellentesque nec,
+          hendrerit efficitur leo. Nulla faucibus at urna et volutpat. Quisque pretium arcu a dolor pellentesque porta.
+        </p>
+        <span>Léo Brunet</span>
         <p>2 personnes</p>
       </div>
 
       <img src="../../../assets/images/fish_chips.png"
-           style="position: absolute;width: 30%; right: 0; margin: 2%; border-radius: 2%">
+           style="position: absolute;width: 30%; right: 0; margin: 2% 7%; border-radius: 2%">
     </div>
   </div>
-</div>
-<div class="split right">
-  <object class="pdf-recipe" data='../../../assets/pdf/test.pdf' type="application/pdf">
-    <iframe src='../../../assets/pdf/test.pdf'>
-      <p>This browser does not support PDF!</p>
-    </iframe>
-  </object>
 </div>

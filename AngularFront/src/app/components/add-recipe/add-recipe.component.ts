@@ -7,9 +7,7 @@ import html2canvas from 'html2canvas';
 @Component({
   selector: 'add-recipe',
   templateUrl: 'add-recipe.component.html',
-  styleUrls: ['../../../assets/css/font.css',
-    '../../../assets/css/form.css',
-    '../../../assets/css/new_recipe_menu.css',
+  styleUrls: ['../../../assets/css/new_recipe_menu.css',
     '../../../assets/css/new_recipe_left.css',
     '../../../assets/css/new_recipe_right.css']
 })
