@@ -27,11 +27,42 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.tutorials = require("./tutorial.model.js")(sequelize, Sequelize);
-db.utilisateurs = require("./utilisateur.model.js")(sequelize, Sequelize);
-db.allergenes = require("./allergene.model.js")(sequelize, Sequelize);
-db.categories = require("./categorie.model.js")(sequelize, Sequelize);
-db.categories = require("./type_ingredient.model.js")(sequelize, Sequelize);
+db.user = require("./user.model.js")(sequelize, Sequelize);
+db.allergen = require("./allergen.model.js")(sequelize, Sequelize);
+db.category = require("./category.model.js")(sequelize, Sequelize);
+db.ingredientType = require("./ingredientType.model.js")(sequelize, Sequelize);
+db.recipe = require("./recipe.model.js")(sequelize, Sequelize);
+db.ingredient = require("./ingredient.model.js")(sequelize, Sequelize);
+db.unit = require("./unit.model.js")(sequelize, Sequelize);
+db.descriptionStep = require("./descriptionStep.model.js")(sequelize, Sequelize);
+db.generalStep = require("./generalStep.model.js")(sequelize, Sequelize);
+db.cost = require("./cost.model.js")(sequelize, Sequelize);
 
+//CLE ETRANGERE
+db.user.hasMany(db.recipe,{foreignKey: "numUser"});
+db.recipe.belongsTo(db.user,{foreignKey: "numUser"});
+
+db.category.hasMany(db.recipe, {foreignKey: "labelCategory"});
+db.recipe.belongsTo(db.category, {foreignKey: "labelCategory"});
+
+db.allergen.hasMany(db.ingredient, {foreignKey: "codeAllergen"});
+db.ingredient.belongsTo(db.allergen, {foreignKey: "codeAllergen"});
+
+db.ingredientType.hasMany(db.ingredient, {foreignKey: "labelType"});
+db.ingredient.belongsTo(db.ingredientType, {foreignKey: "labelType"});
+
+db.unit.hasMany(db.ingredient, {foreignKey: "labelUnit"});
+db.ingredient.belongsTo(db.unit, {foreignKey: "labelUnit"});
+
+db.descriptionStep.hasOne(db.generalStep, {foreignKey: "numDescriptionStep"});
+db.recipe.hasMany(db.generalStep, {foreignKey : "recipeStep"});
+db.generalStep.belongsTo(db.descriptionStep, {foreignKey: "numDescriptionStep"});
+db.generalStep.belongsTo(db.recipe, {foreignKey : "recipeStep"});
+
+db.recipe.hasMany(db.generalStep, {foreignKey: "proprietaryRecipe"});
+db.generalStep.belongsTo(db.recipe, {foreignKey: "proprietaryRecipe"});
+
+db.cost.hasMany(db.recipe, {foreignKey: "numCost"});
+db.recipe.belongsTo(db.cost, {foreignKey: "numCost"});
 
 module.exports = db;
