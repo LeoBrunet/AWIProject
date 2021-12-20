@@ -1,15 +1,15 @@
 const {DataTypes} = require("sequelize");
 module.exports = (sequelize, Sequelize) => {
     const Recipe = sequelize.define("recipe", {
-        num_recipe: {
+        numRecipe: {
             type: DataTypes.INTEGER,
             primaryKey : true,
             autoIncrement : true
         },
-        name_recipe: {
+        name: {
             type: DataTypes.STRING
         },
-        nb_diner: {
+        nbDiners: {
             type: DataTypes.INTEGER
         },
         image :{
