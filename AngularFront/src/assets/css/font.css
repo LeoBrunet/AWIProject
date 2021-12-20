@@ -29,7 +29,7 @@
 	color: #0F0E2D;
 }
 .light-grey {
-	color: #8D8D9F;
+	color: #8D8D9F!important;
 }
 .green {
 	color: #599442;
@@ -37,6 +37,10 @@
 .fs25 {
 	font-size: 1.302vw;
 }
+.fs15 {
+  font-size: 1.0415vw;
+}
+
 .fs15 {
 	font-size: 0.781vw;
 }

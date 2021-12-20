@@ -3,3 +3,37 @@
   width: 100%;
   height: 100%;
 }
+
+.pdf-container {
+  box-shadow: inset 0px 0px 2px 0px #7070702b;
+  background: #8D8D9F30;
+  overflow-y: scroll
+}
+
+.pdf-page {
+  display: block;
+  width: 90%;
+  margin: 2% 5%;
+  height: 96%;
+  border-radius: 1%;
+  background: white
+}
+
+.pdf-content {
+  display: flex
+}
+
+.pdf-text-content {
+  width: 60%;
+  margin: 2%;
+  font-family: 'Segoe UI', sans-serif
+}
+
+.pdf-text-content p {
+  margin: 0 0 5% 0;
+}
+
+.pdf-text-content span {
+  font-family: 'Segoe UI Semibold', sans-serif;
+  margin: 0 0 5% 0;
+}

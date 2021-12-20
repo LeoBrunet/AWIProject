@@ -1,0 +1,37 @@
+<div class="split left">
+  <div class="left-banner">
+    <div class="margin-top">
+      <span class="logo1">Recette</span>
+      <span class="logo2 green" style="margin: -5px">App.</span>
+    </div>
+    <span class="light-grey slogan-home" style="display: block;">Fiches techniques de cuisine.</span>
+    <button class="new-recipe" (click)="newRecipe()"><span>Nouvelle Recette</span></button>
+  </div>
+  <div class="menu light-grey">
+    <span class="menu-title">MENU</span>
+    <div class="menu-container">
+      <div class="menu-elem"><img src="../../../assets/images/home.png"/>Acueuil</div>
+      <div class="menu-elem selected-icon"><img src="../../../assets/images/green-recipe.png"/>Recettes</div>
+      <div class="menu-elem"><img src="../../../assets/images/stock.png"/>Stock</div>
+    </div>
+    <div class="account-menu">
+      <span class="menu-title">COMPTE</span>
+      <div class="menu-container bottom">
+        <div class="menu-elem"><img src="../../../assets/images/user.png"/>Votre compte</div>
+        <div class="menu-elem"><img src="../../../assets/images/help.png"/>Aide & Assistance</div>
+        <div class="menu-elem"><img src="../../../assets/images/logout.png"/>Déconnexion</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="split right">
+  <span class="welcome light-grey">Bonjour Nicolas,</span>
+  <span class="logo2 big">Vos Recettes</span>
+  <div class="search">
+    <input name="search" placeholder="&#x1F50E;  Rechercher des recettes" type="text">
+  </div>
+  <banner-recipe></banner-recipe>
+  <categories></categories>
+  <recipes></recipes>
+</div>
