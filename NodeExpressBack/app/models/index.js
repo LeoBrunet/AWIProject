@@ -51,8 +51,8 @@ db.ingredient.belongsTo(db.allergen, {foreignKey: "codeAllergen"});
 db.ingredientType.hasMany(db.ingredient, {foreignKey: "labelType"});
 db.ingredient.belongsTo(db.ingredientType, {foreignKey: "labelType"});
 
-db.unit.hasMany(db.ingredient, {foreignKey: "labelUnite"});
-db.ingredient.belongsTo(db.unit, {foreignKey: "labelUnite"});
+db.unit.hasMany(db.ingredient, {foreignKey: "labelUnit"});
+db.ingredient.belongsTo(db.unit, {foreignKey: "labelUnit"});
 
 db.descriptionStep.hasOne(db.generalStep, {foreignKey: "numDescriptionStep"});
 db.recipe.hasMany(db.generalStep, {foreignKey : "recipeStep"});
