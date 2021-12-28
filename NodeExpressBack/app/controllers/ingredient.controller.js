@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Ingredient
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.nameIngredient || !req.body.unitePrice || !req.body.codeAllergen || !req.body.labelType || !req.body.labelUnit) {
+    if (!req.body.nameIngredient || !req.body.unitePrice) {
         res.status(400).send({
             message: "Content can not be empty!"
         });
