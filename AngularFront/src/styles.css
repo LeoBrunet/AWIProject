@@ -6,3 +6,9 @@ body {
   font-size: 1.563vw;
   margin: 0;
 }
+
+a {
+  text-decoration: none;
+  color:inherit;
+}
+

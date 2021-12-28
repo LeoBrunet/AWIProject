@@ -32,6 +32,12 @@ textarea {
 .form-container-name {
   width: 49%;
 }
+.form-step {
+  padding: 1%;
+  border-radius: 0.521vw;
+  background: #8D8D9F10;
+  margin-bottom: 1%
+}
 .photo-container {
   position: relative;
   box-shadow: inset 0 0 8px #0000001f;
@@ -59,7 +65,7 @@ textarea {
   border-radius: 10px;
   border-color: #00000000;
   font-size: 1.042vw;
-  font-family: "Segoe UI Semibold";
+  font-family: "Segoe UI Semibold", sans-serif;
   color: white;
   margin-top: 2%;
   background: #599442;
@@ -69,4 +75,11 @@ textarea {
   background: #8D8D9F30;
   color: #8D8D9F;
   width: 30%;
+}
+.button-step {
+  border-radius: 1vw;
+  border: none;
+  background: #599442;
+  color: white;
+  margin-left: 1%;
 }

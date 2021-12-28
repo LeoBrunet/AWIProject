@@ -1,19 +1,22 @@
 import {User} from "./user";
+import {Step} from "./step";
 
 export class Recipe {
   num: number;
   name: string;
   desc: string;
-  nb_diners: number;
+  nbDiners: number;
   auteur: User;
   image: any;
+  steps: Array<Step>;
 
-  constructor(num: number, name: string, desc: string, nb_diners: number, auteur: User, image: any) {
-    this.num = num;
+  constructor(name: string, desc: string, nbDiners: number, image: any, steps: Array<Step>) {
     this.name = name;
     this.desc = desc;
-    this.nb_diners = nb_diners;
-    this.auteur = auteur;
+    this.nbDiners = nbDiners;
+    /*this.num = num;*/
+    /*this.auteur = auteur;*/
     this.image = image;
+    this.steps = steps;
   }
 }

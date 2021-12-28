@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Ingredient} from "./model/ingredients";
+import {IngredientCategory} from "./model/ingredientCategory";
 
 @Component({
   selector: 'app-root',

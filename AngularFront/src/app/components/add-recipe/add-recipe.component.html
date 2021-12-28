@@ -5,8 +5,8 @@
   <div class="bottom-menu">
     <pre class="menu-title">MENU</pre>
     <div class="menu-container">
-      <img src="../../../assets/images/home.png"/>
-      <a href="/home-recipe"><img src="../../../assets/images/recipe.png"></a>
+      <a href="/home-recipe"><img src="../../../assets/images/home.png"/></a>
+      <img src="../../../assets/images/recipe.png">
       <img src="../../../assets/images/stock.png">
     </div>
     <div class="menu-container account">
@@ -18,11 +18,11 @@
 </div>
 <div class="split left">
   <div class="new-recipe-page-title logo2 big">Nouvelle recette</div>
-  <div [formGroup]="recipeFormGroup" (ngSubmit)="submit()" class="form">
+  <form [formGroup]="recipeFormGroup" class="form" (submit)="submit()">
     <div class="form-element">
       <label for="name">Nom de la recette</label>
       <input id="name" maxlength="100" name="name" formControlName="name" type="text" placeholder="Fish & chips"
-             required>
+             required (keyup.enter)="undefined">
     </div>
     <div class="form-element">
       <label for="desc">Description</label>
@@ -41,39 +41,120 @@
     <div class="form-container">
       <div class="form-container-name">
         <label for="recipe-photo">Photo</label>
-        <input id="recipe-photo" class="photo-container" name="recipe-photo" formControlName="image" type="file">
+        <input id="recipe-photo" class="photo-container" name="recipe-photo" formControlName="image" type="file"
+               (change)="uploadImage($event)" (keyup.enter)="uploadImage($event)"/>
       </div>
       <div class="form-container-name">
-        <label for="nb-diners">Nombre de couvert</label>
-        <input id="nb-diners" name="nb-diners" formControlName="nb_diners" type="number" min="0" placeholder="2">
+        <label for="nbDiners">Nombre de couvert</label>
+        <input id="nbDiners" name="nb-diners" formControlName="nbDiners" type="number" min="1" placeholder="1"
+               value="1" (keyup.enter)="undefined">
       </div>
     </div>
 
-    <div style="display: flex; justify-content: space-between">
 
-      <button type="submit" class="submit google preview" (click)="openPDF()">
-        <span>Aperçu</span>
-      </button>
-      <button type="submit" class="submit google" (click)="openPDF()">
-        <span>Enregister et continuer</span>
-      </button>
+    <div style="display: flex; align-items: center;margin-top: 1%">
+      <span class="semibold">Étapes</span>
+      <button type="button" class="button-step" (click)="addStep()">+</button>
+      <button type="button" class="button-step" (click)="removeStep()">-</button>
     </div>
-  </div>
+    <div formArrayName="steps" *ngFor="let step of recipeFormGroup.get('steps')!['controls']; let indexStep = index;"
+         class="form-step">
+
+      <div [formGroupName]="indexStep">
+        <div style="display: flex;justify-content: space-between;align-items: flex-start;">
+          <label for="stepName">Nom de l'étape {{indexStep + 1}}</label>
+          <img (click)="removeStepAt(indexStep)" src="assets/images/close.png" alt="">
+        </div>
+        <input class="form-element" id="stepName" maxlength="100" name="name" formControlName="stepName" type="text"
+               placeholder="Éplucher">
+        <label for="stepDesc{{indexStep}}">Description</label>
+        <textarea class="form-element" id="stepDesc{{indexStep}}" name="desc" rows="5" formControlName="stepDesc"
+                  type="text"
+                  required="required"></textarea>
+        <div class="semibold"
+             style="display: flex; width: 98%; margin-top: 1%;box-shadow: inset 0px -1px 0px 0px #7070702b;">
+          <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 20%;padding: 1%">Catégories</div>
+          <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 35%;padding: 1%">Ingrédients</div>
+          <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 18%;padding: 1%">Quantités</div>
+          <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 10%;padding: 1%">Unit</div>
+          <div style="width: 5%;padding: 1%"></div>
+        </div>
+
+        <div>
+          <div formArrayName="ingredientFormArray"
+               *ngFor="let ingredient of getIngredientsFormArray(indexStep).controls;let index = index">
+            <div [formGroupName]="index" style="display: flex; width: 98%;">
+              <div class="custom-select">
+                <select #category formcontrolname="category"
+                        (change)="updateCategoryIngredient(indexStep ,index, category.value)">
+                  <option *ngFor="let category of getAllCategories(index)"
+                          [value]="category.id">{{category.name}}</option>
+                </select>
+              </div>
+              <div class="custom-select" style="width: 35%">
+                <select #ingredientElem formcontrolname="name"
+                        (change)="updateNameIngredient(indexStep ,index, ingredientElem.value)">
+                  <option *ngFor="let ingredient of getIngredientsOfCat(category.selectedIndex)"
+                          [value]="ingredient.name">{{ingredient.name}}</option>
+                </select>
+              </div>
+              <input id="qteIngredientInput{{index}}" formControlName="quantity"
+                     style="background:none;border-radius:0;border: none;font-size: 1.563vw;font-family: 'Segoe UI', sans-serif;box-shadow: inset -1px 0px 0px 0px #7070702b;width: 20%;padding: 1%"
+                     (change)="updateQuantityIngredient(indexStep,index)"
+                     (keyup.enter)="updateQuantityIngredient(indexStep,index)"
+                     placeholder="10"
+                     required>
+              <div
+                style="background:none;border-radius:0;border: none;font-size: 1.563vw;font-family: 'Segoe UI', sans-serif;box-shadow: inset -1px 0px 0px 0px #7070702b;width: 10%;padding: 1%">
+                {{getIngredientUnit(indexStep, index)}}
+              </div>
+
+              <button
+                type="button"
+                style="border: none;font-size: 1.563vw;font-family: 'Segoe UI', sans-serif;box-shadow: none;width: 5%;padding: 1%; background: none"
+                (click)="removeIngredientAtIndex(indexStep, index)">
+                <img src="assets/images/close.png" alt="">
+              </button>
+            </div>
+          </div>
+        </div>
+        <span (click)="addIngredient(indexStep)" class="green fs25" style="margin-top: 1%">Ajouter un ingrédient</span>
+
+      </div>
+    </div>
+
+    <button type="submit" class="submit google">
+      Enregister et continuer
+    </button>
+    <div id="errorMessage" class="fs25 semibold" style="color: #ff3f3f;display: none">Veuillez entrer toutes les informations de la recette.</div>
+  </form>
 </div>
 <div id="recipeToPDF" class="split right pdf-container">
   <div class="pdf-page">
-    <div class="new-recipe-page-title logo2">Fish & chips</div>
+    <div class="new-recipe-page-title logo2">{{getRecipeName()}}</div>
     <div class="pdf-content">
       <div class="pdf-text-content fs25">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ex nisl, congue nec pellentesque nec,
-          hendrerit efficitur leo. Nulla faucibus at urna et volutpat. Quisque pretium arcu a dolor pellentesque porta.
-        </p>
+        <p>{{getRecipeDescription()}}</p>
         <span>Léo Brunet</span>
-        <p>2 personnes</p>
+        <p>{{getRecipeNbDiners()}}</p>
       </div>
 
-      <img src="../../../assets/images/fish_chips.png"
+      <img (click)="setImage()" [src]="recipeImageLocalUrl" *ngIf="recipeImageLocalUrl"
            style="position: absolute;width: 30%; right: 0; margin: 2% 7%; border-radius: 2%">
+    </div>
+    <div class="pdf-text-content fs25"
+         *ngFor="let step of recipeFormGroup.get('steps')!['controls']; let index = index;">
+      <div style="display: flex;justify-content: space-between;">
+        <div>
+          <span>{{step.get('stepName').value}}</span>
+          <p>{{step.get('stepDesc').value}}</p>
+        </div>
+        <div>
+          <div *ngFor="let ingredient of getIngredients(index); let indexI = index">
+            <div>{{getQuantity(index, indexI) + " " + ingredient.unit + " de " + ingredient.name}}</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

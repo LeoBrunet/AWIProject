@@ -1,0 +1,35 @@
+<div class="semibold" style="display: flex; width: 98%; margin-top: 2%;box-shadow: inset 0px -1px 0px 0px #7070702b;">
+  <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 47%;padding: 1%">Ingrédients</div>
+  <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 20%;padding: 1%">Unités</div>
+  <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 20%;padding: 1%">Catégories</div>
+  <div style="width: 5%;padding: 1%"></div>
+</div>
+
+<div [formGroup]="ingredientsFormGroup">
+  <div formArrayName="ingredientFormArray"
+       *ngFor="let ingredient of ingredientsFormGroup.get('ingredientFormArray')!['controls']; let indexIngredient = index">
+    <div [formGroupName]="indexIngredient" style="display: flex; width: 98%;" >
+      <input id="nameIngredientInput{{indexIngredient}}" formControlName="name"
+             style="background:none;border-radius:0;border: none;font-size: 1.563vw;font-family: 'Segoe UI', sans-serif;box-shadow: inset -1px 0px 0px 0px #7070702b;width: 47%;padding: 1%"
+             value="{{ingredient.name}}"
+             (change)="updateNameIngredient(indexIngredient)"
+             placeholder="Nom de l'ingrédient">
+      <input formControlName="unit"
+             style="background:none;border-radius:0;border: none;font-size: 1.563vw;font-family: 'Segoe UI', sans-serif;box-shadow: inset -1px 0px 0px 0px #7070702b;width: 20%;padding: 1%"
+             value="{{ingredient.unit}}"
+             (change)="updateUnitIngredient(indexIngredient)"
+             placeholder="Unité">
+      <div class="custom-select">
+        <select #category (change)="updateCategoryIngredient(indexIngredient, category.value)">
+          <option *ngFor="let category of getAllCategories(indexIngredient)" [value]="category.name">{{category.name}}</option>
+        </select>
+      </div>
+      <button
+        style="border: none;font-size: 1.563vw;font-family: 'Segoe UI', sans-serif;box-shadow: none;width: 5%;padding: 1%; background: none"
+        (click)="removeIngredientAtIndex(indexIngredient)">
+        <img src="assets/images/close.png" alt="">
+      </button>
+    </div>
+  </div>
+</div>
+<span (click)="addIngredient()" class="green fs25" style="margin-top: 1%">Ajouter un ingrédient</span>

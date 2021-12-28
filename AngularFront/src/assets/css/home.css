@@ -48,7 +48,7 @@ label {
 }
 
 .left-banner {
-  height: 25%;
+  height: 20%;
   width: 80%;
   background: #0F0E2D;
   padding-top: 10%;
@@ -58,7 +58,7 @@ label {
 
 .menu {
   position: relative;
-  height: 67.5%;
+  height: 75%;
   box-shadow: inset -1px 0px 0px 0px #7070702B;
   padding-top: 5%;
   padding-bottom: 5%;

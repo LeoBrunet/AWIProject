@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-const baseUrl = 'http://localhost:8080/api/user';
+const baseUrl = 'http://localhost:8080/api/recipe';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class RecipeService {
 
   constructor(private http: HttpClient) { }
 
@@ -18,8 +18,8 @@ export class UserService {
     return this.http.get(`${baseUrl}/${id}`);
   }
 
-  create(user) {
-    return this.http.post(baseUrl, user);
+  create(recipe) {
+    return this.http.post(baseUrl, {name: recipe.name, nbDiners: recipe.nbDiners, numUser: 1})
   }
 
   update(id, data) {
@@ -28,13 +28,5 @@ export class UserService {
 
   delete(id) {
     return this.http.delete(`${baseUrl}/${id}`);
-  }
-
-  deleteAll() {
-    return this.http.delete(baseUrl);
-  }
-
-  findByEmail(email) {
-    return this.http.get(`${baseUrl}/:${email}`);
   }
 }
