@@ -37,6 +37,7 @@ db.unit = require("./unit.model.js")(sequelize, Sequelize);
 db.descriptionStep = require("./descriptionStep.model.js")(sequelize, Sequelize);
 db.generalStep = require("./generalStep.model.js")(sequelize, Sequelize);
 db.cost = require("./cost.model.js")(sequelize, Sequelize);
+db.ingredientInStep = require("./ingredientInStep.model")(sequelize, Sequelize);
 
 //CLE ETRANGERE
 db.user.hasMany(db.recipe,{foreignKey: "numUser"});
@@ -64,5 +65,8 @@ db.generalStep.belongsTo(db.recipe, {foreignKey: "proprietaryRecipe"});
 
 db.cost.hasMany(db.recipe, {foreignKey: "numCost"});
 db.recipe.belongsTo(db.cost, {foreignKey: "numCost"});
+
+db.ingredient.belongsToMany(db.descriptionStep, {through: db.ingredientInStep, foreignKey: "numIngredient"});
+db.descriptionStep.belongsToMany(db.ingredient, {through: db.ingredientInStep, foreignKey: "numDescriptionStep"});
 
 module.exports = db;
