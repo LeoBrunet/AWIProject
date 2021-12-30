@@ -13,7 +13,7 @@ export class IngredientService {
   constructor(private http: HttpClient) { }
 
   getAll() {
-    return [new Ingredient(1,'Poulet', "kg"), new Ingredient(2,'Dinde', "kg"), new Ingredient(3,'Dinde', "kg"), new Ingredient(4,'Dinde', "kg"), new Ingredient(5,'Dinde', "kg")];
+    return [new Ingredient(4,'Poulet', "kg"), new Ingredient(5,'Dinde', "kg"), new Ingredient(6,'Dinde', "kg"), new Ingredient(7,'Dinde', "kg"), new Ingredient(7,'Dinde', "kg")];
     //return this.http.get(baseUrl);
   }
 

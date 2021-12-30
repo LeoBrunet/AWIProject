@@ -7,7 +7,6 @@ export class Step {
   ingredients: Ingredient[];
   quantities: number[];
 
-  // TODO Mettre les vrais type pour les ingrédients et les unités
   constructor(name: string, description: string, ingredients: Ingredient[], quantities: number[]) {
     this.name = name;
     this.description = description;

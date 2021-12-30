@@ -33,3 +33,6 @@
   </div>
 </div>
 <span (click)="addIngredient()" class="green fs25" style="margin-top: 1%">Ajouter un ingrédient</span>
+<div id="errorMessage" class="fs25 semibold" style="color: #ff3f3f;" *ngIf="errorMessage">
+  {{errorMessage}}
+</div>

@@ -37,6 +37,7 @@ exports.create = (req, res) => {
 
 exports.createGeneralAndDescriptionStep = async (req, res) => {
     if (!req.body.position || !req.body.proprietaryRecipe || !req.body.nameStep || !req.body.description) {
+        console.log(req.body)
         res.status(400).send({
             message: "Content can not be empty!"
         });

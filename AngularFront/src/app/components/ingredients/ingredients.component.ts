@@ -15,6 +15,7 @@ export class IngredientsComponent implements OnInit {
   @Input() categories: IngredientCategory[];
   @Input() selectedCategory: IngredientCategory;
   ingredientsFormGroup: FormGroup;
+  errorMessage: string;
 
   constructor(private _fb: FormBuilder, private _recipeService: RecipeService, private ref:ChangeDetectorRef) {
   }
@@ -73,24 +74,24 @@ export class IngredientsComponent implements OnInit {
 
   public addIngredient(): void {
 
+    this.printErrorMessage("")
     if (this.ingredients.length == 0) {
-      this.ingredients.push(new Ingredient(1, "", ""))
+      this.ingredients.push(new Ingredient(1, "", "", this.categories[0]))
       this.getIngredientsArray().push(this._fb.group({
         name: [this.ingredients[this.ingredients.length - 1].name],
         unit: [this.ingredients[this.ingredients.length - 1].unit]
       }));
     }
 
-    if (this.ingredients[this.ingredients.length-1].name != "" && this.ingredients[this.ingredients.length-1].unit != "") {
-      this.ingredients.push(new Ingredient(this.ingredients[this.ingredients.length - 1].id + 1, "", ""))
+    if (this.ingredients[this.ingredients.length-1].name != "" && this.ingredients[this.ingredients.length-1].unit != "" && this.ingredients[this.ingredients.length-1].category.name != "Tout") {
+      this.ingredients.push(new Ingredient(this.ingredients[this.ingredients.length - 1].id + 1, "", "", this.categories[0]))
       this.getIngredientsArray().push(this._fb.group({
         name: [this.ingredients[this.ingredients.length - 1].name],
         unit: [this.ingredients[this.ingredients.length - 1].unit]
       }));
     }
     else {
-      //TODO Print error on screen
-      console.log("Modfier d'abord le dernier ajout.")
+      this.printErrorMessage("Modfier d'abord le dernier ajout.")
     }
   }
 
@@ -103,7 +104,8 @@ export class IngredientsComponent implements OnInit {
   }
 
   public getAllCategories(index): IngredientCategory[] {
-    let returnedCategories: IngredientCategory[] = this.categories;
+    let returnedCategories: IngredientCategory[] = Object.assign([], this.categories);
+    returnedCategories.splice(0, 1);
     if (this.ingredients.length > index) {
       returnedCategories.forEach((elementI, indexI) => {
         if (elementI.name == this.ingredients[index].category.name) returnedCategories.splice(indexI, 1);
@@ -114,5 +116,9 @@ export class IngredientsComponent implements OnInit {
       returnedCategories.unshift(this.ingredients[index].category)
     }
     return returnedCategories;
+  }
+
+  private printErrorMessage(errorMessage: string): void {
+    this.errorMessage = errorMessage;
   }
 }

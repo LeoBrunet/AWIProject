@@ -66,11 +66,13 @@
           <img (click)="removeStepAt(indexStep)" src="assets/images/close.png" alt="">
         </div>
         <input class="form-element" id="stepName" maxlength="100" name="name" formControlName="stepName" type="text"
-               placeholder="Éplucher">
+               placeholder="Éplucher"
+               (change)="updateStepName(indexStep)">
         <label for="stepDesc{{indexStep}}">Description</label>
         <textarea class="form-element" id="stepDesc{{indexStep}}" name="desc" rows="5" formControlName="stepDesc"
                   type="text"
-                  required="required"></textarea>
+                  required="required"
+                  (change)="updateStepDesc(indexStep)"></textarea>
         <div class="semibold"
              style="display: flex; width: 98%; margin-top: 1%;box-shadow: inset 0px -1px 0px 0px #7070702b;">
           <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 20%;padding: 1%">Catégories</div>
@@ -126,7 +128,9 @@
     <button type="submit" class="submit google">
       Enregister et continuer
     </button>
-    <div id="errorMessage" class="fs25 semibold" style="color: #ff3f3f;display: none">Veuillez entrer toutes les informations de la recette.</div>
+    <div id="errorMessage" class="fs25 semibold" style="color: #ff3f3f;" *ngIf="errorMessage">
+      {{errorMessage}}
+    </div>
   </form>
 </div>
 <div id="recipeToPDF" class="split right pdf-container">

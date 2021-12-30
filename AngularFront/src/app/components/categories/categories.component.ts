@@ -12,15 +12,21 @@ export class CategoriesComponent implements OnInit {
 
   ngOnInit(): void {
     this.selectedCategory = this.categories.find(cat => cat.name == "Tout")!
+    //this.setSelectedCategory(0, this.selectedCategory)
+  }
+
+  ngAfterViewInit(): void {
     this.setSelectedCategory(0, this.selectedCategory)
   }
 
   setSelectedCategory(index:number, category:Category): void {
     this.unselectAllCategories();
     this.selectedCategory = category;
-    const catElem = document.getElementById('cat'+index)
+    const catElem = document.getElementById("cat"+index)
+    const cats = document.getElementsByClassName("categories")
 
     console.log(document)
+    console.log(cats.item(0)!.children)
     console.log(catElem)
     console.log('cat'+index)
 
