@@ -17,7 +17,7 @@ exports.create = (req, res) => {
         name: req.body.name,
         nbDiners: req.body.nbDiners,
         numUser : req.body.numUser,
-        idCategory: req.idCategory
+        idCategory: req.body.idCategory
     };
 
     // Save Recipe in the database
