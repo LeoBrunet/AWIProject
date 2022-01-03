@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Recipe
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.name || !req.body.nbDiners || !req.body.numUser) {
+    if (!req.body.name || !req.body.nbDiners || !req.body.numUser || !req.body.idCategory) {
         res.status(400).send({
             message: "Content can not be empty!"
         });
@@ -16,7 +16,8 @@ exports.create = (req, res) => {
     const recipe = {
         name: req.body.name,
         nbDiners: req.body.nbDiners,
-        numUser : req.body.numUser
+        numUser : req.body.numUser,
+        idCategory: req.idCategory
     };
 
     // Save Recipe in the database

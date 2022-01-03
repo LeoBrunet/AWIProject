@@ -35,7 +35,7 @@ exports.create = (req, res) => {
         });
 };
 
-exports.createGeneralAndDescriptionStep = async (req, res) => {
+exports.createGeneralAndDescriptionStep = (req, res) => {
     if (!req.body.position || !req.body.proprietaryRecipe || !req.body.nameStep || !req.body.description) {
         console.log(req.body)
         res.status(400).send({
@@ -53,9 +53,6 @@ exports.createGeneralAndDescriptionStep = async (req, res) => {
         }
     };
 
-    let dataToScend;
-    let check;
-
     GeneralStep.create(generalStep, {include: [DescriptionStep]})
         .then(data => {
             ingredients = JSON.parse(req.body.ingredients);
@@ -68,8 +65,6 @@ exports.createGeneralAndDescriptionStep = async (req, res) => {
             check = false;
             dataToScend = err;
         })
-
-
 }
 
 // Retrieve all GeneralSteps for a Recipe from the database.

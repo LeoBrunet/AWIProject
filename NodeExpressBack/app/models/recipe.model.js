@@ -14,6 +14,14 @@ module.exports = (sequelize, Sequelize) => {
         },
         image :{
             type: DataTypes.STRING
+        },
+        idCategory:{
+            type: DataTypes.INTEGER,
+                references: {
+                model: "categories",
+                    key: "idCategory",
+                    foreignKey: "idCategory"
+            }
         }
     });
 

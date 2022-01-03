@@ -43,17 +43,17 @@ db.ingredientInStep = require("./ingredientInStep.model")(sequelize, Sequelize);
 db.user.hasMany(db.recipe,{foreignKey: "numUser"});
 db.recipe.belongsTo(db.user,{foreignKey: "numUser"});
 
-db.category.hasMany(db.recipe, {foreignKey: "labelCategory"});
-db.recipe.belongsTo(db.category, {foreignKey: "labelCategory"});
+db.category.hasMany(db.recipe, {foreignKey: "idCategory"});
+db.recipe.belongsTo(db.category, {foreignKey: "idCategory"});
 
 db.allergen.hasMany(db.ingredient, {foreignKey: "codeAllergen"});
 db.ingredient.belongsTo(db.allergen, {foreignKey: "codeAllergen"});
 
-db.ingredientType.hasMany(db.ingredient, {foreignKey: "labelType"});
-db.ingredient.belongsTo(db.ingredientType, {foreignKey: "labelType"});
+db.ingredientType.hasMany(db.ingredient, {foreignKey: "idType"});
+db.ingredient.belongsTo(db.ingredientType, {foreignKey: "idType"});
 
-db.unit.hasMany(db.ingredient, {foreignKey: "labelUnit"});
-db.ingredient.belongsTo(db.unit, {foreignKey: "labelUnit"});
+db.unit.hasMany(db.ingredient, {foreignKey: "idUnit"});
+db.ingredient.belongsTo(db.unit, {foreignKey: "idUnit"});
 
 db.descriptionStep.hasOne(db.generalStep, {foreignKey: "numDescriptionStep"});
 db.recipe.hasMany(db.generalStep, {foreignKey : "recipeStep"});
