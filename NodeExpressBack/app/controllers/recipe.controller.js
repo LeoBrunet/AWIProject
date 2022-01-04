@@ -115,3 +115,39 @@ exports.delete = (req, res) => {
             });
         });
 };
+
+// Find a single Recipe with an id
+exports.findAllIngredients = (req, res) => {
+    const numRecipe = req.params.id;
+    Recipe.findByPk(numRecipe)
+        .then(async data => {
+            if (data) {
+                gnSteps = await data.getProprietaryStep();
+                ingredients = [];
+                while(gnSteps.length > 0) {
+                    step = gnSteps.pop()
+                    if(step.recipeStep == null){
+                        dStep = await step.getDescriptionStep();
+                        console.log(dStep);
+                        ig = await dStep.getIngredients()
+                        console.log(ig)
+                        ingredients = ingredients.concat(ig);
+                        console.log(ingredients);
+                    }
+                    else{
+                        gnSteps.concat(step.getRecipe().getGeneralSteps());
+                    }
+                }
+                res.send(ingredients)
+            } else {
+                res.status(404).send({
+                    message: `Cannot find Recipe with id=${numRecipe}.`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error retrieving Recipe with id=" + numRecipe
+            });
+        });
+};

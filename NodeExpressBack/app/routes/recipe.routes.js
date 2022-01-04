@@ -1,3 +1,4 @@
+const recipes = require("../controllers/recipe.controller.js");
 module.exports = app => {
     const recipes = require("../controllers/recipe.controller.js");
 
@@ -17,6 +18,9 @@ module.exports = app => {
 
     // Delete a Categories with id
     router.delete("/:id", recipes.delete);
+
+    // Retrieve all Categories
+    router.get("/ingredients/:id", recipes.findAllIngredients);
 
     app.use('/api/recipe', router);
 };
