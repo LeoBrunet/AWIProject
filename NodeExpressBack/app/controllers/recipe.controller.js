@@ -121,23 +121,9 @@ exports.findAllIngredients = (req, res) => {
     const numRecipe = req.params.id;
     Recipe.findByPk(numRecipe)
         .then(async data => {
+
             if (data) {
-                gnSteps = await data.getProprietaryStep();
-                ingredients = [];
-                while(gnSteps.length > 0) {
-                    step = gnSteps.pop()
-                    if(step.recipeStep == null){
-                        dStep = await step.getDescriptionStep();
-                        console.log(dStep);
-                        ig = await dStep.getIngredients()
-                        console.log(ig)
-                        ingredients = ingredients.concat(ig);
-                        console.log(ingredients);
-                    }
-                    else{
-                        gnSteps.concat(step.getRecipe().getGeneralSteps());
-                    }
-                }
+                let ingredients = await getAllIngredients(data)
                 res.send(ingredients)
             } else {
                 res.status(404).send({
@@ -151,3 +137,80 @@ exports.findAllIngredients = (req, res) => {
             });
         });
 };
+
+exports.getTotalCost = (req, res) =>{
+    const numRecipe = req.params.id;
+    Recipe.findByPk(numRecipe)
+        .then(async data => {
+
+            if (data) {
+                let ingredients = await getAllIngredients(data)
+                console.log(getTotalIngredientCost(ingredients))
+                res.send({cost : getTotalIngredientCost(ingredients)})
+            } else {
+                res.status(404).send({
+                    message: `Cannot find Recipe with id=${numRecipe}.`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error retrieving Recipe with id=" + numRecipe
+            });
+        });
+}
+
+async function getAllIngredients(recipe) {
+    gnSteps = await recipe.getProprietaryStep();
+    ingredientsBrut = [];
+    while (gnSteps.length > 0) {
+        step = gnSteps.pop()
+        if (step.recipeStep == null) {
+            dStep = await step.getDescriptionStep();
+            ig = await dStep.getIngredients({
+                attributes: {exclude : ['ingredientInStep.numIngredient', 'ingredientInStep.numDescriptionStep']}
+            })
+            ingredientsBrut = ingredientsBrut.concat(ig);
+        } else {
+            gnSteps.concat(step.getRecipe().getGeneralSteps());
+        }
+    }
+
+    ingredients = []
+    while(ingredientsBrut.length > 0){
+        current = ingredientsBrut.pop();
+        current = current.dataValues;
+        quantity = current["ingredientInStep"]["quantity"];
+        delete current["ingredientInStep"];
+        current["quantity"] = quantity;
+        maj(current, ingredients);
+    }
+    return ingredients;
+}
+
+function maj(current, ingredients){
+    find = false;
+    let i = 0
+    while (i < ingredients.length && !find) {
+        currentKey = ingredients[i]
+        if(currentKey["numIngredient"] === current["numIngredient"]){
+            currentKey["quantity"] += current["quantity"];
+            find = true;
+        }
+        i++
+    }
+
+    if(!find){
+        ingredients.push(current)
+    }
+    return ingredients;
+}
+
+function getTotalIngredientCost(ingredients){
+    cost = 0;
+    for (let i = 0; i < ingredients.length; i++) {
+        current = ingredients[i]
+        cost += current["unitePrice"] * current["quantity"];
+    }
+    return cost;
+}
