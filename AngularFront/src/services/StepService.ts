@@ -19,7 +19,7 @@ export class StepService {
     return this.http.get(`${baseUrl}/${id}`);
   }
 
-  createStep(step: Step, position: number) {
+  createStep(step: Step, position: number, recipeId: number) {
     let ingredients : string = "[";
     for (let index = 0; index < step.ingredients.length; index++){
       ingredients += "{\"numIngredient\":"+step.ingredients[index].id+",\"quantity\":"+step.quantities[index]+"},";
@@ -27,7 +27,7 @@ export class StepService {
     ingredients = ingredients.slice(0, ingredients.length - 1);
     ingredients += "]";
     console.log(step)
-    return this.http.post(`${baseUrl}/desc`, {position: position+1, proprietaryRecipe: 1, nameStep: step.name, description: step.description, ingredients: ingredients})
+    return this.http.post(`${baseUrl}/desc`, {position: position+1, proprietaryRecipe: recipeId, nameStep: step.name, description: step.description, ingredients: ingredients})
   }
 
   createRecipeStep(recipe) {

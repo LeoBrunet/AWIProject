@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {IngredientCategory} from "../app/model/ingredientCategory";
 import {Ingredient} from "../app/model/ingredients";
+import {Category} from "../app/model/category";
 
 //TODO Check url
-const baseUrl = 'http://localhost:8080/api/ingredientType';
+const baseUrl = 'http://localhost:8080/api/category';
 
 @Injectable({
   providedIn: 'root'
 })
-export class IngredientCategoryService {
+export class RecipeCategoryService {
 
   constructor(private http: HttpClient) { }
 
@@ -23,8 +24,8 @@ export class IngredientCategoryService {
   }
 
   //TODO Check create
-  create(ingredientCategory) {
-    return this.http.post(baseUrl, { idType: ingredientCategory.id, label: ingredientCategory.name})
+  create(category: Category) {
+    return this.http.post(baseUrl, { id: category.id, name: category.name})
   }
 
   update(id, data) {
@@ -35,7 +36,7 @@ export class IngredientCategoryService {
     return this.http.delete(`${baseUrl}/${id}`);
   }
 
-  public createIngredientCategory(data): IngredientCategory {
-    return new IngredientCategory(data['idType'], data['label'])
+  public createCategory(data): Category {
+    return new Category(data['idCategory'], data['label'])
   }
 }

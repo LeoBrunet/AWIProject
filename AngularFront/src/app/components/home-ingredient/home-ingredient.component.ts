@@ -1,7 +1,9 @@
-import {Component, OnChanges, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Ingredient} from "../../model/ingredients";
 import {IngredientCategory} from "../../model/ingredientCategory";
 import {Category} from "../../model/category";
+import {IngredientService} from "../../../services/IngredientService";
+import {IngredientCategoryService} from "../../../services/IngredientCategoryService";
 
 @Component({
   selector: 'home-ingredient',
@@ -16,19 +18,39 @@ export class HomeIngredientComponent implements OnInit {
   categories: IngredientCategory[] = [];
   selectedCategory: IngredientCategory;
 
-  ngOnInit(): void {
-    this.categories = [new IngredientCategory(0, 'Tout', "all.png"),new IngredientCategory(1, 'Viande', "steak.png"), new IngredientCategory(2, 'Poisson', "fish_cat.png"), new IngredientCategory(3, 'Autre')];
-    this.ingredients = [new Ingredient(1,'Poulet', "kg", this.categories[1]), new Ingredient(2,'Dinde', "kg"), new Ingredient(3,'Dinde', "kg"), new Ingredient(4,'Dinde', "kg"), new Ingredient(5,'Dinde', "kg")];
-    this.selectedIngredients = this.ingredients;
-    this.selectedCategory = this.categories[0];
+  dataLoaded: boolean = false;
+
+  constructor(private cdr: ChangeDetectorRef, private _ingredientService: IngredientService, private _ingredientCategoryService: IngredientCategoryService) {
   }
 
-  getSelectedCategory(category: Category){
-    this.selectedCategory = category as IngredientCategory;
-    if (this.selectedCategory.name == "Tout"){
+  ngOnInit() {
+    this._ingredientService.getAll().subscribe(async (data: any) => {
+      let datas: any[] = data;
+      for (const data1 of datas) {
+        this.ingredients.push(await this._ingredientService.createIngredient(data1))
+      }
       this.selectedIngredients = this.ingredients;
-    } else {
-      this.selectedIngredients = this.ingredients.filter(ingredient => ingredient.category.name == this.selectedCategory.name || ingredient.category.name == "Tout")
+      if (!this.dataLoaded) {
+        this.dataLoaded = true;
+      }
+    })
+    this._ingredientCategoryService.getAll().subscribe((data: any) => {
+      let datas: any[] = data;
+      datas.forEach(data => {
+        this.categories.push(this._ingredientCategoryService.createIngredientCategory(data))
+      })
+    })
+  }
+
+  getSelectedCategory(category: Category) {
+    if (category) {
+
+      this.selectedCategory = category as IngredientCategory;
+      if (this.selectedCategory.name == "Tout") {
+        this.selectedIngredients = this.ingredients;
+      } else {
+        this.selectedIngredients = this.ingredients.filter(ingredient => ingredient.category.id == this.selectedCategory.id || ingredient.category.name == "Tout")
+      }
     }
   }
 }

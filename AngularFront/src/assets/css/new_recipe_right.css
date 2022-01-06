@@ -4,6 +4,10 @@
   height: 100%;
 }
 
+.pdf-text-content p, span{
+  word-break: break-all;
+}
+
 .pdf-container {
   box-shadow: inset 0px 0px 2px 0px #7070702b;
   background: #8D8D9F30;

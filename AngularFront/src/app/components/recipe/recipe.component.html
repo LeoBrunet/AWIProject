@@ -1,0 +1,31 @@
+<left-menu></left-menu>
+<div class="split right" *ngIf="recipe">
+  <div class="new-recipe-page-title logo2 big">{{recipe.name}}</div>
+  <div class="pdf-page">
+    <div class="pdf-content">
+      <div class="pdf-text-content fs25">
+        <p>{{recipe.desc}}</p>
+        <span>Autheur : Léo Brunet</span>
+        <p>{{recipe.nbDiners}} personnes</p>
+      </div>
+
+      <img src="{{recipe.image}}"
+           style="position: absolute;width: 30%; right: 0; margin: 2% 7%; border-radius: 2%">
+    </div>
+    <div class="pdf-text-content fs25"
+         *ngFor="let step of recipe.steps; let index = index;">
+      <div style="display: flex;justify-content: space-between;">
+        <div>
+          <span>{{step.name}}</span>
+          <p>{{step.description}}</p>
+        </div>
+        <div>
+          <div *ngFor="let ingredient of step.ingredients; let indexI = index">
+            <div>{{step.quantities[index] + " " + ingredient.unit + " de " + ingredient.name}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

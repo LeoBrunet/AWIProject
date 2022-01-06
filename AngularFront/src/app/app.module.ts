@@ -21,6 +21,8 @@ import {UserService} from "../services/UserService";
 import {RecipeService} from "../services/RecipeService";
 import {IngredientService} from "../services/IngredientService";
 import {IngredientCategoryService} from "../services/IngredientCategoryService";
+import {RecipeComponent} from "./components/recipe/recipe.component";
+import {LeftMenuComponent} from "./components/left-menu/left-menu.component";
 
 @NgModule({
   imports: [
@@ -42,7 +44,9 @@ import {IngredientCategoryService} from "../services/IngredientCategoryService";
     CategoriesComponent,
     RecipesComponent,
     HomeIngredientComponent,
-    IngredientsComponent
+    IngredientsComponent,
+    RecipeComponent,
+    LeftMenuComponent
   ],
   providers: [
     UserService,

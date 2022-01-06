@@ -51,6 +51,21 @@
       </div>
     </div>
 
+    <div class="custom-select" style="width: 100%;padding: 0;box-shadow: none">
+      <label for="category">Catégorie</label>
+      <select id="category"
+              name="category"
+              #categoryElem formcontrolname="name"
+              (change)="updateCategory(categoryElem.value)"
+              style="box-shadow: inset 0 0 8px #0000001f;
+              border: none;
+              border-radius: 0.521vw;
+              padding: 1%;">
+        <option *ngFor="let category of recipeCategories"
+                [value]="category.name">{{category.name}}</option>
+      </select>
+    </div>
+
 
     <div style="display: flex; align-items: center;margin-top: 1%">
       <span class="semibold">Étapes</span>

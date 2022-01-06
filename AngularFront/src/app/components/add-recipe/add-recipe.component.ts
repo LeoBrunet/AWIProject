@@ -10,6 +10,9 @@ import {RecipeService} from "../../../services/RecipeService";
 import {IngredientService} from "../../../services/IngredientService";
 import {IngredientCategoryService} from "../../../services/IngredientCategoryService";
 import {StepService} from "../../../services/StepService";
+import {Category} from "../../model/category";
+import {RecipeCategoryService} from "../../../services/RecipeCategoryService";
+import {Unit} from "../../model/unit";
 
 @Component({
   selector: 'add-recipe',
@@ -20,8 +23,9 @@ import {StepService} from "../../../services/StepService";
 })
 export class AddRecipeComponent implements OnInit {
   //TODO get it from database
-  categories: IngredientCategory[];
-  ingredients: Ingredient[];
+  categories: IngredientCategory[] = [];
+  recipeCategories: Category[] = [];
+  ingredients: Ingredient[] = [];
   recipe: Recipe;
 
   errorMessage: string;
@@ -42,12 +46,31 @@ export class AddRecipeComponent implements OnInit {
     )
   })
 
-  constructor(private _fb: FormBuilder, private _recipeService: RecipeService, private _ingredientService: IngredientService, private _ingredientCategoryService: IngredientCategoryService, private _stepService: StepService) {
+  constructor(private _fb: FormBuilder, private _recipeService: RecipeService, private _ingredientService: IngredientService, private _ingredientCategoryService: IngredientCategoryService, private _stepService: StepService, private _recipeCategoryService : RecipeCategoryService) {
   }
 
   ngOnInit() {
-    this.ingredients = this._ingredientService.getAll();
-    this.categories = this._ingredientCategoryService.getAll();
+    this._recipeCategoryService.getAll().subscribe((data: any) => {
+      let datas: any[] = data;
+      datas.forEach(data => {
+        this.recipeCategories.push(this._recipeCategoryService.createCategory(data))
+      })
+      this.recipe.categoryId = this.recipeCategories[0].id
+    })
+    //this.ingredients = this._ingredientService.getAll();
+    this._ingredientService.getAll().subscribe(async (data: any) => {
+      let datas: any[] = data;
+      for (const data1 of datas) {
+        this.ingredients.push(await this._ingredientService.createIngredient(data1))
+      }
+    })
+    //this.categories = this._ingredientCategoryService.getAll();
+    this._ingredientCategoryService.getAll().subscribe((data: any) => {
+      let datas: any[] = data;
+      datas.forEach(data => {
+        this.categories.push(this._ingredientCategoryService.createIngredientCategory(data))
+      })
+    })
 
     for (let stepIndex: number = 0; stepIndex < this.getSteps().length; stepIndex++) {
       let ingredientsOfStep: FormArray = this.getIngredientsFormArray(stepIndex);
@@ -60,6 +83,7 @@ export class AddRecipeComponent implements OnInit {
       }
     }
 
+    //TODO Bouger ça
     let steps: Array<Step> = [new Step("", "", [], [])];
 
     this.recipe = new Recipe(
@@ -67,7 +91,8 @@ export class AddRecipeComponent implements OnInit {
       "",
       0,
       "",
-      steps
+      steps,
+      0
     )
   }
 
@@ -87,10 +112,12 @@ export class AddRecipeComponent implements OnInit {
 
   public removeStep(): void {
     this.getSteps().removeAt(this.getSteps().length - 1);
+    this.recipe.steps.pop();
   }
 
   public removeStepAt(index): void {
     this.getSteps().removeAt(index);
+    this.recipe.steps.splice(index, 1);
   }
 
   public submit(): void {
@@ -106,12 +133,13 @@ export class AddRecipeComponent implements OnInit {
 
       console.log(this.recipe);
       console.log("submit");
-      //TODO Récupérer le l'id de la recette
-      let numRecipe: number;
-      this._recipeService.create(this.recipe).subscribe(data => console.log(data))
-      for (let index = 0; index < this.recipe.steps.length; index++) {
-        this._stepService.createStep(this.recipe.steps[index], index).subscribe()
-      }
+      this._recipeService.create(this.recipe).subscribe((data) => {
+          this.recipe.num = data['numRecipe']
+          for (let index = 0; index < this.recipe.steps.length; index++) {
+            this._stepService.createStep(this.recipe.steps[index], index, this.recipe.num).subscribe()
+          }
+        }
+      )
     }
     //this.openPDF()
   }
@@ -246,6 +274,12 @@ export class AddRecipeComponent implements OnInit {
     return val + " personnes"
   }
 
+  public updateCategory(category : string){
+    console.log(this.recipeCategories.find(cat => cat.name == category)!)
+    this.recipe.categoryId = this.recipeCategories.find(cat => cat.name == category)!.id;
+    console.log(this.recipe.categoryId)
+  }
+
   /* INGREDIENTS */
 
   public getAllIngredients(): Ingredient[] {
@@ -257,7 +291,7 @@ export class AddRecipeComponent implements OnInit {
   }
 
   public getIngredientUnit(indexStep, index): string {
-    return this.recipe!.steps[indexStep].ingredients[index].unit
+    return this.recipe!.steps[indexStep].ingredients[index].unit.name
   }
 
   public getIngredientsFormArray(indexStep: number): FormArray {
@@ -276,7 +310,9 @@ export class AddRecipeComponent implements OnInit {
     let ingredientId = 1;
     let ingredientsOfStep: Ingredient[] = this.getIngredients(indexStep);
     console.log(ingredientsOfStep)
-    let newIngredient: Ingredient = new Ingredient(ingredientId, "", "")
+    console.log(ingredientsOfStep)
+    let newIngredient: Ingredient = new Ingredient(ingredientId, "", new Unit(-1, ""), 0)
+    console.log(this.getIngredientsOfCat(0));
     newIngredient.name = this.getIngredientsOfCat(newIngredient.category.id)[0].name;
     newIngredient.unit = this.getIngredientsOfCat(newIngredient.category.id)[0].unit;
     newIngredient.id = this.getIngredientsOfCat(newIngredient.category.id)[0].id;

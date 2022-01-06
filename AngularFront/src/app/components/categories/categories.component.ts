@@ -1,5 +1,7 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {Category} from "../../model/category";
+import {waitForAsync} from "@angular/core/testing";
+import {IngredientCategory} from "../../model/ingredientCategory";
 @Component({
   selector: 'categories',
   templateUrl: 'categories.component.html',
@@ -11,8 +13,8 @@ export class CategoriesComponent implements OnInit {
   @Output() newCategoryEvent = new EventEmitter<Category>();
 
   ngOnInit(): void {
-    this.selectedCategory = this.categories.find(cat => cat.name == "Tout")!
-    //this.setSelectedCategory(0, this.selectedCategory)
+    this.selectedCategory = new Category(0, 'Tout', "all.png");
+    this.categories.unshift(this.selectedCategory);
   }
 
   ngAfterViewInit(): void {
@@ -24,11 +26,6 @@ export class CategoriesComponent implements OnInit {
     this.selectedCategory = category;
     const catElem = document.getElementById("cat"+index)
     const cats = document.getElementsByClassName("categories")
-
-    console.log(document)
-    console.log(cats.item(0)!.children)
-    console.log(catElem)
-    console.log('cat'+index)
 
     if(catElem){
       catElem.setAttribute("class", catElem.getAttribute("class")+" selected-category")
