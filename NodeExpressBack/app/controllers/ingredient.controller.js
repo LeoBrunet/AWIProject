@@ -17,8 +17,8 @@ exports.create = (req, res) => {
         nameIngredient: req.body.nameIngredient,
         unitePrice: req.body.unitePrice,
         codeAllergen: req.body.codeAllergen,
-        labelType: req.body.labelType,
-        labelUnit: req.body.labelUnit
+        idType: req.body.idType,
+        idUnit: req.body.idUnit
     };
 
     // Save Ingredient in the database
@@ -75,8 +75,8 @@ exports.update = (req, res) => {
         nameIngredient: req.body.nameIngredient,
         unitePrice: req.body.unitePrice,
         codeAllergen: req.body.codeAllergen,
-        labelType: req.body.labelType,
-        labelUnite: req.body.labelType
+        idType: req.body.idType,
+        idUnite: req.body.idUnite
     };
 
     Ingredient.update(ingredient, {
