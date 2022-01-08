@@ -22,7 +22,5 @@ module.exports = app => {
     // Retrieve all Categories
     router.get("/ingredients/:id", recipes.findAllIngredients);
 
-    router.get("/cost/:id", recipes.getTotalCost);
-
     app.use('/api/recipe', router);
 };

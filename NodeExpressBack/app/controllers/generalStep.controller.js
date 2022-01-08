@@ -69,7 +69,12 @@ exports.createGeneralAndDescriptionStep = (req, res) => {
 
 // Retrieve all GeneralSteps for a Recipe from the database.
 exports.findAllOfARecipe = (req, res) => {
-    GeneralStep.findAll({where : {proprietaryRecipe: req.params.id}, include: DescriptionStep})
+    GeneralStep.findAll({where : {proprietaryRecipe: req.params.id}, include: {
+            model: DescriptionStep,
+            include: {
+                model: Ingredient
+            }
+        }})
         .then(data => {
             res.send(data);
         })

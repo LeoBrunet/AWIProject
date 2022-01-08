@@ -50,9 +50,13 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const numRecipe = req.params.id;
     Recipe.findByPk(numRecipe)
-        .then(data => {
+        .then(async data => {
             if (data) {
-                res.send(data);
+                let descriptionSteps = await getAllDescriptionStep(data)
+                recipe = data.dataValues
+                recipe["ingredientCost"] = await getTotalIngredientCost(descriptionSteps);
+                recipe["duration"] = await getTotalDuration(descriptionSteps);
+                res.send(recipe);
             } else {
                 res.status(404).send({
                     message: `Cannot find Recipe with id=${numRecipe}.`
@@ -123,7 +127,8 @@ exports.findAllIngredients = (req, res) => {
         .then(async data => {
 
             if (data) {
-                let ingredients = await getAllIngredients(data)
+                let descriptionSteps = await getAllDescriptionStep(data)
+                let ingredients = await getAllIngredients(descriptionSteps)
                 res.send(ingredients)
             } else {
                 res.status(404).send({
@@ -138,46 +143,35 @@ exports.findAllIngredients = (req, res) => {
         });
 };
 
-exports.getTotalCost = (req, res) =>{
-    const numRecipe = req.params.id;
-    Recipe.findByPk(numRecipe)
-        .then(async data => {
+async function getAllDescriptionStep(recipe) {
 
-            if (data) {
-                let ingredients = await getAllIngredients(data)
-                console.log(getTotalIngredientCost(ingredients))
-                res.send({cost : getTotalIngredientCost(ingredients)})
-            } else {
-                res.status(404).send({
-                    message: `Cannot find Recipe with id=${numRecipe}.`
-                });
-            }
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: "Error retrieving Recipe with id=" + numRecipe
-            });
-        });
-}
-
-async function getAllIngredients(recipe) {
-    gnSteps = await recipe.getProprietaryStep();
-    ingredientsBrut = [];
-    while (gnSteps.length > 0) {
-        step = gnSteps.pop()
+    stepToProcess = await recipe.getProprietaryStep();
+    let allStep = [];
+    while (stepToProcess.length > 0) {
+        step = stepToProcess.pop()
         if (step.recipeStep == null) {
             dStep = await step.getDescriptionStep();
-            ig = await dStep.getIngredients({
-                attributes: {exclude : ['ingredientInStep.numIngredient', 'ingredientInStep.numDescriptionStep']}
-            })
-            ingredientsBrut = ingredientsBrut.concat(ig);
+            allStep.push(dStep);
         } else {
-            gnSteps.concat(step.getRecipe().getGeneralSteps());
+            stepToProcess.concat(step.getRecipe().getGeneralSteps());
         }
     }
+    return allStep;
+}
+
+async function getAllIngredients(descriptionSteps) {
+    ingredientsBrut = [];
+    for (let i = 0; i < descriptionSteps.length; i++) {
+        step = descriptionSteps[i];
+        ig = await step.getIngredients({
+            attributes: {exclude: ['ingredientInStep.numIngredient', 'ingredientInStep.numDescriptionStep']}
+        })
+        ingredientsBrut = ingredientsBrut.concat(ig);
+    }
+
 
     ingredients = []
-    while(ingredientsBrut.length > 0){
+    while (ingredientsBrut.length > 0) {
         current = ingredientsBrut.pop();
         current = current.dataValues;
         quantity = current["ingredientInStep"]["quantity"];
@@ -206,11 +200,20 @@ function maj(current, ingredients){
     return ingredients;
 }
 
-function getTotalIngredientCost(ingredients){
+async function getTotalIngredientCost(descriptionSteps) {
+    ingredients = await getAllIngredients(descriptionSteps);
     cost = 0;
     for (let i = 0; i < ingredients.length; i++) {
         current = ingredients[i]
         cost += current["unitePrice"] * current["quantity"];
     }
     return cost;
+}
+
+async function getTotalDuration(descriptionSteps) {
+    let timeInMinutes = 0;
+    for (let i = 0; i < descriptionSteps.length; i++) {
+        timeInMinutes += descriptionSteps[i].duration;
+    }
+    return timeInMinutes;
 }
