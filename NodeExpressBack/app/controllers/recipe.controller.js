@@ -1,5 +1,7 @@
 const db = require("../models");
 const Recipe = db.recipe;
+const Ingredient = db.ingredient;
+const Sale = db.sale;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Recipe
@@ -143,6 +145,91 @@ exports.findAllIngredients = (req, res) => {
         });
 };
 
+exports.sell = (req, res) => {
+    const numRecipe = req.params.id;
+    const quantity = req.body.quantity;
+    Recipe.findByPk(numRecipe)
+        .then(async data => {
+
+            if (data) {
+                //Récupère les ingrédients nécessaire à la recette qu'on veut vendre
+                let descriptionSteps = await getAllDescriptionStep(data)
+                let ingredients = await getAllIngredients(descriptionSteps)
+
+                //Multiplie les quantité d'ingrédient par le nombre de recette vendu
+                if(quantity > 1){
+                    multiplyQuantity(ingredients, quantity);
+                }
+
+                //Récupère les stocks de tout les ingrédients utilisé dans la recette
+                let ingredientIdList = [];
+                for (let i = 0; i < ingredients.length; i++) {
+                    ingredientIdList.push(ingredients[i].numIngredient);
+                }
+                Ingredient.findAll({where: {numIngredient:{[Op.in]: ingredientIdList}}})
+                    .then(async availableIngredients => {
+                        if (availableIngredients) {
+                            //Vérifie qu'on a assez de quantité pour la vente demandé
+                            for (let i = 0; i < ingredients.length; i++) {
+
+                                //Cherche le même ingrédient en stock que celui qu'on est en train de vérifier
+                                const isEqual = (element) => element.numIngredient === ingredients[i].numIngredient;
+                                let ingInStock = availableIngredients[availableIngredients.findIndex(isEqual)];
+
+                                //On compare le stock et la quantité nécessaire
+                                if(ingInStock.stock < ingredients[i].quantity){
+                                    //Vente non validé
+                                    res.send({
+                                        sell: false,
+                                        message: "Pas assez de stock pour réaliser cette vente."
+                                    });
+                                    return;
+                                }
+                            }
+
+                            //Vente validé
+                            const sale = {
+                                numRecipe: numRecipe,
+                                quantity: quantity
+                            }
+                            Sale.create(sale)
+                                .then(data => {
+                                    res.send({
+                                        sell: true,
+                                        message: "Vente enregistrée !"
+                                    })
+                                })
+                                .catch(err => {
+                                    res.status(500).send({
+                                        message:
+                                            err.message || "Some error occurred while creating the Recipe."
+                                    });
+                                });
+                        }
+                        else{
+                            res.status(404).send({
+                                message: `Cannot find availableIngredients.`
+                            });
+                        }
+                    })
+                    .catch(err => {
+                        res.status(500).send({
+                            message: "Error retrieving ingredientsAvailable"
+                        });
+                    });
+            } else {
+                res.status(404).send({
+                    message: `Cannot find Recipe with id=${numRecipe}.`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error retrieving Recipe with id=" + numRecipe
+            });
+        });
+}
+
 async function getAllDescriptionStep(recipe) {
 
     stepToProcess = await recipe.getProprietaryStep();
@@ -216,4 +303,9 @@ async function getTotalDuration(descriptionSteps) {
         timeInMinutes += descriptionSteps[i].duration;
     }
     return timeInMinutes;
+}
+
+function multiplyQuantity(ingredients, quantity){
+    ingredients = ingredients.map(x => x.quantity = x.quantity * quantity);
+    return ingredients;
 }

@@ -11,6 +11,10 @@ module.exports = (sequelize, Sequelize) => {
         },
         unitePrice:{
             type: DataTypes.REAL
+        },
+        stock:{
+            type: DataTypes.REAL,
+            defaultValue: 0
         }
     });
 

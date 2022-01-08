@@ -6,7 +6,7 @@ module.exports = (sequelize, Sequelize) => {
             autoIncrement: true,
             primaryKey : true
         },
-        nbPortion:{
+        quantity:{
             type: DataTypes.INTEGER
         },
         saleDate:{

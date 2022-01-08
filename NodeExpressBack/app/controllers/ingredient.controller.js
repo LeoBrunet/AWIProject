@@ -76,7 +76,8 @@ exports.update = (req, res) => {
         unitePrice: req.body.unitePrice,
         codeAllergen: req.body.codeAllergen,
         idType: req.body.idType,
-        idUnite: req.body.idUnite
+        idUnite: req.body.idUnite,
+        stock: req.body.stock
     };
 
     Ingredient.update(ingredient, {
@@ -124,3 +125,31 @@ exports.delete = (req, res) => {
             });
         });
 };
+
+exports.incrementStock = (req, res) => {
+    const id = req.params.id;
+    Ingredient.findByPk(id)
+        .then(data => {
+            if (data) {
+                data.increment({'stock': req.body.quantity})
+                    .then(data => {
+                        res.send({message : "Stock mis à jour !"});
+                    })
+                    .catch(err => {
+                        res.status(500).send({
+                            message:
+                                err.message || "Some error occurred while updating the stock."
+                        });
+                    });
+            } else {
+                res.status(404).send({
+                    message: `Cannot find Ingredient with numIngredient=${numIngredient}.`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error retrieving Ingredient with numIngredient=" + numIngredient
+            });
+        });
+}

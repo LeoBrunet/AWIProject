@@ -18,5 +18,7 @@ module.exports = app => {
     // Delete a Types_ingredients with id
     router.delete("/:id", ingredient.delete);
 
+    router.put("/add/:id", ingredient.incrementStock);
+
     app.use('/api/ingredient', router);
 };
