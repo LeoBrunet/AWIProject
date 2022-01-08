@@ -1,19 +1,16 @@
 const {DataTypes} = require("sequelize");
 module.exports = (sequelize, Sequelize) => {
     const Cost = sequelize.define('cost', {
-        NumCost:{
+        numCost:{
             type : DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey : true
         },
-        hourlyCost:{
+        hourlyEmployeeCost:{
             type: DataTypes.REAL
         },
-        hourlyCostAverage:{
+        hourlyFluidCost:{
             type: DataTypes.REAL
-        },
-        time: {
-            type: DataTypes.TIME
         },
         multiplierCoefficient: {
             type: DataTypes.REAL
