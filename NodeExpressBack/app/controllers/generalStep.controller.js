@@ -36,7 +36,7 @@ exports.create = (req, res) => {
 };
 
 exports.createGeneralAndDescriptionStep = (req, res) => {
-    if (!req.body.position || !req.body.proprietaryRecipe || !req.body.nameStep || !req.body.description) {
+    if (!req.body.position || !req.body.proprietaryRecipe || !req.body.nameStep || !req.body.description || !req.body.duration) {
         console.log(req.body)
         res.status(400).send({
             message: "Content can not be empty!"
@@ -50,6 +50,7 @@ exports.createGeneralAndDescriptionStep = (req, res) => {
         descriptionStep: {
             nameStep: req.body.nameStep,
             description: req.body.description,
+            duration: req.body.duration
         }
     };
 
