@@ -187,6 +187,15 @@ exports.sell = (req, res) => {
                                 }
                             }
 
+                            for (let i = 0; i < ingredients.length; i++) {
+
+                                //Cherche le même ingrédient en stock que celui qu'on est en train de vérifier
+                                const isEqual = (element) => element.numIngredient === ingredients[i].numIngredient;
+                                let ingInStock = availableIngredients[availableIngredients.findIndex(isEqual)];
+
+                                ingInStock.increment({stock: -ingredients[i].quantity})
+                            }
+
                             //Vente validé
                             const sale = {
                                 numRecipe: numRecipe,
