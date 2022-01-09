@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Recipe} from "../app/model/recipe";
 import {StepService} from "./StepService";
 import {Step} from "../app/model/step";
@@ -17,7 +17,11 @@ export class RecipeService {
   }
 
   getAll() {
-    return this.http.get(baseUrl);
+    return this.http.get(baseUrl, {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*'
+      })
+    })
     //return [new Recipe('test', 'test', 1, "../../../assets/images/fish_chips.png", []), new Recipe('test', 'test', 1, "../../../assets/images/fish_chips.png", [])]
   }
 
@@ -25,7 +29,7 @@ export class RecipeService {
     return this.http.get(`${baseUrl}/${id}`);
   }
 
-  async getAllIngredientsOfRecipe(id): Promise<Object>{
+  async getAllIngredientsOfRecipe(id): Promise<Object> {
     return await this.http.get(`${baseUrl}/ingredients/${id}`).toPromise();
   }
 
@@ -53,7 +57,7 @@ export class RecipeService {
   public async createRecipe(data): Promise<Recipe> {
     let steps: Step[] = [];
     let recipeSteps: RecipeStep[] = [];
-    await this._stepService.getAllOfRecipe(data['numRecipe']).then(async(response) => {
+    await this._stepService.getAllOfRecipe(data['numRecipe']).then(async (response) => {
       await this._stepService.createAllStepsOfRecipe(response).then(stepsResponse => {
         steps = stepsResponse;
       });
@@ -61,6 +65,6 @@ export class RecipeService {
         recipeSteps = stepsResponse;
       });
     });
-    return new Recipe(data['name'], data['description'], data['nbDiners'], data['image'], steps, recipeSteps,data['idCategory'], data['numRecipe'])
+    return new Recipe(data['name'], data['description'], data['nbDiners'], data['image'], steps, recipeSteps, data['idCategory'], data['numRecipe'])
   }
 }
