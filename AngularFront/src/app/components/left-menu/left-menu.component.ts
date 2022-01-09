@@ -1,5 +1,5 @@
 import {NavigationStart, Router} from "@angular/router";
-import {Component, OnInit} from "@angular/core";
+import {Component, Input, OnInit} from "@angular/core";
 import {filter} from "rxjs/operators";
 
 @Component({
@@ -9,8 +9,13 @@ import {filter} from "rxjs/operators";
 })
 export class LeftMenuComponent implements OnInit {
 
-  ngOnInit(): void {
+  @Input() selectedPage: number;
 
+  ngOnInit(): void {
+    if (this.selectedPage) {
+      let element = document.getElementById('menu-container')?.getElementsByClassName('menu-elem')[this.selectedPage - 1]
+      element!.classList.add('selected-icon')
+    }
   }
 
   constructor(private router: Router) {

@@ -7,11 +7,11 @@
           <div class="new-recipe-page-title logo2 big">{{recipe.name}}</div>
           <p>{{recipe.desc}}</p>
           <span>Autheur : Léo Brunet</span>
-          <div style="display: flex; align-items: center">
+          <!--<div style="display: flex; align-items: center">
             <p style="margin-right: 5%">{{getNbDiners()}}</p>
             <button type="button" class="button-diners" (click)="updateNbDiners(1)">+</button>
             <button type="button" class="button-diners" (click)="updateNbDiners(-1)">-</button>
-          </div>
+          </div>-->
         </div>
         <img *ngIf="recipe.image" src="../../../assets/images/{{recipe.image}}"
              style="width: 30%; border-radius: 2%">
@@ -54,10 +54,16 @@
 </div>
 <div
   class="fs25 semibold fixedBottom" style="height:6%">
-  <button class="fs25 semibold">
+  <button class="fs25 semibold buttonFixedBottom">
     Modifier
   </button>
-  <button (click)="sell()" class="fs25 semibold bg-green white">
-    Vendre
-  </button>
+  <div style="display: flex; align-items: center; width: 50%; justify-content: flex-end">
+    <button type="button" class="button-diners" (click)="updateNbSales(1)">+</button>
+    <p> {{ nbSales }} </p>
+    <button type="button" class="button-diners" (click)="updateNbSales(-1)">-</button>
+    <button (click)="sell()" class="fs25 semibold bg-green white buttonFixedBottom" style="width: 50%; margin-left: 5%">
+      Vendre
+    </button>
+  </div>
+
 </div>

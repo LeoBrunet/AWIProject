@@ -1,0 +1,25 @@
+<left-menu [selectedPage]="3"></left-menu>
+<div class="split right">
+  <div class="semibold" style="display: flex; width: 98%; margin-top: 2%;box-shadow: inset 0px -1px 0px 0px #7070702b;">
+    <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 48%;padding: 1%">Nom de la recette</div>
+    <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 30%;padding: 1%">Date</div>
+    <div style="width: 20%;padding: 1%">Unité vendu</div>
+  </div>
+  <div *ngFor="let sale of sales">
+    <div *ngIf="sale" style="display: flex; width: 98%;">
+
+      <div
+        style="background:none;border-radius:0;border: none;font-size: 1.563vw;font-family: 'Segoe UI', sans-serif;box-shadow: inset -1px 0px 0px 0px #7070702b;width: 48%;padding: 1%">
+        <a href="/recipe/{{sale.numRecipe}}">{{sale.numRecipe}}</a>
+      </div>
+      <div
+        style="background:none;border-radius:0;border: none;font-size: 1.563vw;font-family: 'Segoe UI', sans-serif;box-shadow: inset -1px 0px 0px 0px #7070702b;width: 30%;padding: 1%">
+        {{dateFormatted(sale.date)}}
+      </div>
+      <div
+        style="background:none;border-radius:0;border: none;font-size: 1.563vw;font-family: 'Segoe UI', sans-serif;width: 20%;padding: 1%">
+        {{sale.quantity}}
+      </div>
+    </div>
+  </div>
+</div>

@@ -56,7 +56,8 @@ export class IngredientsComponent implements OnInit {
     //try {
     this._ingredientService.update(ingredient.id, ingredient).subscribe(response => {
       console.log(response);
-      if (response != "Ingredient was updated successfully.") {
+      console.log(response != "Ingredient was updated successfully.")
+      if (response['message'] != "Ingredient was updated successfully.") {
         this._ingredientService.create(ingredient).subscribe(response => {
           console.log(response)
         });
@@ -83,6 +84,7 @@ export class IngredientsComponent implements OnInit {
 
   public updateStockIngredient(index: number): void {
     this.ingredients[index].stock = this.getIngredientsArray().controls[index].get('stock')?.value;
+    this.updateOrCreateIngredient(this.ingredients[index])
   }
 
   public updateUnitePriceIngredient(index: number): void {

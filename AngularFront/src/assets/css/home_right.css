@@ -257,13 +257,15 @@ hr {
   padding: 1%
 }
 
-.fixedBottom button {
+.buttonFixedBottom  {
   width: 30%;
   height: 6vh;
   border-radius: 10px;
   border-color: #00000000;
 }
 .button-diners {
+  height: fit-content;
+  width: fit-content;
   border-radius: 1vw;
   border: none;
   background: #599442;
