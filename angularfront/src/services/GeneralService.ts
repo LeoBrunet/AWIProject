@@ -1,3 +1,3 @@
 export module GeneralServiceInterface {
-  export const baseUrl = 'http://nicolas-ig.alwaysdata.net/api';
+  export const baseUrl = 'https://nicolas-ig.alwaysdata.net/api';
 }
