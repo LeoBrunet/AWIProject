@@ -32,6 +32,7 @@ require("./app/routes/unit.routes")(app);
 require("./app/routes/ingredient.routes")(app);
 require("./app/routes/generalStep.routes")(app);
 require("./app/routes/descriptionStep.routes")(app);
+require("./app/routes/sale.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

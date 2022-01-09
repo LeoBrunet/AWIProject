@@ -1,4 +1,3 @@
-const sale = require("../controllers/sale.controller");
 module.exports = app => {
     const sale = require("../controllers/sale.controller.js");
 

@@ -1,12 +1,13 @@
 const db = require("../models");
 const Sale = db.sale;
+const Recipe = db.recipe;
 const Op = db.Sequelize.Op;
 
 // Retrieve all Sales from the database.
 exports.findAll = (req, res) => {
     Sale.findAll({order: [
             ['saleDate', 'DESC']
-        ]})
+        ], include: Recipe})
         .then(data => {
             res.send(data);
         })
