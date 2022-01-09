@@ -1,3 +1,14 @@
+@font-face {
+  font-family: "Segoe UI Semibold";
+  src:local("seguisb.ttf"), url("../fonts/segoe-ui-semibold/seguisb.ttf") format("truetype")
+}
+
+@font-face {
+  font-family: "Segoe UI";
+  src:local("seguisb.ttf"), url("../fonts/segoe-ui-semibold/segui.ttf") format("truetype")
+}
+
+
 body {
   margin: 0;
   overflow: hidden;
@@ -39,8 +50,8 @@ body {
 }
 .logo {
   position: relative;
-  font-size: 1.563vw; 
-  font-family:'Segoe UI Semibold'; 
+  font-size: 1.563vw;
+  font-family:'Segoe UI Semibold';
   color: white;
   text-align: center;
   top: 50%;

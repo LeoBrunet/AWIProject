@@ -1,3 +1,14 @@
+@font-face {
+  font-family: "Segoe UI Semibold";
+  src:local("seguisb.ttf"), url("../fonts/segoe-ui-semibold/seguisb.ttf") format("truetype")
+}
+
+@font-face {
+  font-family: "Segoe UI";
+  src:local("seguisb.ttf"), url("../fonts/segoe-ui-semibold/segui.ttf") format("truetype")
+}
+
+
 .new-recipe-page-title {
   padding: 2%;
   box-shadow: 0px 3px 6px #00000010

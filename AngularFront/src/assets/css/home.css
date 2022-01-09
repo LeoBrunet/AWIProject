@@ -1,14 +1,24 @@
+@font-face {
+  font-family: "Segoe UI Semibold";
+  src:local("seguisb.ttf"), url("../fonts/segoe-ui-semibold/seguisb.ttf") format("truetype")
+}
+
+@font-face {
+  font-family: "Segoe UI";
+  src:local("seguisb.ttf"), url("../fonts/segoe-ui-semibold/segui.ttf") format("truetype")
+}
+
 body {
-   font-family: "Segoe UI";
+  font-family: "Segoe UI", sans-serif;
    font-size: 1.563vw;
    margin: 0;
    height: 100%;
 }
 span {
-  font-family: "Segoe UI Semibold";
+  font-family: "Segoe UI Semibold", sans-serif;
 }
 label {
-  font-family: "Segoe UI Semibold";
+  font-family: "Segoe UI Semibold", sans-serif;
 }
 
 /* Split the screen */

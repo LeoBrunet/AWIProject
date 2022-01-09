@@ -1,3 +1,14 @@
+@font-face {
+  font-family: "Segoe UI Semibold";
+  src:local("seguisb.ttf"), url("../fonts/segoe-ui-semibold/seguisb.ttf") format("truetype")
+}
+
+@font-face {
+  font-family: "Segoe UI";
+  src:local("seguisb.ttf"), url("../fonts/segoe-ui-semibold/segui.ttf") format("truetype")
+}
+
+
 body {
    font-family: "Segoe UI";
    font-size: 1.563vw;
@@ -122,11 +133,11 @@ hr:after {
 
 .form-container input {
   height: 20%;
-  padding: 10% 10%; 
+  padding: 10% 10%;
 }
 
 .form-element {
-  display: block; 
+  display: block;
   width: 100%;
   margin-top: 2%;
 }

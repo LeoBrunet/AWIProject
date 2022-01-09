@@ -1,3 +1,14 @@
+@font-face {
+  font-family: "Segoe UI Semibold";
+  src:local("seguisb.ttf"), url("../fonts/segoe-ui-semibold/seguisb.ttf") format("truetype")
+}
+
+@font-face {
+  font-family: "Segoe UI";
+  src:local("seguisb.ttf"), url("../fonts/segoe-ui-semibold/segui.ttf") format("truetype")
+}
+
+
 .welcome {
   display: block;
   font-family: 'Roboto', sans-serif;
@@ -20,11 +31,11 @@ input {
   padding: 3% 5%;
   line-height: 1.042vw;
   font-size: 1.042vw;
-  font-family: 'Segoe UI';
+  font-family: 'Segoe UI', sans-serif;
 }
 
 input::-webkit-input-placeholder {
-  font-family: 'Segoe UI';
+  font-family: 'Segoe UI', sans-serif;
 }
 
 /**** BANNER ****/

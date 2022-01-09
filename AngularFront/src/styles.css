@@ -1,4 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: "Segoe UI Semibold";
+  src: local("seguisb.ttf"), url("./assets/fonts/segoe-ui-semibold/seguisb.ttf") format("truetype")
+}
+
+@font-face {
+  font-family: "Segoe UI";
+  src: local("segui.ttf"), url("./assets/fonts/segoe-ui-semibold/segui.ttf") format("truetype")
+}
 html, body { padding: 0; margin: 0; user-select: none;}
 
 body {
