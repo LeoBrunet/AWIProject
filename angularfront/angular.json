@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "AngularFront": {
+    "angularfront": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -20,7 +20,7 @@
             "allowedCommonJsDependencies": [
               "rxjs-compat"
             ],
-            "outputPath": "dist/AngularFront",
+            "outputPath": "dist/angularfront",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -71,10 +71,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "AngularFront:build:production"
+              "browserTarget": "angularfront:build:production"
             },
             "development": {
-              "browserTarget": "AngularFront:build:development"
+              "browserTarget": "angularfront:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -82,7 +82,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "AngularFront:build"
+            "browserTarget": "angularfront:build"
           }
         },
         "test": {
@@ -105,7 +105,7 @@
       }
     }
   },
-  "defaultProject": "AngularFront",
+  "defaultProject": "angularfront",
   "cli": {
     "analytics": "e82394ed-600b-4e0b-8a11-1c085f43f7dd"
   }

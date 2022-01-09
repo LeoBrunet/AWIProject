@@ -1,19 +1,19 @@
 /NodeExpressBack/node_modules/
-/AngularFront/node_modules/
+/angularfront/node_modules/
 
 
-#gitignore AngularFront
+#gitignore angularfront
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-/AngularFront/dist
-/AngularFront/tmp
-/AngularFront/out-tsc
+/angularfront/dist
+/angularfront/tmp
+/angularfront/out-tsc
 # Only exists if Bazel was run
-/AngularFront/bazel-out
+/angularfront/bazel-out
 
 # dependencies
-/AngularFront/node_modules
+/angularfront/node_modules
 
 # profiling files
 chrome-profiler-events*.json
@@ -48,4 +48,4 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-/AngularFront/.angular/
+/angularfront/.angular/

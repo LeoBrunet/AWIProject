@@ -8,5 +8,5 @@ import {IngredientCategory} from "./model/ingredientCategory";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'AngularFront';
+  title = 'angularfront';
 }
