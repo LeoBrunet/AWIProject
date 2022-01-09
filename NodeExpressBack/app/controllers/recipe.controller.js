@@ -235,12 +235,14 @@ async function getAllDescriptionStep(recipe) {
     stepToProcess = await recipe.getProprietaryStep();
     let allStep = [];
     while (stepToProcess.length > 0) {
-        step = stepToProcess.pop()
+        let step = stepToProcess.pop()
         if (step.recipeStep == null) {
-            dStep = await step.getDescriptionStep();
+            let dStep = await step.getDescriptionStep();
             allStep.push(dStep);
         } else {
-            stepToProcess.concat(step.getRecipe().getGeneralSteps());
+            let r = await step.getRecipe();
+            let newSteps = await r.getGeneralSteps();
+            stepToProcess.concat(newSteps);
         }
     }
     return allStep;
