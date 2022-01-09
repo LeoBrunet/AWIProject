@@ -1,20 +1,22 @@
 <div class="banner" id="banner">
-
   <div class="banner-elem" *ngFor="let recipe of getFirstsRecipes(); let index = index">
-    <a class="banner-img-shadow" href="#"><img class="banner-recipe-img"
-                                               src="../../../assets/images/fish_chips.png"></a>
-    <div class="inside-banner-elem">
-      <div class="banner-status">RÉCENT</div>
-      <div class="banner-recipe-infos">
-        <div class="banner-title">{{recipe.name}}</div>
-        <div class="banner-time"><!--<img src="images/clock.png">-->{{recipe.duration}} min
-          &#183; {{recipe.ingredientCost / recipe.nbDiners}} €/part
+    <div *ngIf="recipe">
+      <a class="banner-img-shadow" href="#"><img class="banner-recipe-img"
+                                                 src="../../../assets/images/fish_chips.png"></a>
+      <div class="inside-banner-elem">
+        <div class="banner-status">RÉCENT</div>
+        <div class="banner-recipe-infos">
+          <div class="banner-title">{{recipe.name}}</div>
+          <div class="banner-time"><!--<img src="images/clock.png">-->{{recipe.duration}} min
+            &#183; {{recipe.ingredientCost / recipe.nbDiners}} €/part
+          </div>
+          <!--<div class="banner-cost">10 €/part</div>-->
+          <p class="banner-desc"> {{recipe.desc}}</p>
         </div>
-        <!--<div class="banner-cost">10 €/part</div>-->
-        <p class="banner-desc"> {{recipe.desc}}</p>
       </div>
     </div>
   </div>
+
 
   <!--<div class="banner-elem" *ngFor="let recipe of recipes; let index = index">
     <a class="banner-img-shadow" href="#"><img class="banner-recipe-img" src="../../../assets/images/gratin.jpg"></a>

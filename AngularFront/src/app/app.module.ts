@@ -23,7 +23,7 @@ import {IngredientService} from "../services/IngredientService";
 import {IngredientCategoryService} from "../services/IngredientCategoryService";
 import {RecipeComponent} from "./components/recipe/recipe.component";
 import {LeftMenuComponent} from "./components/left-menu/left-menu.component";
-import {SelectRecipeComponent} from "./components/select-recipe/select-recipe.component";
+import {SalesComponent} from "./components/sales/sales.component";
 
 @NgModule({
   imports: [
@@ -48,6 +48,7 @@ import {SelectRecipeComponent} from "./components/select-recipe/select-recipe.co
     IngredientsComponent,
     RecipeComponent,
     LeftMenuComponent,
+    SalesComponent
   ],
   providers: [
     UserService,

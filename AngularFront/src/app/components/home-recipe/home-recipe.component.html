@@ -1,4 +1,4 @@
-<left-menu></left-menu>
+<left-menu [selectedPage]="1"></left-menu>
 
 <div class="split right">
   <span class="welcome light-grey">Bonjour Nicolas,</span>
@@ -6,7 +6,7 @@
   <div class="search">
     <input name="search" placeholder="&#x1F50E;  Rechercher des recettes" type="text">
   </div>
-  <banner-recipe [recipes]="selectedRecipes"></banner-recipe>
+  <banner-recipe [recipes]="recipes"></banner-recipe>
   <categories [categories]="categories" (newCategoryEvent)="getSelectedCategory($event)"></categories>
   <recipes [recipes]="selectedRecipes"></recipes>
 </div>

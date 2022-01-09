@@ -3,9 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import {IngredientCategory} from "../app/model/ingredientCategory";
 import {Ingredient} from "../app/model/ingredients";
 import {Unit} from "../app/model/unit";
+import {GeneralServiceInterface} from "./GeneralService";
 
 //TODO Check url
-const baseUrl = 'http://localhost:8080/api/unit';
+const baseUrl = GeneralServiceInterface.baseUrl + '/unit';
 
 @Injectable({
   providedIn: 'root'

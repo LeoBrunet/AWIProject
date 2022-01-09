@@ -112,7 +112,7 @@ label {
   width: 1.2vw;
 }
 .selected-icon {
-  box-shadow: inset -5px 0px 0px 0px #599442;
+  box-shadow: inset -3px 0px 0px 0px #599442;
   color: #599442;
   font-weight: bold;
 }

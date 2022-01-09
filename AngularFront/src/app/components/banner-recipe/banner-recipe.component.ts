@@ -9,6 +9,10 @@ import {Router} from "@angular/router";
 })
 export class BannerRecipeComponent implements OnInit {
   @Input() recipes: Recipe[];
+  firstRecipes: Recipe[];
+
+  constructor(private  router: Router) {
+  }
 
   ngOnInit(): void {
   }
@@ -17,18 +21,20 @@ export class BannerRecipeComponent implements OnInit {
     this.recipes = changes.recipes.currentValue;
   }
 
-  constructor(private  router : Router) {
-  }
-
-  getFirstsRecipes(): Recipe[]{
+  getFirstsRecipes(): Recipe[] {
     if (this.recipes) {
-      return [(this.recipes)[0], (this.recipes)[1], (this.recipes)[2]];
+      if (this.recipes.length > 2) {
+        return [(this.recipes)[0], (this.recipes)[1], (this.recipes)[2]];
+      } else if (this.recipes.length < 3) {
+        return [(this.recipes)[0], (this.recipes)[1]];
+      } else {
+        return [(this.recipes)[0]]
+      }
     }
     return [];
   }
 
-  goToRecipe(recipe : Recipe){
+  goToRecipe(recipe: Recipe) {
     this.router.navigate(['/recipe', recipe.num]);
   }
-
 }

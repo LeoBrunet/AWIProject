@@ -4,8 +4,9 @@ import {Step} from "../app/model/step";
 import {Ingredient} from "../app/model/ingredients";
 import {IngredientService} from "./IngredientService";
 import {RecipeStep} from "../app/model/recipeStep";
+import {GeneralServiceInterface} from "./GeneralService";
 
-const baseUrl = 'http://localhost:8080/api/generalStep';
+const baseUrl = GeneralServiceInterface.baseUrl + '/generalStep';
 
 @Injectable({
   providedIn: 'root'

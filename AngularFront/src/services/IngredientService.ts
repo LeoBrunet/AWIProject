@@ -1,12 +1,11 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import {Ingredient} from "../app/model/ingredients";
 import {IngredientCategoryService} from "./IngredientCategoryService";
 import {UnitService} from "./UnitService";
-import {Unit} from "../app/model/unit";
+import {GeneralServiceInterface} from "./GeneralService";
 
-//TODO Check url
-const baseUrl = 'http://localhost:8080/api/ingredient';
+const baseUrl = GeneralServiceInterface.baseUrl + '/ingredient';
 
 @Injectable({
   providedIn: 'root'
@@ -27,11 +26,11 @@ export class IngredientService {
   //TODO Check create
   create(ingredient) {
     console.log(ingredient)
-    return this.http.post(baseUrl, { numIngredient: ingredient.id, nameIngredient: ingredient.name, unitePrice: ingredient.unitePrice, codeAllergen: null, idType: ingredient.category.id, idUnit: ingredient.unit.id})
+    return this.http.post(baseUrl, { numIngredient: ingredient.id, nameIngredient: ingredient.name, unitePrice: ingredient.unitePrice, codeAllergen: null, idType: ingredient.category.id, idUnit: ingredient.unit.id, stock: ingredient.stock})
   }
 
   update(id, ingredient) {
-    return this.http.put(`${baseUrl}/${id}`, { numIngredient: ingredient.id, nameIngredient: ingredient.name, unitePrice: ingredient.unitePrice, codeAllergen: null, idType: ingredient.category.id, idUnit: ingredient.unit.id});
+    return this.http.put(`${baseUrl}/${id}`, { numIngredient: ingredient.id, nameIngredient: ingredient.name, unitePrice: ingredient.unitePrice, codeAllergen: null, idType: ingredient.category.id, idUnit: ingredient.unit.id, stock: ingredient.stock});
   }
 
   delete(id) {
@@ -42,6 +41,6 @@ export class IngredientService {
     //let ingredient: Ingredient;
     let unit = await this._unitService.get(data['idUnit']).toPromise();
     let ingredientCategory = await this._ingredientCategoryService.get(data['idType']).toPromise();
-    return new Ingredient(data['numIngredient'], data['nameIngredient'], this._unitService.createUnit(unit), data['unitePrice'], this._ingredientCategoryService.createIngredientCategory(ingredientCategory));
+    return new Ingredient(data['numIngredient'], data['nameIngredient'], this._unitService.createUnit(unit), data['unitePrice'], this._ingredientCategoryService.createIngredientCategory(ingredientCategory), data['stock']);
   }
 }

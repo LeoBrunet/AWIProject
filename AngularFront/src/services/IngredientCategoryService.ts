@@ -1,17 +1,15 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import {IngredientCategory} from "../app/model/ingredientCategory";
-import {Ingredient} from "../app/model/ingredients";
+import {GeneralServiceInterface} from "./GeneralService";
 
-//TODO Check url
-const baseUrl = 'http://localhost:8080/api/ingredientType';
+const baseUrl = GeneralServiceInterface.baseUrl + '/ingredientType';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IngredientCategoryService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getAll() {
     return this.http.get(baseUrl);
@@ -24,7 +22,7 @@ export class IngredientCategoryService {
 
   //TODO Check create
   create(ingredientCategory) {
-    return this.http.post(baseUrl, { idType: ingredientCategory.id, label: ingredientCategory.name})
+    return this.http.post(baseUrl, {idType: ingredientCategory.id, label: ingredientCategory.name})
   }
 
   update(id, data) {
