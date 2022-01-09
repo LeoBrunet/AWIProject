@@ -3,12 +3,12 @@
     <img class="recipe-img" src="../../../assets/images/fish_chips.png">
     <div class="recipe-text">
       <p class="bold grey">{{recipe.name}}</p>
-      <p class="recipe-desc light-grey fs15">Petite recette anglaise alliant des frites
+      <p class="recipe-desc light-grey fs15">{{recipe.desc}}Petite recette anglaise alliant des frites
         croustillantes et un poisson au citron, thym, romarin, plein de choses quoi</p>
       <hr/>
       <div style="display: flex; justify-content: space-between; font-family: 'Segoe UI Semibold'">
-        <p class="grey fs15">15 min</p>
-        <p class="grey fs15">10 €/pers</p>
+        <p class="grey fs15">{{recipe.duration}} min</p>
+        <p class="grey fs15">{{recipe.ingredientCost / recipe.nbDiners}} €/pers</p>
       </div>
 
     </div>

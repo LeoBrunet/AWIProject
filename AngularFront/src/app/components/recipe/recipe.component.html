@@ -1,31 +1,63 @@
 <left-menu></left-menu>
-<div class="split right" *ngIf="recipe">
-  <div class="new-recipe-page-title logo2 big">{{recipe.name}}</div>
+<div class="split right" style="height: 87%" *ngIf="recipe">
   <div class="pdf-page">
     <div class="pdf-content">
-      <div class="pdf-text-content fs25">
-        <p>{{recipe.desc}}</p>
-        <span>Autheur : Léo Brunet</span>
-        <p>{{recipe.nbDiners}} personnes</p>
+      <div style="display: flex; width: 98%; justify-content: space-between;">
+        <div class="pdf-text-content fs25">
+          <div class="new-recipe-page-title logo2 big">{{recipe.name}}</div>
+          <p>{{recipe.desc}}</p>
+          <span>Autheur : Léo Brunet</span>
+          <div style="display: flex; align-items: center">
+            <p style="margin-right: 5%">{{getNbDiners()}}</p>
+            <button type="button" class="button-diners" (click)="updateNbDiners(1)">+</button>
+            <button type="button" class="button-diners" (click)="updateNbDiners(-1)">-</button>
+          </div>
+        </div>
+        <img *ngIf="recipe.image" src="../../../assets/images/{{recipe.image}}"
+             style="width: 30%; border-radius: 2%">
       </div>
 
-      <img src="{{recipe.image}}"
-           style="position: absolute;width: 30%; right: 0; margin: 2% 7%; border-radius: 2%">
+
     </div>
+    <span>Coûts</span>
+    <div
+      style="width: 96%; border: 1px solid #0F0E2D; border-radius: 6px;padding: 1%; margin-top: 1%; margin-bottom: 1%">
+
+    </div>
+    <span>Ingrédients</span>
+    <div
+      style="width: 96%; border: 1px solid #0F0E2D; border-radius: 6px;padding: 1%; margin-top: 1%; margin-bottom: 1%">
+      <div *ngFor="let ingredient of ingredients; let index = index">
+        <div>{{quantities[index] + " " + ingredient.unit.name + " de " + ingredient.name}}
+        </div>
+      </div>
+    </div>
+    <span>Étapes</span>
     <div class="pdf-text-content fs25"
          *ngFor="let step of recipe.steps; let index = index;">
-      <div style="display: flex;justify-content: space-between;">
+      <div
+        style="display: flex;justify-content: space-between;width: 96%; border: 1px solid #0F0E2D; border-radius: 6px;padding: 1% 1% 0% 1%; margin-top: 1%">
         <div>
           <span>{{step.name}}</span>
           <p>{{step.description}}</p>
         </div>
         <div>
           <div *ngFor="let ingredient of step.ingredients; let indexI = index">
-            <div>{{step.quantities[index] + " " + ingredient.unit + " de " + ingredient.name}}</div>
+            <div
+              style="float: right">{{step.quantities[indexI] + " " + ingredient.unit.name + " de " + ingredient.name}}
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
+<div
+  class="fs25 semibold fixedBottom" style="height:6%">
+  <button class="fs25 semibold">
+    Modifier
+  </button>
+  <button (click)="sell()" class="fs25 semibold bg-green white">
+    Vendre
+  </button>
+</div>

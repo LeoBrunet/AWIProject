@@ -1,7 +1,5 @@
 import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
-import {RecipeService} from "../../../services/RecipeService";
 import {Recipe} from "../../model/recipe";
-import {UserService} from "../../../services/UserService";
 import {Router} from "@angular/router";
 
 @Component({
@@ -16,7 +14,6 @@ export class RecipesComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes.recipes.currentValue)
     this.recipes = changes.recipes.currentValue;
   }
 

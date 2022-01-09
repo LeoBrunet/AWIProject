@@ -1,6 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Recipe} from "../app/model/recipe";
+import {StepService} from "./StepService";
+import {Step} from "../app/model/step";
+import {RecipeStep} from "../app/model/recipeStep";
 
 const baseUrl = 'http://localhost:8080/api/recipe';
 
@@ -9,7 +12,7 @@ const baseUrl = 'http://localhost:8080/api/recipe';
 })
 export class RecipeService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private _stepService: StepService) {
   }
 
   getAll() {
@@ -21,12 +24,16 @@ export class RecipeService {
     return this.http.get(`${baseUrl}/${id}`);
   }
 
+  async getAllIngredientsOfRecipe(id): Promise<Object>{
+    return await this.http.get(`${baseUrl}/ingredients/${id}`).toPromise();
+  }
+
   create(recipe) {
     return this.http.post(baseUrl, {
       name: recipe.name,
       nbDiners: recipe.nbDiners,
       numUser: 1,
-      idCategory: recipe.category.id
+      idCategory: recipe.categoryId
     });
   }
 
@@ -38,7 +45,21 @@ export class RecipeService {
     return this.http.delete(`${baseUrl}/${id}`);
   }
 
-  public createRecipe(data): Recipe {
-    return new Recipe(data['name'], data['description'], data['nbDiners'], data['image'], [], data['idCategory'], data['numRecipe'])
+  sell(recipeId, nbDiners) {
+    return this.http.post(`${baseUrl}/sell/${recipeId}`, {quantity: nbDiners});
+  }
+
+  public async createRecipe(data): Promise<Recipe> {
+    let steps: Step[] = [];
+    let recipeSteps: RecipeStep[] = [];
+    await this._stepService.getAllOfRecipe(data['numRecipe']).then(async(response) => {
+      await this._stepService.createAllStepsOfRecipe(response).then(stepsResponse => {
+        steps = stepsResponse;
+      });
+      await this._stepService.createAllRecipeStepsOfRecipe(response).then(stepsResponse => {
+        recipeSteps = stepsResponse;
+      });
+    });
+    return new Recipe(data['name'], data['description'], data['nbDiners'], data['image'], steps, recipeSteps,data['idCategory'], data['numRecipe'])
   }
 }

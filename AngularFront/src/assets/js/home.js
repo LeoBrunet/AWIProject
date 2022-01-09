@@ -23,15 +23,12 @@ $(document).ready(function() {
 	const bannerDescs = document.getElementsByClassName("banner-desc");
 	const recipeDescs = document.getElementsByClassName("recipe-desc");
 	var descs = Array.prototype.concat.call(bannerDescs, recipeDescs);
-	console.log(descs)
 	for (var i = descs.length - 1; i >= 0; i--) {
-		descs[i]
 		for (var j = descs[i].length - 1; j >= 0; j--) {
 		const length = descs[i][j].innerHTML.length;
-		console.log(length);
-		if (i == 0 & length > 100) {
+		if (i === 0 && length > 100) {
 			descs[i][j].innerHTML = descs[i][j].innerHTML.substr(0, 99) + "...";
-		} else if (i == 1 & length > 100) {
+		} else if (i === 1 && length > 100) {
 			descs[i][j].innerHTML = descs[i][j].innerHTML.substr(0, 80) + "...";
 		}
 	}

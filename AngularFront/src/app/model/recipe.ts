@@ -1,6 +1,6 @@
 import {User} from "./user";
 import {Step} from "./step";
-import {Category} from "./category";
+import {RecipeStep} from "./recipeStep";
 
 export class Recipe {
   num: number;
@@ -10,9 +10,12 @@ export class Recipe {
   auteur: User;
   image: any;
   categoryId: number;
-  steps: Array<Step>;
+  steps: Step[];
+  recipeSteps: RecipeStep[];
+  duration: number;
+  ingredientCost: number;
 
-  constructor(name: string, desc: string, nbDiners: number, image: any, steps: Array<Step>, categoryId: number, num: number = 0) {
+  constructor(name: string, desc: string, nbDiners: number, image: any, steps: Step[], recipeSteps: RecipeStep[], categoryId: number, num: number = 0, duration: number = 0, ingredientCost: number = 0) {
     this.name = name;
     this.desc = desc;
     this.nbDiners = nbDiners;
@@ -21,5 +24,8 @@ export class Recipe {
     this.categoryId = categoryId;
     this.image = image;
     this.steps = steps;
+    this.recipeSteps = recipeSteps;
+    this.duration = duration;
+    this.ingredientCost = ingredientCost;
   }
 }

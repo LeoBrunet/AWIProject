@@ -26,12 +26,12 @@ export class HomeRecipeComponent implements OnInit {
         }
       );
     })
-    this._recipeService.getAll().subscribe((data: any) => {
+    this._recipeService.getAll().subscribe(async (data: any) => {
       let datas: any[] = data;
       this.recipes = [];
-      datas.forEach(data => {
-        this.recipes.push(this._recipeService.createRecipe(data));
-      })
+      for (const data1 of datas) {
+        this.recipes.push(await this._recipeService.createRecipe(data1));
+      }
       this.selectedRecipes = this.recipes;
     });
   }

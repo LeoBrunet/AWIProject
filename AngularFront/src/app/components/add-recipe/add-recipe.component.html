@@ -46,7 +46,7 @@
       </div>
       <div class="form-container-name">
         <label for="nbDiners">Nombre de couvert</label>
-        <input id="nbDiners" name="nb-diners" formControlName="nbDiners" type="number" min="1" placeholder="1"
+        <input id="nbDiners" name="nb-diners" formControlName="nbDiners" type="number" min="1"
                value="1" (keyup.enter)="undefined">
       </div>
     </div>
@@ -72,12 +72,12 @@
       <button type="button" class="button-step" (click)="addStep()">+</button>
       <button type="button" class="button-step" (click)="removeStep()">-</button>
     </div>
-    <div formArrayName="steps" *ngFor="let step of recipeFormGroup.get('steps')!['controls']; let indexStep = index;"
+    <div formArrayName="steps"
+         *ngFor="let step of recipeFormGroup.get('steps')!['controls']; let indexStep = index; let stepModel of this.recipe.steps"
          class="form-step">
-
       <div [formGroupName]="indexStep">
         <div style="display: flex;justify-content: space-between;align-items: flex-start;">
-          <label for="stepName">Nom de l'étape {{indexStep + 1}}</label>
+          <label for="stepName">Nom de l'étape {{stepModel.position}}</label>
           <img (click)="removeStepAt(indexStep)" src="assets/images/close.png" alt="">
         </div>
         <input class="form-element" id="stepName" maxlength="100" name="name" formControlName="stepName" type="text"
@@ -88,6 +88,10 @@
                   type="text"
                   required="required"
                   (change)="updateStepDesc(indexStep)"></textarea>
+        <label for="stepDuration">Durée (en minutes)</label>
+        <input id="stepDuration" name="duration" formControlName="stepDuration" type="number"
+               value="10" min="1"
+               (change)="updateStepDuration(indexStep)">
         <div class="semibold"
              style="display: flex; width: 98%; margin-top: 1%;box-shadow: inset 0px -1px 0px 0px #7070702b;">
           <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 20%;padding: 1%">Catégories</div>
@@ -102,17 +106,17 @@
                *ngFor="let ingredient of getIngredientsFormArray(indexStep).controls;let index = index">
             <div [formGroupName]="index" style="display: flex; width: 98%;">
               <div class="custom-select">
-                <select #category formcontrolname="category"
-                        (change)="updateCategoryIngredient(indexStep ,index, category.value)">
-                  <option *ngFor="let category of getAllCategories(index)"
-                          [value]="category.id">{{category.name}}</option>
+                <select formControlName="category"
+                        (change)="updateCategoryIngredient(indexStep ,index)">
+                  <option *ngFor="let category of getAllCategories(indexStep, index)"
+                          [ngValue]="category">{{category.name}}</option>
                 </select>
               </div>
               <div class="custom-select" style="width: 35%">
-                <select #ingredientElem formcontrolname="name"
-                        (change)="updateNameIngredient(indexStep ,index, ingredientElem.value)">
-                  <option *ngFor="let ingredient of getIngredientsOfCat(category.selectedIndex)"
-                          [value]="ingredient.name">{{ingredient.name}}</option>
+                <select formControlName="name"
+                        (change)="updateNameIngredient(indexStep ,index)">
+                  <option *ngFor="let ingredient of getIngredientsOfSelectedCat(indexStep, index)"
+                          [ngValue]="ingredient">{{ingredient.name}}</option>
                 </select>
               </div>
               <input id="qteIngredientInput{{index}}" formControlName="quantity"
@@ -136,10 +140,36 @@
           </div>
         </div>
         <span (click)="addIngredient(indexStep)" class="green fs25" style="margin-top: 1%">Ajouter un ingrédient</span>
-
       </div>
     </div>
-
+    <div style="display: flex; align-items: center;margin-top: 1%">
+      <span class="semibold">Recettes à réaliser</span>
+      <button type="button" class="button-step" (click)="addRecipeStep()">+</button>
+      <button type="button" class="button-step" (click)="removeRecipeStep()">-</button>
+    </div>
+    <div formArrayName="recipeSteps"
+         *ngFor="let step of recipeFormGroup.get('recipeSteps')!['controls']; let indexRecipeStep = index; let stepModel of this.recipe.recipeSteps"
+         class="form-step">
+      <div style="display: flex;justify-content: space-between;align-items: flex-start;">
+        <label for="stepName">Nom de la recette à réaliser en temps que
+          <img (click)="updateSubRecipePosition(indexRecipeStep, -1)"
+               src="../../../assets/images/arrow_left.png"
+               style="height: 14px"> Étape {{stepModel.position}}
+          <img src="../../../assets/images/arrow_right.png" style="height: 14px"
+               (click)="updateSubRecipePosition(indexRecipeStep,1)"></label>
+        <img (click)="removeRecipeStepAt(indexRecipeStep)" src="assets/images/close.png" alt="">
+      </div>
+      <div class="custom-select" style="width: 98%;box-shadow: none">
+        <select #recipe id="recipeName" formcontrolname="recipeFormControl"
+                (change)="updateSubRecipe(indexRecipeStep, recipe.value)"
+                style="box-shadow: inset 0 0 8px #0000001f;border: none;border-radius: 0.521vw;padding: 1%;">
+          <option *ngFor="let recipe of recipes"
+                  [value]="recipe.num">{{recipe.name + " (numéro de recette: " + recipe.num + ")"}}</option>
+        </select>
+      </div>
+    </div>
+    <!--<span class="fs25" style="margin-top: 1%"
+          (click)="addRecipeStep()"><u>Ajouter une recette en tant qu'étape {{this.recipe.steps.length + 1}}</u></span>-->
     <button type="submit" class="submit google">
       Enregister et continuer
     </button>
@@ -151,7 +181,7 @@
 <div id="recipeToPDF" class="split right pdf-container">
   <div class="pdf-page">
     <div class="new-recipe-page-title logo2">{{getRecipeName()}}</div>
-    <div class="pdf-content">
+    <div class="pdf-content" style="height: fit-content">
       <div class="pdf-text-content fs25">
         <p>{{getRecipeDescription()}}</p>
         <span>Léo Brunet</span>
@@ -159,19 +189,31 @@
       </div>
 
       <img (click)="setImage()" [src]="recipeImageLocalUrl" *ngIf="recipeImageLocalUrl"
-           style="position: absolute;width: 30%; right: 0; margin: 2% 7%; border-radius: 2%">
+           style="width: 30%; right: 0; margin: 2% 3%; border-radius: 2%">
     </div>
     <div class="pdf-text-content fs25"
-         *ngFor="let step of recipeFormGroup.get('steps')!['controls']; let index = index;">
-      <div style="display: flex;justify-content: space-between;">
-        <div>
-          <span>{{step.get('stepName').value}}</span>
-          <p>{{step.get('stepDesc').value}}</p>
+         *ngFor="let position of counter(nbStepsTotal);">
+      <div *ngIf="getStepAtPosition(position)" style="display: flex;justify-content: space-between;">
+        <div style="max-width: 70%">
+          <span>Étape {{position}}</span>
+          <p><u>{{getFormStepAt(position).get('stepName')!.value}}</u></p>
+          <p>{{getFormStepAt(position).get('stepDesc')!.value}}</p>
         </div>
         <div>
-          <div *ngFor="let ingredient of getIngredients(index); let indexI = index">
-            <div>{{getQuantity(index, indexI) + " " + ingredient.unit + " de " + ingredient.name}}</div>
+          <div *ngFor="let ingredient of getIngredients(getIndexFormStepAt(position)); let indexI = index">
+            <div>{{getQuantity(getIndexFormStepAt(position), indexI) + " " + ingredient.unit.name + " de " + ingredient.name}}</div>
           </div>
+        </div>
+      </div>
+      <div *ngIf="getRecipeStepAtPosition(position)">
+        <div style="max-width: 70%">
+          <span>Étape {{position}}</span>
+          <p>{{getFormRecipeStepAt(position)!.value.name}}</p>
+        </div>
+        <div>
+          <!--<div *ngFor="let ingredient of getAllIngredientsOfRecipe(getFormRecipeStepAt(position)!.value.num)[0];">
+            <div>{{ingredient.unit.name + " de " + ingredient.name}}</div>
+          </div>-->
         </div>
       </div>
     </div>

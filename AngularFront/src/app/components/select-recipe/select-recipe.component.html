@@ -1,0 +1,10 @@
+<div class="form-step">
+  <label for="name">Nom de la recette</label>
+  <div class="custom-select" style="width: 35%">
+    <select #recipe id="name" formcontrolname="recipeFormControl"
+            (change)="updateName(recipe.value)">
+      <option *ngFor="let recipe of recipes"
+              [value]="recipe.num">{{recipe.name}}</option>
+    </select>
+  </div>
+</div>

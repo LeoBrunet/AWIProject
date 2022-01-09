@@ -35,6 +35,10 @@
   color: #0F0E2D;
 }
 
+.white {
+  color: white;
+}
+
 .light-grey {
   color: #8D8D9F !important;
 }
@@ -43,6 +47,9 @@
   color: #599442;
 }
 
+.bg-green {
+  background: #599442;
+}
 .fs25 {
   font-size: 1.302vw;
 }

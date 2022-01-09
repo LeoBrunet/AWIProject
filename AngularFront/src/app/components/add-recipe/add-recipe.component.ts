@@ -12,14 +12,13 @@ import {IngredientCategoryService} from "../../../services/IngredientCategorySer
 import {StepService} from "../../../services/StepService";
 import {Category} from "../../model/category";
 import {RecipeCategoryService} from "../../../services/RecipeCategoryService";
-import {Unit} from "../../model/unit";
+import {RecipeStep} from "../../model/recipeStep";
+import {GeneralStep} from "../../model/generalStep";
 
 @Component({
   selector: 'add-recipe',
   templateUrl: 'add-recipe.component.html',
-  styleUrls: ['../../../assets/css/new_recipe_menu.css',
-    '../../../assets/css/new_recipe_left.css',
-    '../../../assets/css/new_recipe_right.css']
+  styleUrls: ['../../../assets/css/new_recipe_menu.css', '../../../assets/css/new_recipe_left.css', '../../../assets/css/new_recipe_right.css']
 })
 export class AddRecipeComponent implements OnInit {
   //TODO get it from database
@@ -27,7 +26,8 @@ export class AddRecipeComponent implements OnInit {
   recipeCategories: Category[] = [];
   ingredients: Ingredient[] = [];
   recipe: Recipe;
-
+  recipes: Recipe[];
+  nbStepsTotal: number = 1;
   errorMessage: string;
   recipeImageLocalUrl: string = "../../assets/images/add_image.jpg";
   recipeFormGroup: FormGroup = this._fb.group({
@@ -35,18 +35,13 @@ export class AddRecipeComponent implements OnInit {
     desc: [''],
     nbDiners: ['', Validators.required],
     image: [''],
-    steps: this._fb.array(
-      [
-        this._fb.group({
-          stepName: [''],
-          stepDesc: ['', Validators.required],
-          ingredientFormArray: this._fb.array([])
-        })
-      ]
-    )
+    steps: this._fb.array([this._fb.group({
+      stepName: [''], stepDesc: ['', Validators.required], stepDuration: [10], ingredientFormArray: this._fb.array([])
+    })]),
+    recipeSteps: this._fb.array([])
   })
 
-  constructor(private _fb: FormBuilder, private _recipeService: RecipeService, private _ingredientService: IngredientService, private _ingredientCategoryService: IngredientCategoryService, private _stepService: StepService, private _recipeCategoryService : RecipeCategoryService) {
+  constructor(private _fb: FormBuilder, private _recipeService: RecipeService, private _ingredientService: IngredientService, private _ingredientCategoryService: IngredientCategoryService, private _stepService: StepService, private _recipeCategoryService: RecipeCategoryService) {
   }
 
   ngOnInit() {
@@ -70,99 +65,68 @@ export class AddRecipeComponent implements OnInit {
       datas.forEach(data => {
         this.categories.push(this._ingredientCategoryService.createIngredientCategory(data))
       })
+      console.log(this.categories)
     })
-
-    for (let stepIndex: number = 0; stepIndex < this.getSteps().length; stepIndex++) {
+    this._recipeService.getAll().subscribe(async (data: any) => {
+      this.recipes = [];
+      for (const data1 of data as any[]) {
+        let recipe = await this._recipeService.createRecipe(data1)
+        this.recipes.push(recipe);
+        console.log(recipe);
+      }
+    });
+    for (let stepIndex: number = 0; stepIndex < this.getFormSteps().length; stepIndex++) {
       let ingredientsOfStep: FormArray = this.getIngredientsFormArray(stepIndex);
       for (let index: number = 0; index < ingredientsOfStep.length; index++) {
         this.getIngredientsFormArray(stepIndex).push(this._fb.group({
           name: [ingredientsOfStep[index].name, Validators.required],
           category: [ingredientsOfStep[index].category],
-          quantity: [this.getSteps()[stepIndex].quantities[index]]
+          quantity: [this.getFormSteps()[stepIndex].quantities[index]]
         }));
       }
     }
-
     //TODO Bouger ça
-    let steps: Array<Step> = [new Step("", "", [], [])];
-
-    this.recipe = new Recipe(
-      "",
-      "",
-      0,
-      "",
-      steps,
-      0
-    )
+    let steps: Step[] = [new Step(1, "", "", [], [], 10)];
+    let recipeSteps: RecipeStep[] = [];
+    this.recipe = new Recipe("", "", 0, "", steps, recipeSteps, 0)
   }
 
-  public getSteps() {
-    return this.recipeFormGroup.get('steps') as FormArray;
-  }
-
-  public addStep(): void {
-    this.getSteps().push(this._fb.group({
-      stepName: [''],
-      stepDesc: ['', Validators.required],
-      ingredientFormArray: this._fb.array([])
-    }));
-    let step: Step = new Step("", "", [], []);
-    this.recipe.steps.push(step);
-  }
-
-  public removeStep(): void {
-    this.getSteps().removeAt(this.getSteps().length - 1);
-    this.recipe.steps.pop();
-  }
-
-  public removeStepAt(index): void {
-    this.getSteps().removeAt(index);
-    this.recipe.steps.splice(index, 1);
-  }
-
-  public submit(): void {
+  /* RECIPE */
+  submit(): void {
     console.log("submit")
     console.log(this.getAllValidationErrors())
     this.updateViewOnErrors(this.getAllValidationErrors())
     if (this.recipeFormGroup.valid) {
-
       this.recipe.name = this.recipeFormGroup.get('name')?.value;
       this.recipe.desc = this.recipeFormGroup.get('desc')?.value;
       this.recipe.nbDiners = this.recipeFormGroup.get('nbDiners')?.value;
       this.recipe.image = this.recipeFormGroup.get('image')?.value;
-
       console.log(this.recipe);
       console.log("submit");
       this._recipeService.create(this.recipe).subscribe((data) => {
-          this.recipe.num = data['numRecipe']
-          for (let index = 0; index < this.recipe.steps.length; index++) {
-            this._stepService.createStep(this.recipe.steps[index], index, this.recipe.num).subscribe()
-          }
+        this.recipe.num = data['numRecipe']
+        for (let index = 0; index < this.recipe.steps.length; index++) {
+          this._stepService.create(this.recipe.steps[index] as Step, this.recipe.num).subscribe()
         }
-      )
+        for (let index = 0; index < this.recipe.recipeSteps.length; index++) {
+          this._stepService.createStepRecipe(this.recipe.recipeSteps[index] as RecipeStep, this.recipe.num).subscribe()
+        }
+      })
     }
     //this.openPDF()
   }
 
-  private getAllValidationErrors(): string[] {
-
+  getAllValidationErrors(): string[] {
     let result: string[] = [];
     Object.keys(this.recipeFormGroup.controls).forEach(key => {
-
       let controlErrors = this.recipeFormGroup.get(key)!.errors;
       if (controlErrors) {
         Object.keys(controlErrors).forEach(keyError => {
           if (controlErrors) {
             result.push(key)
-            /*result.push({
-              'control': key,
-              'error': keyError,
-              'value': controlErrors[keyError]
-            });*/
           }
         });
       }
-
       if (key == "steps") {
         let stepsArray = this.recipeFormGroup.get(key) as FormArray
         if (stepsArray) {
@@ -175,13 +139,7 @@ export class AddRecipeComponent implements OnInit {
                   Object.keys(controlErrors).forEach(keyError => {
                     if (controlErrors) {
                       result.push(elem + index)
-                      /*result.push({
-                        'control': elem + index,
-                        'error': keyError,
-                        'value': controlErrors[keyError]
-                      });*/
                     }
-
                   });
                 }
               });
@@ -190,11 +148,10 @@ export class AddRecipeComponent implements OnInit {
         }
       }
     });
-
     return result;
   }
 
-  public updateViewOnErrors(ids: string[]): void {
+  updateViewOnErrors(ids: string[]): void {
     Object.values(ids).forEach(id => {
       const elem = document.getElementById(id);
       if (elem) {
@@ -206,12 +163,11 @@ export class AddRecipeComponent implements OnInit {
     }
   }
 
-  private printErrorMessage(errorMessage: string): void {
+  printErrorMessage(errorMessage: string): void {
     this.errorMessage = errorMessage;
   }
 
-
-  public uploadImage(event: any): void {
+  uploadImage(event: any): void {
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (event: any) => {
@@ -221,22 +177,19 @@ export class AddRecipeComponent implements OnInit {
     }
   }
 
-  public setImage(): void {
+  setImage(): void {
     let input = document.getElementById('recipe-photo')
-    if (input)
-      input.click();
+    if (input) input.click();
   }
 
-  public openPDF(): void {
+  openPDF(): void {
     let DATA = document.getElementById('recipeToPDF');
-
     if (DATA) {
       //DATA.style = "display: block; width: 100%"
       console.log(html2canvas(DATA));
       html2canvas(DATA).then(canvas => {
         let fileWidth = 208;
         let fileHeight = canvas.height * fileWidth / canvas.width;
-
         var FILEURI = new Image()
         FILEURI.src = canvas.toDataURL('image/png')
         console.log(FILEURI.src)
@@ -247,26 +200,25 @@ export class AddRecipeComponent implements OnInit {
           PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight)
           PDF.save("test-recipe.pdf");
         }
-
       });
     }
   }
 
-  public getRecipeName(): string {
+  getRecipeName(): string {
     if (this.recipeFormGroup.get('name')?.value == "") {
       return "Nom de la recette"
     }
     return this.recipeFormGroup.get('name')?.value
   }
 
-  public getRecipeDescription(): string {
+  getRecipeDescription(): string {
     if (this.recipeFormGroup.get('desc')?.value == "") {
       return "Lorem ipsum"
     }
     return this.recipeFormGroup.get('desc')?.value
   }
 
-  public getRecipeNbDiners(): string {
+  getRecipeNbDiners(): string {
     let val = this.recipeFormGroup.get('nbDiners')?.value;
     if (val == "" || val == 1) {
       return "1 personne"
@@ -274,104 +226,227 @@ export class AddRecipeComponent implements OnInit {
     return val + " personnes"
   }
 
-  public updateCategory(category : string){
-    console.log(this.recipeCategories.find(cat => cat.name == category)!)
-    this.recipe.categoryId = this.recipeCategories.find(cat => cat.name == category)!.id;
-    console.log(this.recipe.categoryId)
-  }
-
-  /* INGREDIENTS */
-
-  public getAllIngredients(): Ingredient[] {
-    return this.ingredients;
-  }
-
-  public getIngredients(indexStep): Ingredient[] {
-    return this.recipe!.steps[indexStep].ingredients
-  }
-
-  public getIngredientUnit(indexStep, index): string {
-    return this.recipe!.steps[indexStep].ingredients[index].unit.name
-  }
-
-  public getIngredientsFormArray(indexStep: number): FormArray {
-    return this.getSteps().controls[indexStep].get('ingredientFormArray') as FormArray;
-  }
-
-  public removeIngredientAtIndex(indexStep: number, index: number): void {
-    this.getIngredientsFormArray(indexStep).removeAt(index);
-    this.ingredients.forEach((elementI, indexI) => {
-      if (indexI == index) this.ingredients.splice(indexI, 1);
+  /* RECIPE STEPS */
+  public async getAllIngredientsOfRecipe(recipeId) {
+    let ingredients: Ingredient[] = [];
+    let quantities: number[] = [];
+    await this._recipeService.getAllIngredientsOfRecipe(recipeId).then(async (data: any) => {
+      for (let ingredient of data as any[]) {
+        ingredients.push(await this._ingredientService.createIngredient(ingredient))
+        quantities.push(ingredient.quantity)
+      }
     });
+    return [ingredients, quantities];
   }
 
-  public addIngredient(indexStep: number): void {
-
-    let ingredientId = 1;
-    let ingredientsOfStep: Ingredient[] = this.getIngredients(indexStep);
-    console.log(ingredientsOfStep)
-    console.log(ingredientsOfStep)
-    let newIngredient: Ingredient = new Ingredient(ingredientId, "", new Unit(-1, ""), 0)
-    console.log(this.getIngredientsOfCat(0));
-    newIngredient.name = this.getIngredientsOfCat(newIngredient.category.id)[0].name;
-    newIngredient.unit = this.getIngredientsOfCat(newIngredient.category.id)[0].unit;
-    newIngredient.id = this.getIngredientsOfCat(newIngredient.category.id)[0].id;
-    ingredientsOfStep.push(newIngredient)
-    this.recipe.steps[indexStep].ingredients = ingredientsOfStep;
-    this.recipe.steps[indexStep].quantities[ingredientsOfStep.length - 1] = 0;
-    this.getIngredientsFormArray(indexStep).push(this._fb.group({
-      category: [newIngredient.category],
-      name: [this.getIngredientsOfCat(newIngredient.category.id)[0], Validators.required],
-      quantity: [this.recipe.steps[indexStep].quantities[ingredientsOfStep.length - 1]]
-    }));
-
+  public getRecipeStepAtPosition(position): RecipeStep | undefined {
+    return this.recipe.recipeSteps.find(recipe => recipe.position == position);
   }
 
-  public getAllCategories(index): IngredientCategory[] {
-    let returnedCategories: IngredientCategory[] = this.categories;
-    returnedCategories.forEach((elementI, indexI) => {
-      if (elementI.name == this.ingredients[index].category.name) returnedCategories.splice(indexI, 1);
-    });
-    returnedCategories.sort(function (a, b) {
-      return a.id - b.id
-    })
-    returnedCategories.unshift(this.ingredients[index].category)
-    return returnedCategories;
+  public getFormRecipeStepAt(position): FormGroup {
+    let step = this.getRecipeStepAtPosition(position);
+    let index: number = this.recipe.recipeSteps.indexOf(step!);
+    return this.getRecipeSteps().controls[index] as FormGroup;
   }
 
-  public getIngredientsOfCat(catId: number): Ingredient[] {
-    return this.ingredients.filter(i => i.category.id == catId)
+  public getRecipeSteps() {
+    return this.recipeFormGroup.get('recipeSteps') as FormArray;
   }
 
-  public updateNameIngredient(indexStep: number, index: number, name: string): void {
-    let ingredient = this.ingredients.find(i => i.name == name);
-    if (ingredient) {
-      this.getIngredients(indexStep)[index].name = ingredient.name;
-      this.getIngredients(indexStep)[index].id = ingredient.id;
-      //this.getIngredientsFormArray(indexStep).controls[index].setValue(ingredient.name)
+  public addRecipeStep(): void {
+    this.nbStepsTotal++;
+    this.recipe.recipeSteps.push(new RecipeStep(this.nbStepsTotal, this.recipes[0].num));
+    this.getRecipeSteps().push(this._fb.control(this.recipes[0]));
+  }
+
+  public removeRecipeStep(): void {
+    this.nbStepsTotal--;
+    this.getRecipeSteps().removeAt(this.getRecipeSteps().length - 1);
+    this.recipe.recipeSteps.pop();
+  }
+
+  public removeRecipeStepAt(indexRecipeStep): void {
+    this.getRecipeSteps().removeAt(indexRecipeStep);
+    this.recipe.recipeSteps.splice(indexRecipeStep, 1);
+    for (let index = indexRecipeStep; index < this.recipe.recipeSteps.length; index++) {
+      this.recipe.recipeSteps[index].position--;
     }
   }
 
-  public updateCategoryIngredient(indexStep: number, index: number, categoryId: string): void {
-    let category = this.categories.find(i => i.id == parseInt(categoryId));
-    if (category)
-      this.getIngredients(indexStep)[index].category = category;
+  public updateSubRecipe(indexStep, recipeId): void {
+    this.recipe.recipeSteps[indexStep].recipeId = recipeId;
   }
 
-  public updateStepName(indexStep: number): void {
-    this.recipe.steps[indexStep].name = (this.getSteps().controls[indexStep] as FormGroup).get('stepName')?.value;
+  public updateSubRecipePosition(indexStep, increment): void {
+    if (this.recipe.recipeSteps[indexStep].position + increment > 0 && this.recipe.recipeSteps[indexStep].position + increment < this.nbStepsTotal + 1) {
+      let newPosition = this.recipe.recipeSteps[indexStep].position + increment;
+      let exStep: GeneralStep | undefined = this.recipe.steps.find(step => step.position == newPosition);
+      if (exStep) {
+        exStep!.position = exStep!.position - increment;
+        this.recipe.recipeSteps[indexStep].position = newPosition;
+        this.printErrorMessage("")
+      } else {
+        this.printErrorMessage("Vous ne pouvez pas déplacer cette étape dans ce sens.")
+      }
+    } else {
+      this.printErrorMessage("Vous ne pouvez pas déplacer cette étape dans ce sens.")
+    }
   }
 
-  public updateStepDesc(indexStep: number): void {
-    this.recipe.steps[indexStep].description = (this.getSteps().controls[indexStep] as FormGroup).get('stepDesc')?.value;
+  public getPosition(indexRecipeStep): string {
+    let position = this.recipe.recipeSteps[indexRecipeStep].position;
+    if (position == 1) {
+      return "Avant l'étape 1";
+    } else {
+      return "Après l'étape " + (position - 1);
+    }
   }
 
-  public updateQuantityIngredient(indexStep: number, index: number): void {
-    this.recipe.steps[indexStep].quantities[index] = this.getIngredientsFormArray(indexStep).controls[index].get('quantity')?.value;
+  /* STEP */
+  public getStepAtPosition(position): Step | undefined {
+    return this.recipe.steps.find(step => step.position == position);
   }
 
-  public getQuantity(indexStep, index) {
-    return this.recipe.steps[indexStep].quantities[index];
+  public getIndexFormStepAt(position): number {
+    let step = this.getStepAtPosition(position);
+    let index: number = -1;
+    if (step) {
+      index = this.recipe.steps.indexOf(step);
+    }
+    return index;
   }
 
+  public getFormStepAt(position): FormGroup {
+    let step = this.getStepAtPosition(position);
+    let index: number = this.recipe.steps.indexOf(step!);
+    return this.getFormSteps().controls[index] as FormGroup;
+  }
+
+  getFormSteps() {
+    return this.recipeFormGroup.get('steps') as FormArray;
+  }
+
+  public addStep(): void {
+    this.getFormSteps().push(this._fb.group({
+      stepName: [''], stepDesc: ['', Validators.required], stepDuration: [10], ingredientFormArray: this._fb.array([])
+    }));
+    this.nbStepsTotal++;
+    let step: Step = new Step(this.nbStepsTotal, "", "", [], [], 10);
+    this.recipe.steps.push(step);
+  }
+
+  removeStep(): void {
+    this.nbStepsTotal--;
+    this.getFormSteps().removeAt(this.getFormSteps().length - 1);
+    this.recipe.steps.pop();
+  }
+
+  removeStepAt(indexStep): void {
+    this.getFormSteps().removeAt(indexStep);
+    this.recipe.steps.splice(indexStep, 1);
+    for (let index = indexStep; index < this.recipe.recipeSteps.length; index++) {
+      this.recipe.recipeSteps[index].position--;
+    }
+  }
+
+  /* INGREDIENTS */
+  updateCategory(category: string) {
+    this.recipe.categoryId = this.recipeCategories.find(cat => cat.name == category)!.id;
+  }
+
+  getAllIngredients(): Ingredient[] {
+    return this.ingredients;
+  }
+
+  getIngredients(indexStep): Ingredient[] {
+    return this.recipe!.steps[indexStep].ingredients
+  }
+
+  getIngredientUnit(indexStep, index): string {
+    return this.recipe!.steps[indexStep].ingredients[index].unit.name
+  }
+
+  getIngredientsFormArray(indexStep: number): FormArray {
+    return this.getFormSteps().controls[indexStep].get('ingredientFormArray') as FormArray;
+  }
+
+  removeIngredientAtIndex(indexStep: number, index: number): void {
+    this.getIngredientsFormArray(indexStep).removeAt(index);
+    this.ingredients.forEach((elementI, indexI) => {
+      if (indexI == index) this.recipe!.steps[indexStep].ingredients.splice(indexI, 1);
+    });
+  }
+
+  addIngredient(indexStep: number): void {
+    const newIngredient: Ingredient = this.ingredients[0];
+    this.recipe.steps[indexStep].ingredients.push(newIngredient);
+    this.recipe.steps[indexStep].quantities[this.recipe.steps[indexStep].ingredients.length - 1] = 1;
+    this.getIngredientsFormArray(indexStep).push(this._fb.group({
+      category: IngredientCategory.getDefaultCategory(),
+      name: [newIngredient, Validators.required],
+      quantity: [this.recipe.steps[indexStep].quantities[this.recipe.steps[indexStep].ingredients.length - 1]]
+    }));
+  }
+
+  getAllCategories(indexStep, index): IngredientCategory[] {
+    let returnedCategories: IngredientCategory[] = Object.assign([], this.categories);
+    returnedCategories.sort(function (a, b) {
+      return a.name.charCodeAt(0) - b.name.charCodeAt(0)
+    })
+    if (returnedCategories.find(cat => cat.id == IngredientCategory.getDefaultCategory().id) === undefined) {
+      returnedCategories.unshift(IngredientCategory.getDefaultCategory());
+    }
+    return returnedCategories;
+  }
+
+  getIngredientsOfSelectedCat(indexStep, index): Ingredient[] {
+    const selectedCat = (this.getIngredientsFormArray(indexStep).controls[index] as FormGroup).controls['category'].value;
+    if (selectedCat.id == 0) {
+      return this.ingredients;
+    }
+    return this.ingredients.filter(i => i.category.id == selectedCat.id)
+  }
+
+  updateNameIngredient(indexStep: number, index: number): void {
+    const newIngredientSelected = (this.getIngredientsFormArray(indexStep).controls[index] as FormGroup).controls['name'].value;
+    (this.getIngredientsFormArray(indexStep).controls[index] as FormGroup).patchValue({
+      //category: newIngredientSelected.category,
+      name: newIngredientSelected, //quantity: 1
+    });
+    this.recipe.steps[indexStep].ingredients[index] = newIngredientSelected;
+    this.updateQuantityIngredient(indexStep, index);
+  }
+
+  updateCategoryIngredient(indexStep: number, index: number): void {
+    const newCategorySelected = (this.getIngredientsFormArray(indexStep).controls[index] as FormGroup).controls['category'].value;
+    (this.getIngredientsFormArray(indexStep).controls[index] as FormGroup).patchValue({
+      category: newCategorySelected, name: this.getIngredientsOfSelectedCat(indexStep, index)[0], //quantity: 1
+    });
+    this.updateQuantityIngredient(indexStep, index);
+    this.updateNameIngredient(indexStep, index);
+  }
+
+  updateStepName(indexStep: number): void {
+    this.recipe!.steps[indexStep].name = (this.getFormSteps().controls[indexStep] as FormGroup).get('stepName')?.value;
+  }
+
+  updateStepDesc(indexStep: number): void {
+    this.recipe!.steps[indexStep].description = (this.getFormSteps().controls[indexStep] as FormGroup).get('stepDesc')?.value;
+  }
+
+  updateStepDuration(indexStep: number): void{
+    this.recipe!.steps[indexStep].duration = (this.getFormSteps().controls[indexStep] as FormGroup).get('stepDuration')?.value;
+  }
+
+  updateQuantityIngredient(indexStep: number, index: number): void {
+    this.recipe!.steps[indexStep].quantities[index] = this.getIngredientsFormArray(indexStep).controls[index].get('quantity')?.value;
+  }
+
+  getQuantity(indexStep, index) {
+    return this.recipe!.steps[indexStep].quantities[index];
+  }
+
+  counter(i: number): number[] {
+    return Array.from({length: i}, (v, i) => i + 1);
+  }
 }

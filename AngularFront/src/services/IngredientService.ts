@@ -39,14 +39,7 @@ export class IngredientService {
   }
 
   public async createIngredient(data): Promise<Ingredient> {
-    let ingredient: Ingredient;
-    /*this._unitService.get(data['idUnit']).subscribe((data) => {
-      let unit = this._unitService.createUnit(data);
-      this._ingredientCategoryService.get(data['idType']).subscribe((data) => {
-        let ingredientCategory = this._ingredientCategoryService.createIngredientCategory(data);
-        ingredient = new Ingredient(data['numIngredient'], data['nameIngredient'], unit, data['unitePrice'], ingredientCategory);
-      })
-    })*/
+    //let ingredient: Ingredient;
     let unit = await this._unitService.get(data['idUnit']).toPromise();
     let ingredientCategory = await this._ingredientCategoryService.get(data['idType']).toPromise();
     return new Ingredient(data['numIngredient'], data['nameIngredient'], this._unitService.createUnit(unit), data['unitePrice'], this._ingredientCategoryService.createIngredientCategory(ingredientCategory));

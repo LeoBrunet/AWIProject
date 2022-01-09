@@ -1,162 +1,184 @@
 .welcome {
-	display: block;
-	font-family: 'Roboto', sans-serif;
-	font-size: 1.042vw;
-	margin-bottom: 10px;
+  display: block;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.042vw;
+  margin-bottom: 10px;
 }
+
 .search {
-	position: absolute;
-	top: 5%;
-	right: 2%;
-	width: 20%;
-	font-size: 1.042vw;
+  position: absolute;
+  top: 5%;
+  right: 2%;
+  width: 20%;
+  font-size: 1.042vw;
 }
+
 input {
-	border: 1px solid #8D8D9F;
-	border-radius: 0.260vw;
-	width: 90%;
-	padding: 3% 5%;
-	line-height: 1.042vw;
-	font-size: 1.042vw;
-	font-family: 'Segoe UI';
+  border: 1px solid #8D8D9F;
+  border-radius: 0.260vw;
+  width: 90%;
+  padding: 3% 5%;
+  line-height: 1.042vw;
+  font-size: 1.042vw;
+  font-family: 'Segoe UI';
 }
+
 input::-webkit-input-placeholder {
   font-family: 'Segoe UI';
 }
 
 /**** BANNER ****/
 .banner {
-	position: relative;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    width: 100%;
-    height: 30%;
-    margin-top: 1.042vw;
-    margin-bottom: 1.042vw;
-    display: flex;
-    flex-wrap: wrap;
-    flex-basis: 75%;
-    flex-direction: column;
-    list-style: none;
-    justify-content: space-around;
-    border-radius: 0.417vw 0 0 0.417vw;
+  position: relative;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  width: 100%;
+  height: 30%;
+  margin-top: 1.042vw;
+  margin-bottom: 1.042vw;
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 75%;
+  flex-direction: column;
+  list-style: none;
+  justify-content: space-around;
+  border-radius: 0.417vw 0 0 0.417vw;
 }
+
 .banner::-webkit-scrollbar {
   display: none;
 }
+
 .banner-elem {
-	position: relative;
-	width: 75%;
-	height: 100%;
-	overflow: hidden;
-	border-radius: 0.417vw;
-	margin-right: 1.042vw;
+  position: relative;
+  width: 75%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 0.417vw;
+  margin-right: 1.042vw;
 }
-.banner-recipe-img{
-	width: 100%;
+
+.banner-recipe-img {
+  width: 100%;
 }
+
 .banner-img-shadow {
-	position: relative;
-	width: 100%;
-	float: left;/*Trick pour la box-shadow*/
+  position: relative;
+  width: 100%;
+  float: left; /*Trick pour la box-shadow*/
 }
+
 .banner-img-shadow:before {
-	content: "";
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	box-shadow: inset 26.042vw 0px 5.208vw 0px #00000085;
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  box-shadow: inset 26.042vw 0px 5.208vw 0px #00000085;
 }
+
 .inside-banner-elem {
-	position: absolute;
-	padding: 1.563vw;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	color: white;
-	font-size: 0.833vw;
+  position: absolute;
+  padding: 1.563vw;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: white;
+  font-size: 0.833vw;
 }
+
 .banner-status {
-	position: absolute;
-	font-family: "Roboto", sans-serif;
-	font-weight: bold;
-	font-size: 0.833vw;
-	color: #0F0E2D;
-	background: white;
-	border-radius: 0.260vw;
-	padding: 0.156vw 1.354vw;
+  position: absolute;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  font-size: 0.833vw;
+  color: #0F0E2D;
+  background: white;
+  border-radius: 0.260vw;
+  padding: 0.156vw 1.354vw;
 }
+
 .banner-recipe-infos {
-	position: absolute;
-	bottom: 1.563vw;
-	max-width: 20vw;
+  position: absolute;
+  bottom: 1.563vw;
+  max-width: 20vw;
 }
+
 .banner-desc {
-	margin: 0.4vw 0 0 0;
-	word-break: break-word;
+  margin: 0.4vw 0 0 0;
+  word-break: break-word;
 }
+
 .banner-title {
-	font-size: 2.083vw;
-	font-family: "Segoe UI Semibold";
-	text-size-adjust: auto;
+  font-size: 2.083vw;
+  font-family: "Segoe UI Semibold";
+  text-size-adjust: auto;
 }
+
 .banner-time {
-	display: flex;
-	align-items: center;
+  display: flex;
+  align-items: center;
 }
+
 .banner-time img {
-	margin-right: 0.520vw;
-	width: 0.833vw;
-	height: 0.833vw;
+  margin-right: 0.520vw;
+  width: 0.833vw;
+  height: 0.833vw;
 }
 
 /**** CATEGORIES ****/
 .categories-layout {
-	width: 100%;
-	flex-wrap: wrap;
-    flex-basis: 75%;
-    flex-direction: column;
+  width: 100%;
+  flex-wrap: wrap;
+  flex-basis: 75%;
+  flex-direction: column;
 }
+
 .categories-text {
-	display: flex;
-	width: 98%;
-	justify-content: space-between;
-	align-items: baseline;
+  display: flex;
+  width: 98%;
+  justify-content: space-between;
+  align-items: baseline;
 }
+
 .categories {
-	display: flex;
-	width: 100%;
-	height: 6.250vw;
+  display: flex;
+  width: 100%;
+  height: 6.250vw;
 }
+
 .category {
-	display: block;
-	width: 6.250vw;
-	border-radius: 0.260vw;
-	border: 1px solid #0F0E2D;
-	margin-right: 2%;
-	font-family: "Segoe UI Semibold";
-	font-size: 0.781vw;
+  display: block;
+  width: 6.250vw;
+  border-radius: 0.260vw;
+  border: 1px solid #0F0E2D;
+  margin-right: 2%;
+  font-family: "Segoe UI Semibold";
+  font-size: 0.781vw;
 }
+
 .selected-category {
-	background: #599442;
-	box-shadow: 0 0 4vw 0px #00000085;
-	border: none;
-	color: white;
+  background: #599442;
+  box-shadow: 0 0 4vw 0px #00000085;
+  border: none;
+  color: white;
 }
+
 .category-text {
-	margin: 0 0 0 20%;
-	word-break: break-word;
-	width: 60%
+  margin: 0 0 0 20%;
+  word-break: break-word;
+  width: 60%
 }
+
 .category-img {
-	margin-left: 20%;
-	margin-right: 20%;
-	margin-top: 30%;
-	margin-bottom: 5%;
+  margin-left: 20%;
+  margin-right: 20%;
+  margin-top: 30%;
+  margin-bottom: 5%;
 }
+
 .category:hover {
   -webkit-transform: scale(1.2);
   -moz-transform: scale(1.2);
@@ -167,43 +189,73 @@ input::-webkit-input-placeholder {
 }
 
 .selected-category:hover {
-  transform: scale(1)!important;
-  cursor: auto!important;
+  transform: scale(1) !important;
+  cursor: auto !important;
 }
 
 /**** RECIPES ****/
 .recipes {
-	display: flex;
-	width: 98%;
-	flex-wrap: wrap;
-    flex-basis: 75%;
-    flex-direction: row;
-    margin-top: 2%;
-    gap: 5%;
+  display: flex;
+  width: 98%;
+  flex-wrap: wrap;
+  flex-basis: 75%;
+  flex-direction: row;
+  margin-top: 2%;
+  gap: 5%;
 }
+
 .recipe {
-	width: 20%;
-	overflow: hidden;
-	margin-bottom: 2%;
+  width: 20%;
+  overflow: hidden;
+  margin-bottom: 2%;
 }
+
 .recipe-img {
-	width: 100%;
-	border-radius: 0.417vw;
+  width: 100%;
+  border-radius: 0.417vw;
 }
+
 .recipe-text {
-	display: block;
-	width: 100%;
-	font-size: 1.146vw;
+  display: block;
+  width: 100%;
+  font-size: 1.146vw;
 }
+
 hr {
-	margin: 2% 0 1% 0;
-	height: 1px;
-	border: 0px;
-	box-sizing: content-box;
-	background: #8D8D9F60;
+  margin: 2% 0 1% 0;
+  height: 1px;
+  border: 0px;
+  box-sizing: content-box;
+  background: #8D8D9F60;
 }
 
 /**** INGREDIENTS ****/
 .ingredient-categories {
   margin-top: 2%;
+}
+
+/**** RECIPE ****/
+.fixedBottom {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 20%;
+  position: fixed;
+  bottom: 0;
+  width: 78%;
+  box-shadow: inset 0px 1px 0px 0px #7070702b;
+  padding: 1%
+}
+
+.fixedBottom button {
+  width: 30%;
+  height: 6vh;
+  border-radius: 10px;
+  border-color: #00000000;
+}
+.button-diners {
+  border-radius: 1vw;
+  border: none;
+  background: #599442;
+  color: white;
+  margin-left: 1%;
 }
