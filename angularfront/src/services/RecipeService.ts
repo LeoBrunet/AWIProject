@@ -33,12 +33,14 @@ export class RecipeService {
   }
 
   create(recipe) {
+    let image = recipe.image.split("\\")[2]
+    image = image.image.split("/")[2]
     return this.http.post(baseUrl, {
       name: recipe.name,
       nbDiners: recipe.nbDiners,
       numUser: 1,
       idCategory: recipe.categoryId,
-      image: recipe.image.split("\\")[2],
+      image: image,
       description: recipe.desc
     });
   }
