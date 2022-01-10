@@ -54,6 +54,10 @@ export class HomeRecipeComponent implements OnInit {
     } else {
       this.selectedRecipes = this.recipes.filter(recipe => recipe.categoryId == this.selectedCategory.id);
     }
+    this.imagesPath = [];
+    for (let i = 0; i < this.selectedRecipes.length; i++) {
+      this.imagesPath.push(GeneralServiceInterface.imagePath + this.selectedRecipes[i].image)
+    }
   }
 
   search(search: string) {

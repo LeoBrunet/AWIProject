@@ -1,10 +1,11 @@
 <div class="semibold" style="display: flex; width: 98%; margin-top: 2%;box-shadow: inset 0px -1px 0px 0px #7070702b;">
-  <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 33%;padding: 1%">Ingrédients</div>
-  <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 20%;padding: 1%">Catégories</div>
-  <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 10%;padding: 1%">Stock</div>
-  <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 10%;padding: 1%">Unités</div>
-  <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 10%;padding: 1%">Prix unitaire</div>
-  <div style="width: 5%;padding: 1%"></div>
+  <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 32%;padding: 1%">Ingrédients</div>
+  <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 15%;padding: 1%">Catégories</div>
+  <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 15%;padding: 1%">Allergènes</div>
+  <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 7%;padding: 1%">Stock</div>
+  <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 7%;padding: 1%">Unités</div>
+  <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 7%;padding: 1%">Prix U.</div>
+  <div style="width: 3%;padding: 1%"></div>
 </div>
 
 <div [formGroup]="ingredientsFormGroup" *ngIf="dataLoaded">
@@ -12,21 +13,26 @@
        *ngFor="let ingredient of ingredientsFormGroup.get('ingredientFormArray')!['controls']; let indexIngredient = index">
     <div [formGroupName]="indexIngredient" style="display: flex; width: 98%;" >
       <input id="nameIngredientInput{{indexIngredient}}" formControlName="name"
-             style="background:none;border-radius:0;border: none;font-size: 1.563vw;font-family: 'Segoe UI', sans-serif;box-shadow: inset -1px 0px 0px 0px #7070702b;width: 33%;padding: 1%"
+             style="background:none;border-radius:0;border: none;font-size: 1.563vw;font-family: 'Segoe UI', sans-serif;box-shadow: inset -1px 0px 0px 0px #7070702b;width: 32%;padding: 1%"
              value="{{ingredient.name}}"
              (change)="updateNameIngredient(indexIngredient)"
              placeholder="Nom de l'ingrédient">
-      <div class="custom-select">
-        <select #category (change)="updateCategoryIngredient(indexIngredient, category.value)">
+      <div class="custom-select" style="width: 15%">
+        <select #category (change)="updateCategoryIngredient(indexIngredient, category.value)" >
           <option *ngFor="let category of getAllCategories(indexIngredient)" [value]="category.name">{{category.name}}</option>
         </select>
       </div>
+      <div class="custom-select" style="width: 15%">
+        <select #allergen (change)="updateAllergenIngredient(indexIngredient, allergen.value)">
+          <option *ngFor="let allergen of getAllAllergens(indexIngredient)" [value]="allergen.label">{{allergen.label}}</option>
+        </select>
+      </div>
       <input id="stockIngredientInput{{indexIngredient}}" formControlName="stock"
-             style="background:none;border-radius:0;border: none;font-size: 1.563vw;font-family: 'Segoe UI', sans-serif;box-shadow: inset -1px 0px 0px 0px #7070702b;width: 10%;padding: 1%"
+             style="background:none;border-radius:0;border: none;font-size: 1.563vw;font-family: 'Segoe UI', sans-serif;box-shadow: inset -1px 0px 0px 0px #7070702b;width: 7%;padding: 1%"
              value="{{ingredient.stock}}"
              (change)="updateStockIngredient(indexIngredient)"
              placeholder="0">
-      <div class="custom-select" style="width: 10%">
+      <div class="custom-select" style="width: 7%">
         <select #unit (change)="updateUnitIngredient(indexIngredient, unit.value)">
           <option *ngFor="let unit of units" [value]="unit.name">{{unit.name}}</option>
         </select>
@@ -37,12 +43,12 @@
              (change)="updateUnitIngredient(indexIngredient)"
              placeholder="Unité">-->
       <input id="unitePriceIngredientInput{{indexIngredient}}" formControlName="unitePrice"
-             style="background:none;border-radius:0;border: none;font-size: 1.563vw;font-family: 'Segoe UI', sans-serif;box-shadow: inset -1px 0px 0px 0px #7070702b;width: 10%;padding: 1%"
+             style="background:none;border-radius:0;border: none;font-size: 1.563vw;font-family: 'Segoe UI', sans-serif;box-shadow: inset -1px 0px 0px 0px #7070702b;width: 7%;padding: 1%"
              value="{{ingredient.unitePrice}}"
              (change)="updateUnitePriceIngredient(indexIngredient)"
              placeholder="0">
       <button
-        style="border: none;font-size: 1.563vw;font-family: 'Segoe UI', sans-serif;box-shadow: none;width: 5%;padding: 1%; background: none"
+        style="border: none;font-size: 1.563vw;font-family: 'Segoe UI', sans-serif;box-shadow: none;width: 3%;padding: 1%; background: none"
         (click)="removeIngredientAtIndex(indexIngredient)">
         <img src="assets/images/close.png" alt="">
       </button>

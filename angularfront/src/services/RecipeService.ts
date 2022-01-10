@@ -37,7 +37,9 @@ export class RecipeService {
       name: recipe.name,
       nbDiners: recipe.nbDiners,
       numUser: 1,
-      idCategory: recipe.categoryId
+      idCategory: recipe.categoryId,
+      image: recipe.image,
+      description: recipe.desc
     });
   }
 

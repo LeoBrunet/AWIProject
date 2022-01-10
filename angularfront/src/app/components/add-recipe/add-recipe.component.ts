@@ -16,6 +16,7 @@ import {RecipeStep} from "../../model/recipeStep";
 import {GeneralStep} from "../../model/generalStep";
 import {HttpClient, HttpEventType, HttpHeaders, HttpResponse} from "@angular/common/http";
 import {FileService} from "../../../services/FileService";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'add-recipe',
@@ -45,7 +46,7 @@ export class AddRecipeComponent implements OnInit {
   imageErrorMessage: string;
   selectedFile: File;
 
-  constructor(private _fileService: FileService, private _fb: FormBuilder, private _recipeService: RecipeService, private _ingredientService: IngredientService, private _ingredientCategoryService: IngredientCategoryService, private _stepService: StepService, private _recipeCategoryService: RecipeCategoryService) {
+  constructor(private router: Router, private _fileService: FileService, private _fb: FormBuilder, private _recipeService: RecipeService, private _ingredientService: IngredientService, private _ingredientCategoryService: IngredientCategoryService, private _stepService: StepService, private _recipeCategoryService: RecipeCategoryService) {
   }
 
   ngOnInit() {
@@ -102,8 +103,6 @@ export class AddRecipeComponent implements OnInit {
       this.recipe.desc = this.recipeFormGroup.get('desc')?.value;
       this.recipe.nbDiners = this.recipeFormGroup.get('nbDiners')?.value;
       this.recipe.image = this.recipeFormGroup.get('image')?.value;
-      console.log(this.recipe);
-      console.log("submit");
       this.uploadImageOnServ()
       this._recipeService.create(this.recipe).subscribe((data) => {
         this.recipe.num = data['numRecipe']
@@ -115,6 +114,7 @@ export class AddRecipeComponent implements OnInit {
         }
       })
     }
+    this.router.navigate(['/home-recipe'])
     //this.openPDF()
   }
 
