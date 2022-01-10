@@ -44,7 +44,7 @@ export class AddRecipeComponent implements OnInit {
   recipeImageLocalUrl: string = "../../assets/images/add_image.jpg";
   recipeFormGroup: FormGroup = this._fb.group({
     name: ['', [Validators.required, Validators.minLength(3)]],
-    desc: [''],
+    desc: ['', [Validators.required, Validators.minLength(40)]],
     nbDiners: ['', Validators.required],
     image: [''],
     steps: this._fb.array([this._fb.group({
