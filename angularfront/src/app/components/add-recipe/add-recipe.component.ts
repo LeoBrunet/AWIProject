@@ -363,8 +363,8 @@ export class AddRecipeComponent implements OnInit {
     this.nbStepsTotal--;
     this.getFormSteps().removeAt(indexStep);
     this.recipe.steps.splice(indexStep, 1);
-    for (let index = indexStep; index < this.recipe.recipeSteps.length; index++) {
-      this.recipe.recipeSteps[index].position--;
+    for (let index = indexStep; index < this.recipe.steps.length; index++) {
+      this.recipe.steps[index].position--;
     }
   }
 
