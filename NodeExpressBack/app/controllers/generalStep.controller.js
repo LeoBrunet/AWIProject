@@ -2,6 +2,7 @@ const db = require("../models");
 const GeneralStep = db.generalStep;
 const DescriptionStep = db.descriptionStep;
 const Ingredient = db.ingredient;
+const Recipe = db.recipe;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new GeneralStep
@@ -70,12 +71,18 @@ exports.createGeneralAndDescriptionStep = (req, res) => {
 
 // Retrieve all GeneralSteps for a Recipe from the database.
 exports.findAllOfARecipe = (req, res) => {
-    GeneralStep.findAll({where : {proprietaryRecipe: req.params.id}, include: {
-            model: DescriptionStep,
-            include: {
-                model: Ingredient
+    GeneralStep.findAll({where : {proprietaryRecipe: req.params.id}, include: [
+            {
+                model: DescriptionStep,
+                include: {
+                    model: Ingredient
+                }
+            },
+            {
+                model: Recipe,
+                as: 'RecipeStep'
             }
-        }})
+        ]})
         .then(data => {
             res.send(data);
         })
