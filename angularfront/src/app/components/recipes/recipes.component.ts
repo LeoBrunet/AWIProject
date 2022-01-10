@@ -10,6 +10,7 @@ import {GeneralServiceInterface} from "../../../services/GeneralService";
 })
 export class RecipesComponent implements OnInit {
   @Input() recipes: Recipe[];
+  @Input() imagesPath: string[];
   readonly averageMinuteRate = GeneralServiceInterface.averageMinuteRate;
   readonly averageMinuteRateFluid = GeneralServiceInterface.averageMinuteRateFluid;
 
@@ -17,6 +18,7 @@ export class RecipesComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    console.log(changes)
     this.recipes = changes.recipes.currentValue;
   }
 

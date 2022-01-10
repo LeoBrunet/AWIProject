@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpEvent, HttpRequest} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import {GeneralServiceInterface} from "./GeneralService";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FileService {
-  private baseUrl = GeneralServiceInterface.baseUrl + "/files";
+  private baseUrl = GeneralServiceInterface.baseUrl + "/file";
 
   constructor(private http: HttpClient) { }
 

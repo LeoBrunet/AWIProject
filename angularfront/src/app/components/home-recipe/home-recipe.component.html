@@ -4,9 +4,9 @@
   <span class="welcome light-grey">Bonjour Nicolas,</span>
   <span class="logo2 big">Vos Recettes</span>
   <div class="search">
-    <input name="search" placeholder="{{loupe}}  Rechercher des recettes" type="text">
+    <input #searchInput name="search" placeholder="{{loupe}}  Rechercher des recettes" type="text" (keyup.enter)="search(searchInput.value)">
   </div>
-  <banner-recipe [recipes]="recipes"></banner-recipe>
+  <banner-recipe [recipes]="recipes" [imagesPath]="imagesPath"></banner-recipe>
   <categories [categories]="categories" (newCategoryEvent)="getSelectedCategory($event)"></categories>
-  <recipes [recipes]="selectedRecipes"></recipes>
+  <recipes [recipes]="selectedRecipes" [imagesPath]="imagesPath"></recipes>
 </div>

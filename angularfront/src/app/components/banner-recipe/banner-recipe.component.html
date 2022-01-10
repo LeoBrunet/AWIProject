@@ -2,7 +2,7 @@
   <div class="banner-elem" *ngFor="let recipe of getFirstsRecipes(); let index = index">
     <div *ngIf="recipe">
       <a class="banner-img-shadow" href="#"><img class="banner-recipe-img"
-                                                 src="../../../assets/images/fish_chips.png"></a>
+                                                 [src]="imagesPath[index]"></a>
       <a href="/recipe/{{recipe.num}}">
         <div class="inside-banner-elem">
           <div class="banner-status">RÉCENT</div>

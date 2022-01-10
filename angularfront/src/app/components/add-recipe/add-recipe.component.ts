@@ -43,8 +43,9 @@ export class AddRecipeComponent implements OnInit {
   })
   progress = 0;
   imageErrorMessage: string;
+  selectedFile: File;
 
-  constructor(private uploadService: FileService, private _fb: FormBuilder, private _recipeService: RecipeService, private _ingredientService: IngredientService, private _ingredientCategoryService: IngredientCategoryService, private _stepService: StepService, private _recipeCategoryService: RecipeCategoryService) {
+  constructor(private _fileService: FileService, private _fb: FormBuilder, private _recipeService: RecipeService, private _ingredientService: IngredientService, private _ingredientCategoryService: IngredientCategoryService, private _stepService: StepService, private _recipeCategoryService: RecipeCategoryService) {
   }
 
   ngOnInit() {
@@ -86,7 +87,6 @@ export class AddRecipeComponent implements OnInit {
         }));
       }
     }
-    //TODO Bouger ça
     let steps: Step[] = [new Step(1, "", "", [], [], 10)];
     let recipeSteps: RecipeStep[] = [];
     this.recipe = new Recipe("", "", 0, "", steps, recipeSteps, 0)
@@ -104,6 +104,7 @@ export class AddRecipeComponent implements OnInit {
       this.recipe.image = this.recipeFormGroup.get('image')?.value;
       console.log(this.recipe);
       console.log("submit");
+      this.uploadImageOnServ()
       this._recipeService.create(this.recipe).subscribe((data) => {
         this.recipe.num = data['numRecipe']
         for (let index = 0; index < this.recipe.steps.length; index++) {
@@ -175,26 +176,8 @@ export class AddRecipeComponent implements OnInit {
         this.recipeImageLocalUrl = event.target.result;
       }
       reader.readAsDataURL(event.target.files[0]);
-      /*this.http.post(this.url, event.target.files[0], this.htmlOptions).subscribe(response => {
-          console.log(response);
-        }
-      );*/
-      this.uploadService.uploadFile(event.target.files[0]).subscribe(
-        (event: any) => {
-          if (event.type === HttpEventType.UploadProgress) {
-            this.progress = Math.round(100 * event.loaded / event.total);
-          }
-        },
-        (err: any) => {
-          console.log(err);
-          this.progress = 0;
-
-          if (err.error && err.error.message) {
-            this.imageErrorMessage = err.error.message;
-          } else {
-            this.imageErrorMessage = 'Could not upload the file!';
-          }
-        });
+      this.selectedFile = event.target.files[0];
+      //this.uploadImageOnServ()
     }
   }
 
@@ -203,23 +186,23 @@ export class AddRecipeComponent implements OnInit {
     if (input) input.click();
   }
 
-  openPDF(): void {
+  uploadPDF(fileName): void {
     let DATA = document.getElementById('recipeToPDF');
     if (DATA) {
       //DATA.style = "display: block; width: 100%"
-      console.log(html2canvas(DATA));
       html2canvas(DATA).then(canvas => {
         let fileWidth = 208;
         let fileHeight = canvas.height * fileWidth / canvas.width;
         var FILEURI = new Image()
+        const fileService = this._fileService;
         FILEURI.src = canvas.toDataURL('image/png')
-        console.log(FILEURI.src)
-        console.log(canvas)
         FILEURI.onload = function () {
           let PDF = new jsPDF('p', 'mm', 'a4');
           let position = 0;
           PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight)
-          PDF.save("test-recipe.pdf");
+          //PDF.save("test-recipe.pdf");
+          let f = new File([PDF.output('blob')], fileName);
+          fileService.uploadFile(f);
         }
       });
     }
@@ -488,7 +471,29 @@ export class AddRecipeComponent implements OnInit {
     return this.recipe!.steps[indexStep].quantities[index];
   }
 
+  //* UTILITIES *//
+  uploadImageOnServ() {
+    this._fileService.uploadFile(this.selectedFile).subscribe(
+      (event: any) => {
+        if (event.type === HttpEventType.UploadProgress) {
+          this.progress = Math.round(100 * event.loaded / event.total);
+        }
+      },
+      (err: any) => {
+        console.log(err);
+        this.progress = 0;
+
+        if (err.error && err.error.message) {
+          this.imageErrorMessage = err.error.message;
+        } else {
+          this.imageErrorMessage = 'Could not upload the file!';
+        }
+      });
+  }
+
   counter(i: number): number[] {
     return Array.from({length: i}, (v, i) => i + 1);
   }
+
+
 }

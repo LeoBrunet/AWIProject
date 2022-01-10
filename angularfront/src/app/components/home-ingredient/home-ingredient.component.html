@@ -3,7 +3,7 @@
 <div class="split right">
   <span class="logo2 big">Vos ingrédients</span>
   <div class="search">
-    <input name="search" placeholder="{{loupe}} Rechercher des ingrédients" type="text">
+    <input #searchInput name="search" placeholder="{{loupe}} Rechercher des ingrédients" type="text" (keyup.enter)="search(searchInput.value)">
   </div>
   <div class="ingredient-categories">
     <categories [categories]="categories" (newCategoryEvent)="getSelectedCategory($event)"></categories>

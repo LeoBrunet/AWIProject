@@ -4,6 +4,7 @@ import {RecipeCategoryService} from "../../../services/RecipeCategoryService";
 import {Recipe} from "../../model/recipe";
 import {RecipeService} from "../../../services/RecipeService";
 import {Router} from "@angular/router";
+import {GeneralServiceInterface} from "../../../services/GeneralService";
 
 @Component({
   selector: 'home-recipe',
@@ -14,10 +15,14 @@ import {Router} from "@angular/router";
 export class HomeRecipeComponent implements OnInit {
   categories: Category[] = [];
   selectedCategory: Category;
-  recipes: Recipe[];
-  selectedRecipes: Recipe[];
+  recipes: Recipe[] = [];
+  selectedRecipes: Recipe[] = [];
+  imagesPath: string[] = [];
 
   readonly loupe = "\uD83D\uDD0E";
+
+  constructor(private router: Router, private _recipeCategoryRecipe: RecipeCategoryService, private _recipeService: RecipeService) {
+  }
 
   ngOnInit(): void {
     //this.categories = [new Category(0, 'Tout', "all.png"),new Category(1, 'Viande', "steak.png"), new Category(2, 'Poisson', "fish_cat.png"), new Category(3, 'Autre')];
@@ -30,15 +35,12 @@ export class HomeRecipeComponent implements OnInit {
     })
     this._recipeService.getAll().subscribe(async (data: any) => {
       let datas: any[] = data;
-      this.recipes = [];
       for (const data1 of datas) {
-        this.recipes.push(await this._recipeService.createRecipe(data1));
+        let recipe = await this._recipeService.createRecipe(data1)
+        this.recipes.push(recipe);
+        this.imagesPath.push(GeneralServiceInterface.imagePath + recipe.image);
       }
-      this.selectedRecipes = this.recipes;
     });
-  }
-
-  constructor(private router: Router, private _recipeCategoryRecipe: RecipeCategoryService, private _recipeService: RecipeService) {
   }
 
   newRecipe() {
@@ -47,11 +49,18 @@ export class HomeRecipeComponent implements OnInit {
 
   getSelectedCategory(category: Category) {
     this.selectedCategory = category as Category;
-    if (this.selectedCategory.name == "Tout"){
+    if (this.selectedCategory.name == "Tout") {
       this.selectedRecipes = this.recipes;
     } else {
       this.selectedRecipes = this.recipes.filter(recipe => recipe.categoryId == this.selectedCategory.id);
     }
   }
 
+  search(search: string) {
+    if (search != "") {
+      this.selectedRecipes = this.selectedRecipes.filter(recipe => recipe.name.toLowerCase().includes(search.toLowerCase()))
+    } else {
+      this.selectedRecipes = this.recipes
+    }
+  }
 }

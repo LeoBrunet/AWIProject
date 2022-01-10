@@ -46,13 +46,20 @@ export class HomeIngredientComponent implements OnInit {
 
   getSelectedCategory(category: Category) {
     if (category) {
-
       this.selectedCategory = category as IngredientCategory;
       if (this.selectedCategory.name == "Tout") {
         this.selectedIngredients = this.ingredients;
       } else {
         this.selectedIngredients = this.ingredients.filter(ingredient => ingredient.category.id == this.selectedCategory.id || ingredient.category.name == "Tout")
       }
+    }
+  }
+
+  search(search: string) {
+    if (search != "") {
+      this.selectedIngredients = this.ingredients.filter(ingredient => ingredient.name.toLowerCase().includes(search.toLowerCase()))
+    } else {
+      this.selectedIngredients = this.ingredients
     }
   }
 }

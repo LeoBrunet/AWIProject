@@ -1,11 +1,11 @@
 @font-face {
   font-family: "Segoe UI Semibold";
-  src:local("seguisb.ttf"), url("../fonts/segoe-ui-semibold/seguisb.ttf") format("truetype")
+  src: local("seguisb.ttf"), url("../fonts/segoe-ui-semibold/seguisb.ttf") format("truetype")
 }
 
 @font-face {
   font-family: "Segoe UI";
-  src:local("seguisb.ttf"), url("../fonts/segoe-ui-semibold/segui.ttf") format("truetype")
+  src: local("seguisb.ttf"), url("../fonts/segoe-ui-semibold/segui.ttf") format("truetype")
 }
 
 
@@ -66,7 +66,30 @@ input::-webkit-input-placeholder {
   height: 100%;
   overflow: hidden;
   border-radius: 0.417vw;
-  margin-right: 1.042vw;
+  margin-right: 1%;
+}
+
+.banner-elem-animation {
+  -webkit-animation: slide 30s linear infinite; /* Chrome, Safari, Opera */
+  animation: slide 30s linear infinite; /* Vitesse de défilement */
+}
+
+.banner:hover .banner-elem-animation {
+  animation-play-state: paused;
+}
+
+@keyframes slide {
+  29%, 33% {
+    transform: translate3d(-101%, 0, 0); /* The image width */
+  }
+
+  62%, 66% {
+    transform: translate3d(-203%, 0, 0); /* The image width */
+  }
+
+  95%,100% {
+    transform: translate3d(-304%, 0, 0); /* The image width */
+  }
 }
 
 .banner-recipe-img {
@@ -259,12 +282,13 @@ hr {
   padding: 1%
 }
 
-.buttonFixedBottom  {
+.buttonFixedBottom {
   width: 30%;
   height: 6vh;
   border-radius: 10px;
   border-color: #00000000;
 }
+
 .button-diners {
   display: inline-flex;
   align-items: center;

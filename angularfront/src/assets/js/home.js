@@ -1,11 +1,16 @@
 $(document).ready(function() {
 	const scrollContainer = document.getElementById("banner");
-	if(scrollContainer) {
+	/*if(scrollContainer) {
+	  const maxValue = (scrollContainer.offsetWidth * (3/4) * 2) - scrollContainer.offsetWidth * (1/4)
     scrollContainer.addEventListener("wheel", (evt) => {
       evt.preventDefault();
-      scrollContainer.scrollLeft += evt.deltaY / 5;
+      if (scrollContainer.scrollLeft + evt.deltaY < maxValue) {
+        scrollContainer.scrollLeft += evt.deltaY;
+      } else {
+        scrollContainer.scrollLeft = maxValue;
+      }
     });
-  }
+  }*/
 
 	/* ADAPT TEXT SIZE OF RECIPE TITLE (MAX LENGTH 100 letters)*/
 	const bannerTitles = document.getElementsByClassName("banner-title");

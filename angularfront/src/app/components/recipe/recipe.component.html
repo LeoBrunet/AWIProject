@@ -9,7 +9,7 @@
           <p class="no-margin">{{recipe.desc}}</p>
           <div class="semibold">Pour {{getNbDiners()}}</div>
         </div>
-        <img *ngIf="recipe.image" src="../../../assets/images/{{recipe.image}}"
+        <img *ngIf="recipe.image" [src]="imagePath"
              style="width: 30%; border-radius: 2%">
       </div>
     </div>
@@ -47,7 +47,9 @@
         </div>
       </div>
     </div>
-    <span>Étapes ({{recipe.duration}} min)</span>
+    <div *ngIf="recipe.steps[0] != undefined || recipe.recipeSteps[0] != undefined">
+      <span>Étapes ({{recipe.duration}} min)</span>
+    </div>
     <div class="pdf-text-content fs25"
          *ngFor="let position of counter(recipe.steps.length + recipe.recipeSteps.length)">
       <div *ngIf="getStepAtPosition(position)">

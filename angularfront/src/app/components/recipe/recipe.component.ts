@@ -7,6 +7,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {GeneralServiceInterface} from "../../../services/GeneralService";
 import {Step} from "../../model/step";
 import {RecipeStep} from "../../model/recipeStep";
+import {FileService} from "../../../services/FileService";
+import {response} from "express";
 
 @Component({
   selector: 'recipe',
@@ -26,9 +28,10 @@ export class RecipeComponent implements OnInit {
   quantities: number[] = [];
   originalNbDiners: number;
   nbSales: number = 1;
+  imagePath = GeneralServiceInterface.imagePath;
   //TODO Modifier
   //TODO Vendre
-  constructor(private router: Router, private route: ActivatedRoute, private _recipeService: RecipeService, private _ingredientService: IngredientService) {
+  constructor(private _fileService: FileService, private router: Router, private route: ActivatedRoute, private _recipeService: RecipeService, private _ingredientService: IngredientService) {
   }
 
   ngOnInit(): void {
@@ -46,6 +49,7 @@ export class RecipeComponent implements OnInit {
         this.flavoringCost = this.recipe.ingredientCost * 0.05;
         this.personnelCost = this.recipe.duration * GeneralServiceInterface.averageMinuteRate;
         this.fluidCost = this.recipe.duration * GeneralServiceInterface.averageMinuteRateFluid;
+        this.imagePath += this.recipe.image;
         console.log(this.recipe)
       });
     });
