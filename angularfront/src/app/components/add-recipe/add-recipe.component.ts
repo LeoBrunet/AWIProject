@@ -104,6 +104,7 @@ export class AddRecipeComponent implements OnInit {
       this.recipe.nbDiners = this.recipeFormGroup.get('nbDiners')?.value;
       this.recipe.image = this.recipeFormGroup.get('image')?.value;
       this.uploadImageOnServ()
+      //this.uploadPDF('recipe'+this.recipe.num+'.pdf')
       this._recipeService.create(this.recipe).subscribe((data) => {
         this.recipe.num = data['numRecipe']
         for (let index = 0; index < this.recipe.steps.length; index++) {

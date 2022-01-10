@@ -39,7 +39,7 @@ export class RecipeService {
       nbDiners: recipe.nbDiners,
       numUser: 1,
       idCategory: recipe.categoryId,
-      image: recipe.image,
+      image: recipe.image.replace('C:\\fakepath\\', ""),
       description: recipe.desc
     });
   }
