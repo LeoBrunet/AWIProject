@@ -178,6 +178,7 @@ input::-webkit-input-placeholder {
 }
 
 .category-text {
+  font-size: 0.9vw;
   margin: 0 0 0 20%;
   word-break: break-word;
   width: 60%
@@ -264,6 +265,8 @@ hr {
   border-color: #00000000;
 }
 .button-diners {
+  display: inline-flex;
+  align-items: center;
   height: fit-content;
   width: fit-content;
   border-radius: 1vw;

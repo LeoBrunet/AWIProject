@@ -1,6 +1,7 @@
 import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
 import {Recipe} from "../../model/recipe";
 import {Router} from "@angular/router";
+import {GeneralServiceInterface} from "../../../services/GeneralService";
 
 @Component({
   selector: 'banner-recipe',
@@ -10,6 +11,8 @@ import {Router} from "@angular/router";
 export class BannerRecipeComponent implements OnInit {
   @Input() recipes: Recipe[];
   firstRecipes: Recipe[];
+  readonly averageMinuteRate = GeneralServiceInterface.averageMinuteRate;
+  readonly averageMinuteRateFluid = GeneralServiceInterface.averageMinuteRateFluid;
 
   constructor(private  router: Router) {
   }

@@ -1,11 +1,16 @@
 @font-face {
   font-family: "Segoe UI Semibold";
-  src:local("seguisb.ttf"), url("../fonts/segoe-ui-semibold/seguisb.ttf") format("truetype")
+  src: local("seguisb.ttf"), url("../fonts/segoe-ui-semibold/seguisb.ttf") format("truetype")
 }
 
 @font-face {
   font-family: "Segoe UI";
-  src:local("seguisb.ttf"), url("../fonts/segoe-ui-semibold/segui.ttf") format("truetype")
+  src: local("seguisb.ttf"), url("../fonts/segoe-ui-semibold/segui.ttf") format("truetype")
+}
+
+.classic-font {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
 }
 
 .logo1 {
@@ -18,7 +23,7 @@
   font-weight: bold;
   color: #0F0E2D;
   font-size: 1.563vw;
-  font-family: 'Segoe UI';
+  font-family: 'Segoe UI', sans-serif;
 }
 
 .slogan {
@@ -60,6 +65,7 @@
 .bg-green {
   background: #599442;
 }
+
 .fs25 {
   font-size: 1.302vw;
 }
@@ -85,10 +91,15 @@
   width: 20%;
   padding: 1%
 }
-.custom-select select{
+
+.custom-select select {
   font-family: "Segoe UI", sans-serif;
   width: 100%;
   font-size: 1.563vw;
   border: none;
+}
+
+.no-margin {
+  margin: 0;
 }
 

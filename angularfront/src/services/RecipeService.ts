@@ -12,16 +12,15 @@ const baseUrl = GeneralServiceInterface.baseUrl + '/recipe';
   providedIn: 'root'
 })
 export class RecipeService {
-
   constructor(private http: HttpClient, private _stepService: StepService) {
   }
 
   getAll() {
-    return this.http.get(baseUrl, {
+    return this.http.get(baseUrl/*, {
       headers: new HttpHeaders({
         'Access-Control-Allow-Origin': '*'
       })
-    })
+    }*/)
     //return [new Recipe('test', 'test', 1, "../../../assets/images/fish_chips.png", []), new Recipe('test', 'test', 1, "../../../assets/images/fish_chips.png", [])]
   }
 
@@ -65,6 +64,6 @@ export class RecipeService {
         recipeSteps = stepsResponse;
       });
     });
-    return new Recipe(data['name'], data['description'], data['nbDiners'], data['image'], steps, recipeSteps, data['idCategory'], data['numRecipe'])
+    return new Recipe(data['name'], data['description'], data['nbDiners'], data['image'], steps, recipeSteps, data['idCategory'], data['numRecipe'], data['duration'], data['ingredientCost'])
   }
 }
