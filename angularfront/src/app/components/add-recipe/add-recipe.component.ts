@@ -14,7 +14,8 @@ import {Category} from "../../model/category";
 import {RecipeCategoryService} from "../../../services/RecipeCategoryService";
 import {RecipeStep} from "../../model/recipeStep";
 import {GeneralStep} from "../../model/generalStep";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpEventType, HttpHeaders, HttpResponse} from "@angular/common/http";
+import {FileService} from "../../../services/FileService";
 
 @Component({
   selector: 'add-recipe',
@@ -22,17 +23,6 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
   styleUrls: ['../../../assets/css/new_recipe_menu.css', '../../../assets/css/new_recipe_left.css', '../../../assets/css/new_recipe_right.css']
 })
 export class AddRecipeComponent implements OnInit {
-  url = "https://webdav-nicolas-ig.alwaysdata.net";
-  htmlOptions = {
-    headers: new HttpHeaders({
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': 'true',
-      'Access-Control-Allow-Headers': 'Content-Type',
-      'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
-      'Content-Type': 'image',
-      'Authorization': 'Basic ' + btoa('nicolas-ig:Nicolas.2000')
-    })
-  }
   categories: IngredientCategory[] = [];
   recipeCategories: Category[] = [];
   ingredients: Ingredient[] = [];
@@ -51,8 +41,10 @@ export class AddRecipeComponent implements OnInit {
     })]),
     recipeSteps: this._fb.array([])
   })
+  progress = 0;
+  imageErrorMessage: string;
 
-  constructor(private http: HttpClient, private _fb: FormBuilder, private _recipeService: RecipeService, private _ingredientService: IngredientService, private _ingredientCategoryService: IngredientCategoryService, private _stepService: StepService, private _recipeCategoryService: RecipeCategoryService) {
+  constructor(private uploadService: FileService, private _fb: FormBuilder, private _recipeService: RecipeService, private _ingredientService: IngredientService, private _ingredientCategoryService: IngredientCategoryService, private _stepService: StepService, private _recipeCategoryService: RecipeCategoryService) {
   }
 
   ngOnInit() {
@@ -183,10 +175,26 @@ export class AddRecipeComponent implements OnInit {
         this.recipeImageLocalUrl = event.target.result;
       }
       reader.readAsDataURL(event.target.files[0]);
-      this.http.post(this.url, event.target.files[0], this.htmlOptions).subscribe(response => {
+      /*this.http.post(this.url, event.target.files[0], this.htmlOptions).subscribe(response => {
           console.log(response);
         }
-      );
+      );*/
+      this.uploadService.uploadFile(event.target.files[0]).subscribe(
+        (event: any) => {
+          if (event.type === HttpEventType.UploadProgress) {
+            this.progress = Math.round(100 * event.loaded / event.total);
+          }
+        },
+        (err: any) => {
+          console.log(err);
+          this.progress = 0;
+
+          if (err.error && err.error.message) {
+            this.imageErrorMessage = err.error.message;
+          } else {
+            this.imageErrorMessage = 'Could not upload the file!';
+          }
+        });
     }
   }
 
@@ -284,12 +292,12 @@ export class AddRecipeComponent implements OnInit {
     this.getRecipeSteps().removeAt(indexRecipeStep);
     this.recipe.recipeSteps.splice(indexRecipeStep, 1);
     for (let position of this.counter(this.nbStepsTotal + 1)) {
-      if (position > positionOfStepDeleted){
+      if (position > positionOfStepDeleted) {
         const step = this.getStepAtPosition(position);
         const recipeStep = this.getRecipeStepAtPosition(position);
-        if (step){
+        if (step) {
           step.position--;
-        } else if (recipeStep){
+        } else if (recipeStep) {
           recipeStep.position--;
         }
       }
@@ -371,12 +379,12 @@ export class AddRecipeComponent implements OnInit {
     this.getFormSteps().removeAt(indexStep);
     this.recipe.steps.splice(indexStep, 1);
     for (let position of this.counter(this.nbStepsTotal + 1)) {
-      if (position > positionOfStepDeleted){
+      if (position > positionOfStepDeleted) {
         const step = this.getStepAtPosition(position);
         const recipeStep = this.getRecipeStepAtPosition(position);
-        if (step){
+        if (step) {
           step.position--;
-        } else if (recipeStep){
+        } else if (recipeStep) {
           recipeStep.position--;
         }
       }

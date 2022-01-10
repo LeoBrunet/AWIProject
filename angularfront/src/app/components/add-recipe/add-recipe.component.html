@@ -41,7 +41,8 @@
     <div class="form-container">
       <div class="form-container-name">
         <label for="recipe-photo">Photo</label>
-        <input id="recipe-photo" class="photo-container" name="recipe-photo" formControlName="image" type="file" style="cursor: pointer"
+        <input id="recipe-photo" class="photo-container" name="recipe-photo" formControlName="image" type="file"
+               style="cursor: pointer"
                (change)="uploadImage($event)" (keyup.enter)="uploadImage($event)"/>
       </div>
       <div class="form-container-name">
@@ -188,8 +189,13 @@
         <p>{{getRecipeNbDiners()}}</p>
       </div>
 
-      <img (click)="setImage()" [src]="recipeImageLocalUrl" *ngIf="recipeImageLocalUrl"
-           style="cursor: pointer;width: 30%; right: 0; margin: 2% 3%; border-radius: 2%">
+
+      <!--<img (click)="setImage()" [src]="recipeImageLocalUrl" *ngIf="recipeImageLocalUrl"
+           style="cursor: pointer;width: 30%; right: 0; margin: 2% 3%; border-radius: 2%">-->
+      <div style="position:relative;cursor: pointer;width: 30%; right: 0; margin: 2% 3%; border-radius: 2%">
+        <div style="position:absolute;z-index: 1;right: 2%;top: 2%" *ngIf="progress != 0 && progress != 100">{{progress}}%</div>
+        <img style="position:absolute;z-index: 0; width: 100%" (click)="setImage()" [src]="recipeImageLocalUrl" *ngIf="recipeImageLocalUrl">
+      </div>
     </div>
     <div class="pdf-text-content fs25"
          *ngFor="let position of counter(nbStepsTotal);">
