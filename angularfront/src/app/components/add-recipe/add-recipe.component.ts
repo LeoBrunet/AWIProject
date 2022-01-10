@@ -22,7 +22,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
   styleUrls: ['../../../assets/css/new_recipe_menu.css', '../../../assets/css/new_recipe_left.css', '../../../assets/css/new_recipe_right.css']
 })
 export class AddRecipeComponent implements OnInit {
-  url = "http://webdav-nicolas-ig.alwaysdata.net";
+  url = "https://webdav-nicolas-ig.alwaysdata.net";
   htmlOptions = {
     headers: new HttpHeaders({
       'Access-Control-Allow-Origin': '*',
