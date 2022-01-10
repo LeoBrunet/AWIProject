@@ -33,13 +33,12 @@ export class RecipeService {
   }
 
   create(recipe) {
-    console.log(recipe)
     return this.http.post(baseUrl, {
       name: recipe.name,
       nbDiners: recipe.nbDiners,
       numUser: 1,
       idCategory: recipe.categoryId,
-      image: recipe.image.replace('C:\\fakepath\\', ""),
+      image: recipe.image.split("\\")[2],
       description: recipe.desc
     });
   }
