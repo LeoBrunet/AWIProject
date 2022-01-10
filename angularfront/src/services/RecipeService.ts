@@ -33,8 +33,10 @@ export class RecipeService {
   }
 
   create(recipe) {
-    let image = recipe.image.split("\\")[2]
-    if (image == undefined) {
+    let image = ""
+    if (recipe.image.includes("\\")) {
+      image = recipe.image.split("\\")[2]
+    } else {
       image = recipe.image.split("/")[2]
     }
     return this.http.post(baseUrl, {
