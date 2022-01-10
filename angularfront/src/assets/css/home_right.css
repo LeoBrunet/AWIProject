@@ -224,13 +224,14 @@ input::-webkit-input-placeholder {
 
 .recipe-img {
   width: 100%;
-  border-radius: 0.417vw;
+  border-radius: 0.417vw 0.417vw 0 0;
 }
 
 .recipe-text {
   display: block;
-  width: 100%;
+  width: 90%;
   font-size: 1.146vw;
+  padding: 0 5%;
 }
 
 hr {

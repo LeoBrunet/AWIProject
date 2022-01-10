@@ -18,7 +18,6 @@ export class SalesComponent implements OnInit {
       let datas: any[] = data;
       datas.forEach(data => {
         this.sales.push(this._saleService.createSale(data))
-
       })
     })
   }

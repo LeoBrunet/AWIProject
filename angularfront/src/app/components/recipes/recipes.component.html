@@ -1,8 +1,8 @@
 <div class="recipes">
-  <div class="recipe" *ngFor="let recipe of recipes" (click)="goToRecipe(recipe)" style="cursor: pointer;">
+  <div class="recipe" *ngFor="let recipe of recipes" (click)="goToRecipe(recipe)" style="cursor: pointer;background: #e3e3e370; border-radius: 0.417vw">
     <img class="recipe-img" src="../../../assets/images/fish_chips.png">
     <div class="recipe-text">
-      <p class="bold grey">{{recipe.name}}</p>
+      <p class="bold grey" style="margin: 2% 0">{{recipe.name}}</p>
       <p class="recipe-desc light-grey fs15">{{recipe.desc}}</p>
       <hr/>
       <div style="display: flex; justify-content: space-between; font-family: 'Segoe UI Semibold'">

@@ -1,6 +1,4 @@
-import {Component, OnInit} from '@angular/core';
-import {Ingredient} from "./model/ingredients";
-import {IngredientCategory} from "./model/ingredientCategory";
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +6,5 @@ import {IngredientCategory} from "./model/ingredientCategory";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'angularfront';
+  title = 'RecipeApp';
 }

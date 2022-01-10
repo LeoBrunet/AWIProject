@@ -374,7 +374,7 @@ export class AddRecipeComponent implements OnInit {
   }
 
   removeStepAt(indexStep): void {
-    let positionOfStepDeleted = this.recipe.recipeSteps[indexStep].position;
+    let positionOfStepDeleted = this.recipe.steps[indexStep].position;
     this.nbStepsTotal--;
     this.getFormSteps().removeAt(indexStep);
     this.recipe.steps.splice(indexStep, 1);

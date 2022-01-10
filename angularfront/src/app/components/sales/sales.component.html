@@ -2,24 +2,34 @@
 <div class="split right">
   <span class="logo2 big">Vos ventes</span>
   <div class="semibold" style="display: flex; width: 98%; margin-top: 2%;box-shadow: inset 0px -1px 0px 0px #7070702b;">
-    <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 48%;padding: 1%">Nom de la recette</div>
-    <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 30%;padding: 1%">Date</div>
-    <div style="width: 20%;padding: 1%">Unité vendu</div>
+    <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 40%;padding: 1%">Nom de la recette</div>
+    <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 22%;padding: 1%">Date</div>
+    <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 12%;padding: 1%">Unité vendu</div>
+    <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 12%;padding: 1%">Cout total</div>
+    <div style="width: 12%;padding: 1%">Prix de vente</div>
   </div>
   <div *ngFor="let sale of sales">
     <div *ngIf="sale" style="display: flex; width: 98%;">
 
       <div
-        style="background:none;border-radius:0;border: none;font-size: 1.563vw;font-family: 'Segoe UI', sans-serif;box-shadow: inset -1px 0px 0px 0px #7070702b;width: 48%;padding: 1%">
-        <a href="/recipe/{{sale.numRecipe}}">{{sale.numRecipe}}</a>
+        style="background:none;border-radius:0;border: none;font-size: 1.563vw;font-family: 'Segoe UI', sans-serif;box-shadow: inset -1px 0px 0px 0px #7070702b;width: 40%;padding: 1%">
+        <a href="/recipe/{{sale.numRecipe}}">{{sale.nameRecipe}}</a>
       </div>
       <div
-        style="background:none;border-radius:0;border: none;font-size: 1.563vw;font-family: 'Segoe UI', sans-serif;box-shadow: inset -1px 0px 0px 0px #7070702b;width: 30%;padding: 1%">
+        style="background:none;border-radius:0;border: none;font-size: 1.563vw;font-family: 'Segoe UI', sans-serif;box-shadow: inset -1px 0px 0px 0px #7070702b;width: 22%;padding: 1%">
         {{dateFormatted(sale.date)}}
       </div>
       <div
-        style="background:none;border-radius:0;border: none;font-size: 1.563vw;font-family: 'Segoe UI', sans-serif;width: 20%;padding: 1%">
+        style="text-align: right;background:none;border-radius:0;border: none;font-size: 1.563vw;font-family: 'Segoe UI', sans-serif;box-shadow: inset -1px 0px 0px 0px #7070702b;width: 12%;padding: 1%">
         {{sale.quantity}}
+      </div>
+      <div
+        style="text-align: right;background:none;border-radius:0;border: none;font-size: 1.563vw;font-family: 'Segoe UI', sans-serif;box-shadow: inset -1px 0px 0px 0px #7070702b;width: 12%;padding: 1%">
+        {{sale.cost}} €
+      </div>
+      <div
+        style="text-align: right;background:none;border-radius:0;border: none;font-size: 1.563vw;font-family: 'Segoe UI', sans-serif;width: 12%;padding: 1%">
+        {{sale.price}} €
       </div>
     </div>
   </div>

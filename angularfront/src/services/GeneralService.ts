@@ -4,4 +4,5 @@ export module GeneralServiceInterface {
   // CONSTANTES CALCULS DES COUTS
   export const averageMinuteRate: number = 0.175; // Taux horaire moyen commis de cuisine en France en 2022
   export const averageMinuteRateFluid: number = 0.0198;
+  export const sellingPriceMultiplierCoefficient: number = 0.3;
 }

@@ -21,6 +21,6 @@ export class SaleService {
   }
 
   public createSale(data): Sale {
-    return new Sale(data['numSale'], data['quantity'], new Date(data['saleDate']), data['numRecipe']);
+    return new Sale(data['numSale'], data['quantity'], new Date(data['saleDate']), data['numRecipe'], data['recipe']['name'], data['cost'], data['price']);
   }
 }

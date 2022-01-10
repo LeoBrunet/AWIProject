@@ -19,6 +19,7 @@ export class RecipeComponent implements OnInit {
   flavoringCost: number;
   personnelCost: number;
   fluidCost: number;
+  cost: number;
 
   @Input() recipe: Recipe;
   ingredients: Ingredient[] = [];
@@ -74,13 +75,14 @@ export class RecipeComponent implements OnInit {
       this.flavoringCost = this.flavoringCost + ((this.flavoringCost / this.nbSales) * increment)
       this.personnelCost = this.personnelCost + ((this.personnelCost / this.nbSales) * increment)
       this.fluidCost = this.fluidCost + ((this.fluidCost / this.nbSales) * increment)
+      this.cost = +(this.recipe.ingredientCost + this.flavoringCost + this.personnelCost + this.fluidCost).toFixed(2);
       this.nbSales = this.nbSales + increment;
     }
   }
 
   public sell(): void {
     console.log("sell")
-    this._recipeService.sell(this.recipe.num, this.recipe.nbDiners).subscribe((response) => {
+    this._recipeService.sell(this.recipe.num, this.recipe.nbDiners, this.cost, this.cost * GeneralServiceInterface.sellingPriceMultiplierCoefficient).subscribe((response) => {
       console.log(response)
       this.router.navigate(['home-recipe'])
     });

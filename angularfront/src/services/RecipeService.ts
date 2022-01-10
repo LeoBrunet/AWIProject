@@ -49,8 +49,8 @@ export class RecipeService {
     return this.http.delete(`${baseUrl}/${id}`);
   }
 
-  sell(recipeId, nbDiners) {
-    return this.http.post(`${baseUrl}/sell/${recipeId}`, {quantity: nbDiners});
+  sell(recipeId, nbDiners, cost, price) {
+    return this.http.post(`${baseUrl}/sell/${recipeId}`, {quantity: nbDiners, price: price, cost: cost});
   }
 
   public async createRecipe(data): Promise<Recipe> {
