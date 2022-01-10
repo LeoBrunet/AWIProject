@@ -57,9 +57,10 @@ db.unit.hasMany(db.ingredient, {foreignKey: "idUnit"});
 db.ingredient.belongsTo(db.unit, {foreignKey: "idUnit"});
 
 db.descriptionStep.hasOne(db.generalStep, {foreignKey: "numDescriptionStep"});
-db.recipe.hasMany(db.generalStep, {foreignKey : "recipeStep"});
 db.generalStep.belongsTo(db.descriptionStep, {foreignKey: "numDescriptionStep"});
-db.generalStep.belongsTo(db.recipe, {foreignKey : "recipeStep"});
+
+db.recipe.hasMany(db.generalStep, {foreignKey : "recipeStep", as:"RecipeStep"});
+db.generalStep.belongsTo(db.recipe, {foreignKey : "recipeStep", as:"RecipeStep"});
 
 db.recipe.hasMany(db.generalStep, {foreignKey: "proprietaryRecipe",as:"ProprietaryStep"});
 db.generalStep.belongsTo(db.recipe, {foreignKey: "proprietaryRecipe", as:"PRecipe"});

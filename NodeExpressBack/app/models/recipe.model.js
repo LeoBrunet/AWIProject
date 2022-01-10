@@ -17,11 +17,14 @@ module.exports = (sequelize, Sequelize) => {
         },
         idCategory:{
             type: DataTypes.INTEGER,
-                references: {
+            references: {
                 model: "categories",
-                    key: "idCategory",
-                    foreignKey: "idCategory"
+                key: "idCategory",
+                foreignKey: "idCategory"
             }
+        },
+        description:{
+            type:DataTypes.STRING(2000)
         }
     });
 

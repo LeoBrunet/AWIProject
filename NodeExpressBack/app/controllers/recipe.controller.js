@@ -38,8 +38,17 @@ exports.create = (req, res) => {
 // Retrieve all Recipes from the database.
 exports.findAll = (req, res) => {
     Recipe.findAll()
-        .then(data => {
-            res.send(data);
+        .then(async data => {
+            let resultat = [];
+            for (let i = 0; i < data.length; i++) {
+                let recipe = data[i];
+                let descriptionSteps = await getAllDescriptionStep(recipe)
+                recipe = recipe.dataValues
+                recipe["ingredientCost"] = await getTotalIngredientCost(descriptionSteps);
+                recipe["duration"] = await getTotalDuration(descriptionSteps);
+                resultat.push(recipe)
+            }
+            res.send(resultat);
         })
         .catch(err => {
             res.status(500).send({
@@ -249,8 +258,8 @@ async function getAllDescriptionStep(recipe) {
             let dStep = await step.getDescriptionStep();
             allStep.push(dStep);
         } else {
-            let r = await step.getRecipe();
-            let newSteps = await r.getGeneralSteps();
+            let r = await step.getRecipeStep();
+            let newSteps = await r.getProprietaryStep();
             stepToProcess.concat(newSteps);
         }
     }
