@@ -14,6 +14,9 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
             defaultValue: DataTypes.NOW
         },
+        cost:{
+            type:DataTypes.REAL
+        },
         price:{
             type:DataTypes.REAL
         }
