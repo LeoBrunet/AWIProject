@@ -26,7 +26,7 @@
     </div>
     <div class="form-element">
       <label for="desc">Description</label>
-      <textarea id="desc" name="desc" required rows="5" formControlName="desc" type="text"></textarea>
+      <textarea id="desc" name="desc" required rows="5" formControlName="desc" type="text" min="40" required></textarea>
     </div>
     <!--<div class="form-container">
       <div class="form-container-name">
@@ -41,7 +41,7 @@
     <div class="form-container">
       <div class="form-container-name">
         <label for="recipe-photo">Photo</label>
-        <input id="recipe-photo" class="photo-container" name="recipe-photo" formControlName="image" type="file"
+        <input id="recipe-photo" class="photo-container" name="recipe-photo" formControlName="image" type="file" style="cursor: pointer"
                (change)="uploadImage($event)" (keyup.enter)="uploadImage($event)"/>
       </div>
       <div class="form-container-name">
@@ -139,7 +139,7 @@
             </div>
           </div>
         </div>
-        <span (click)="addIngredient(indexStep)" class="green fs25" style="margin-top: 1%">Ajouter un ingrédient</span>
+        <span (click)="addIngredient(indexStep)" class="green fs25" style="margin-top: 1%;cursor: pointer">Ajouter un ingrédient</span>
       </div>
     </div>
     <div style="display: flex; align-items: center;margin-top: 1%">
@@ -189,7 +189,7 @@
       </div>
 
       <img (click)="setImage()" [src]="recipeImageLocalUrl" *ngIf="recipeImageLocalUrl"
-           style="width: 30%; right: 0; margin: 2% 3%; border-radius: 2%">
+           style="cursor: pointer;width: 30%; right: 0; margin: 2% 3%; border-radius: 2%">
     </div>
     <div class="pdf-text-content fs25"
          *ngFor="let position of counter(nbStepsTotal);">

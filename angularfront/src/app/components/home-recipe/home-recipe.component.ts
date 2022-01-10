@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
 import {Category} from "../../model/category";
 import {RecipeCategoryService} from "../../../services/RecipeCategoryService";
 import {Recipe} from "../../model/recipe";
 import {RecipeService} from "../../../services/RecipeService";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'home-recipe',
@@ -16,6 +16,8 @@ export class HomeRecipeComponent implements OnInit {
   selectedCategory: Category;
   recipes: Recipe[];
   selectedRecipes: Recipe[];
+
+  readonly loupe = "\uD83D\uDD0E";
 
   ngOnInit(): void {
     //this.categories = [new Category(0, 'Tout', "all.png"),new Category(1, 'Viande', "steak.png"), new Category(2, 'Poisson', "fish_cat.png"), new Category(3, 'Autre')];

@@ -3,46 +3,19 @@
     <div *ngIf="recipe">
       <a class="banner-img-shadow" href="#"><img class="banner-recipe-img"
                                                  src="../../../assets/images/fish_chips.png"></a>
-      <div class="inside-banner-elem">
-        <div class="banner-status">RÉCENT</div>
-        <div class="banner-recipe-infos">
-          <div class="banner-title">{{recipe.name}}</div>
-          <div class="banner-time"><!--<img src="images/clock.png">-->{{recipe.duration}} min
-            &#183; {{recipe.ingredientCost / recipe.nbDiners}} €/part
+      <a href="/recipe/{{recipe.num}}">
+        <div class="inside-banner-elem">
+          <div class="banner-status">RÉCENT</div>
+          <div class="banner-recipe-infos">
+            <div class="banner-title">{{recipe.name}}</div>
+            <div class="banner-time"><!--<img src="images/clock.png">-->{{recipe.duration}} min
+              &#183; {{+(recipe.ingredientCost + (recipe.ingredientCost * 0.05) + (recipe.duration * averageMinuteRate) + (this.recipe.duration * averageMinuteRateFluid)).toFixed(2)}} €
+            </div>
+            <!--<div class="banner-cost">10 €/part</div>-->
+            <p class="banner-desc"> {{recipe.desc}}</p>
           </div>
-          <!--<div class="banner-cost">10 €/part</div>-->
-          <p class="banner-desc"> {{recipe.desc}}</p>
         </div>
-      </div>
+      </a>
     </div>
   </div>
-
-
-  <!--<div class="banner-elem" *ngFor="let recipe of recipes; let index = index">
-    <a class="banner-img-shadow" href="#"><img class="banner-recipe-img" src="../../../assets/images/gratin.jpg"></a>
-    <div class="inside-banner-elem">
-      <div class="banner-status">RÉCENT</div>
-      <div class="banner-recipe-infos">
-        <div class="banner-title">Gratin d'aubergines, gambas et du chorizo</div>
-        <div class="banner-time"><img src="images/clock.png">5 min &#183; 10 €/part</div>
-        <div class="banner-cost">10 €/part</div>
-        <p class="banner-desc">Petite recette anglaise alliant des frites
-          croustillantes et un poisson au citron, thym, romarin, plein de choses quoi</p>
-      </div>
-    </div>
-  </div>
-  <div class="banner-elem">
-    <a class="banner-img-shadow" href="#"><img class="banner-recipe-img"
-                                               src="../../../assets/images/fish_chips.png"></a>
-    <div class="inside-banner-elem">
-      <div class="banner-status">RÉCENT</div>
-      <div class="banner-recipe-infos">
-        <div class="banner-title">Fish & Chips</div>
-        <div class="banner-time"><img src="images/clock.png">15 min &#183; 10 €/part</div>
-        <div class="banner-cost">10 €/part</div>
-        <p class="banner-desc">Petite recette anglaise alliant des frites
-          croustillantes et un poisson au citron, thym, romarin, plein de choses quoi</p>
-      </div>
-    </div>
-  </div>-->
 </div>

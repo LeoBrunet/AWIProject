@@ -14,6 +14,7 @@ import {Category} from "../../model/category";
 import {RecipeCategoryService} from "../../../services/RecipeCategoryService";
 import {RecipeStep} from "../../model/recipeStep";
 import {GeneralStep} from "../../model/generalStep";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Component({
   selector: 'add-recipe',
@@ -21,7 +22,17 @@ import {GeneralStep} from "../../model/generalStep";
   styleUrls: ['../../../assets/css/new_recipe_menu.css', '../../../assets/css/new_recipe_left.css', '../../../assets/css/new_recipe_right.css']
 })
 export class AddRecipeComponent implements OnInit {
-  //TODO get it from database
+  url = "https://webdav-nicolas-ig.alwaysdata.net";
+  htmlOptions = {
+    headers: new HttpHeaders({
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': 'true',
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+      'Content-Type': 'image',
+      'Authorization': 'Basic ' + btoa('nicolas-ig:Nicolas.2000')
+    })
+  }
   categories: IngredientCategory[] = [];
   recipeCategories: Category[] = [];
   ingredients: Ingredient[] = [];
@@ -32,7 +43,7 @@ export class AddRecipeComponent implements OnInit {
   recipeImageLocalUrl: string = "../../assets/images/add_image.jpg";
   recipeFormGroup: FormGroup = this._fb.group({
     name: ['', [Validators.required, Validators.minLength(3)]],
-    desc: [''],
+    desc: ['', [Validators.required, Validators.minLength(40)]],
     nbDiners: ['', Validators.required],
     image: [''],
     steps: this._fb.array([this._fb.group({
@@ -41,7 +52,7 @@ export class AddRecipeComponent implements OnInit {
     recipeSteps: this._fb.array([])
   })
 
-  constructor(private _fb: FormBuilder, private _recipeService: RecipeService, private _ingredientService: IngredientService, private _ingredientCategoryService: IngredientCategoryService, private _stepService: StepService, private _recipeCategoryService: RecipeCategoryService) {
+  constructor(private http: HttpClient, private _fb: FormBuilder, private _recipeService: RecipeService, private _ingredientService: IngredientService, private _ingredientCategoryService: IngredientCategoryService, private _stepService: StepService, private _recipeCategoryService: RecipeCategoryService) {
   }
 
   ngOnInit() {
@@ -65,14 +76,12 @@ export class AddRecipeComponent implements OnInit {
       datas.forEach(data => {
         this.categories.push(this._ingredientCategoryService.createIngredientCategory(data))
       })
-      console.log(this.categories)
     })
     this._recipeService.getAll().subscribe(async (data: any) => {
       this.recipes = [];
       for (const data1 of data as any[]) {
         let recipe = await this._recipeService.createRecipe(data1)
         this.recipes.push(recipe);
-        console.log(recipe);
       }
     });
     for (let stepIndex: number = 0; stepIndex < this.getFormSteps().length; stepIndex++) {
@@ -174,6 +183,10 @@ export class AddRecipeComponent implements OnInit {
         this.recipeImageLocalUrl = event.target.result;
       }
       reader.readAsDataURL(event.target.files[0]);
+      this.http.post(this.url, event.target.files[0], this.htmlOptions).subscribe(response => {
+          console.log(response);
+        }
+      );
     }
   }
 
@@ -266,10 +279,20 @@ export class AddRecipeComponent implements OnInit {
   }
 
   public removeRecipeStepAt(indexRecipeStep): void {
+    let positionOfStepDeleted = this.recipe.recipeSteps[indexRecipeStep].position;
+    this.nbStepsTotal--;
     this.getRecipeSteps().removeAt(indexRecipeStep);
     this.recipe.recipeSteps.splice(indexRecipeStep, 1);
-    for (let index = indexRecipeStep; index < this.recipe.recipeSteps.length; index++) {
-      this.recipe.recipeSteps[index].position--;
+    for (let position of this.counter(this.nbStepsTotal + 1)) {
+      if (position > positionOfStepDeleted){
+        const step = this.getStepAtPosition(position);
+        const recipeStep = this.getRecipeStepAtPosition(position);
+        if (step){
+          step.position--;
+        } else if (recipeStep){
+          recipeStep.position--;
+        }
+      }
     }
   }
 
@@ -291,6 +314,7 @@ export class AddRecipeComponent implements OnInit {
     } else {
       this.printErrorMessage("Vous ne pouvez pas déplacer cette étape dans ce sens.")
     }
+    return
   }
 
   public getPosition(indexRecipeStep): string {
@@ -342,10 +366,20 @@ export class AddRecipeComponent implements OnInit {
   }
 
   removeStepAt(indexStep): void {
+    let positionOfStepDeleted = this.recipe.recipeSteps[indexStep].position;
+    this.nbStepsTotal--;
     this.getFormSteps().removeAt(indexStep);
     this.recipe.steps.splice(indexStep, 1);
-    for (let index = indexStep; index < this.recipe.recipeSteps.length; index++) {
-      this.recipe.recipeSteps[index].position--;
+    for (let position of this.counter(this.nbStepsTotal + 1)) {
+      if (position > positionOfStepDeleted){
+        const step = this.getStepAtPosition(position);
+        const recipeStep = this.getRecipeStepAtPosition(position);
+        if (step){
+          step.position--;
+        } else if (recipeStep){
+          recipeStep.position--;
+        }
+      }
     }
   }
 
@@ -434,7 +468,7 @@ export class AddRecipeComponent implements OnInit {
     this.recipe!.steps[indexStep].description = (this.getFormSteps().controls[indexStep] as FormGroup).get('stepDesc')?.value;
   }
 
-  updateStepDuration(indexStep: number): void{
+  updateStepDuration(indexStep: number): void {
     this.recipe!.steps[indexStep].duration = (this.getFormSteps().controls[indexStep] as FormGroup).get('stepDuration')?.value;
   }
 

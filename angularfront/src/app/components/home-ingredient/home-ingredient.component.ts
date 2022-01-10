@@ -20,6 +20,8 @@ export class HomeIngredientComponent implements OnInit {
 
   dataLoaded: boolean = false;
 
+  readonly loupe = "\uD83D\uDD0E";
+
   constructor(private cdr: ChangeDetectorRef, private _ingredientService: IngredientService, private _ingredientCategoryService: IngredientCategoryService) {
   }
 

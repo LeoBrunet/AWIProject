@@ -67,7 +67,7 @@ export class StepService {
           await this._ingredientService.createIngredient(ingredient).then(response => ingredients.push(response))
           quantities.push(ingredient.ingredientInStep.quantity)
         }
-        steps.push(new Step(data["position"], data["descriptionStep"]["nameStep"], data["descriptionStep"]["description"], ingredients, quantities, data['duration']))
+        steps.push(new Step(data["position"], data["descriptionStep"]["nameStep"], data["descriptionStep"]["description"], ingredients, quantities, data["descriptionStep"]['duration']))
       }
     }
     return Promise.all(steps);

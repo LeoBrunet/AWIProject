@@ -1,6 +1,7 @@
 import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
 import {Recipe} from "../../model/recipe";
 import {Router} from "@angular/router";
+import {GeneralServiceInterface} from "../../../services/GeneralService";
 
 @Component({
   selector: 'recipes',
@@ -9,6 +10,8 @@ import {Router} from "@angular/router";
 })
 export class RecipesComponent implements OnInit {
   @Input() recipes: Recipe[];
+  readonly averageMinuteRate = GeneralServiceInterface.averageMinuteRate;
+  readonly averageMinuteRateFluid = GeneralServiceInterface.averageMinuteRateFluid;
 
   ngOnInit(): void {
   }
