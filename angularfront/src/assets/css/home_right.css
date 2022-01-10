@@ -84,11 +84,11 @@ input::-webkit-input-placeholder {
   }
 
   62%, 66% {
-    transform: translate3d(-203%, 0, 0); /* The image width */
+    transform: translate3d(-202%, 0, 0); /* The image width */
   }
 
   95%,100% {
-    transform: translate3d(-304%, 0, 0); /* The image width */
+    transform: translate3d(-303%, 0, 0); /* The image width */
   }
 }
 
