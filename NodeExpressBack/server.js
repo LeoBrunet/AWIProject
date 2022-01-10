@@ -4,10 +4,10 @@ const cors = require("cors");
 const app = express();
 
 var corsOptions = {
-    origin: "http://localhost:8080"
+    origin: "*"
 };
 
-app.use(cors(/*corsOptions*/));
+app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json
 app.use(express.json());
@@ -33,6 +33,7 @@ require("./app/routes/ingredient.routes")(app);
 require("./app/routes/generalStep.routes")(app);
 require("./app/routes/descriptionStep.routes")(app);
 require("./app/routes/sale.routes")(app);
+require("./app/routes/file.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
