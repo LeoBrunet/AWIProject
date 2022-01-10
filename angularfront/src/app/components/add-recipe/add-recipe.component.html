@@ -43,7 +43,7 @@
         <label for="recipe-photo">Photo</label>
         <input id="recipe-photo" class="photo-container" name="recipe-photo" formControlName="image" type="file"
                style="cursor: pointer"
-               (change)="uploadImage($event)" (keyup.enter)="uploadImage($event)"/>
+               (change)="uploadImage($event)" (keyup.enter)="uploadImage($event)" required/>
       </div>
       <div class="form-container-name">
         <label for="nbDiners">Nombre de couvert</label>

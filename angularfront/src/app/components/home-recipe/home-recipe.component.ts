@@ -18,6 +18,7 @@ export class HomeRecipeComponent implements OnInit {
   recipes: Recipe[] = [];
   selectedRecipes: Recipe[] = [];
   imagesPath: string[] = [];
+  selectedImagePath: string[] = [];
 
   readonly loupe = "\uD83D\uDD0E";
 
@@ -38,6 +39,7 @@ export class HomeRecipeComponent implements OnInit {
       for (const data1 of datas) {
         let recipe = await this._recipeService.createRecipe(data1)
         this.recipes.push(recipe);
+        this.selectedImagePath.push(GeneralServiceInterface.imagePath + recipe.image);
         this.imagesPath.push(GeneralServiceInterface.imagePath + recipe.image);
       }
     });
@@ -54,9 +56,9 @@ export class HomeRecipeComponent implements OnInit {
     } else {
       this.selectedRecipes = this.recipes.filter(recipe => recipe.categoryId == this.selectedCategory.id);
     }
-    this.imagesPath = [];
+    this.selectedImagePath = [];
     for (let i = 0; i < this.selectedRecipes.length; i++) {
-      this.imagesPath.push(GeneralServiceInterface.imagePath + this.selectedRecipes[i].image)
+      this.selectedImagePath.push(GeneralServiceInterface.imagePath + this.selectedRecipes[i].image)
     }
   }
 

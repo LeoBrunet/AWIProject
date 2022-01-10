@@ -112,9 +112,9 @@ export class AddRecipeComponent implements OnInit {
         for (let index = 0; index < this.recipe.recipeSteps.length; index++) {
           this._stepService.createStepRecipe(this.recipe.recipeSteps[index] as RecipeStep, this.recipe.num).subscribe()
         }
+        this.router.navigate(['/home-recipe'])
       })
     }
-    this.router.navigate(['/home-recipe'])
     //this.openPDF()
   }
 

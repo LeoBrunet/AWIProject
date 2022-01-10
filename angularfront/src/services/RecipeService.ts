@@ -33,6 +33,7 @@ export class RecipeService {
   }
 
   create(recipe) {
+    console.log(recipe)
     return this.http.post(baseUrl, {
       name: recipe.name,
       nbDiners: recipe.nbDiners,

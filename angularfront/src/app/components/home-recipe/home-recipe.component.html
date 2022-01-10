@@ -8,5 +8,5 @@
   </div>
   <banner-recipe [recipes]="recipes" [imagesPath]="imagesPath"></banner-recipe>
   <categories [categories]="categories" (newCategoryEvent)="getSelectedCategory($event)"></categories>
-  <recipes [recipes]="selectedRecipes" [imagesPath]="imagesPath"></recipes>
+  <recipes [recipes]="selectedRecipes" [imagesPath]="selectedImagePath"></recipes>
 </div>
