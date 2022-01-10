@@ -76,14 +76,12 @@ export class AddRecipeComponent implements OnInit {
       datas.forEach(data => {
         this.categories.push(this._ingredientCategoryService.createIngredientCategory(data))
       })
-      console.log(this.categories)
     })
     this._recipeService.getAll().subscribe(async (data: any) => {
       this.recipes = [];
       for (const data1 of data as any[]) {
         let recipe = await this._recipeService.createRecipe(data1)
         this.recipes.push(recipe);
-        console.log(recipe);
       }
     });
     for (let stepIndex: number = 0; stepIndex < this.getFormSteps().length; stepIndex++) {
@@ -281,11 +279,20 @@ export class AddRecipeComponent implements OnInit {
   }
 
   public removeRecipeStepAt(indexRecipeStep): void {
+    let positionOfStepDeleted = this.recipe.recipeSteps[indexRecipeStep].position;
     this.nbStepsTotal--;
     this.getRecipeSteps().removeAt(indexRecipeStep);
     this.recipe.recipeSteps.splice(indexRecipeStep, 1);
-    for (let index = indexRecipeStep; index < this.recipe.recipeSteps.length; index++) {
-      this.recipe.recipeSteps[index].position--;
+    for (let position of this.counter(this.nbStepsTotal + 1)) {
+      if (position > positionOfStepDeleted){
+        const step = this.getStepAtPosition(position);
+        const recipeStep = this.getRecipeStepAtPosition(position);
+        if (step){
+          step.position--;
+        } else if (recipeStep){
+          recipeStep.position--;
+        }
+      }
     }
   }
 
@@ -359,11 +366,20 @@ export class AddRecipeComponent implements OnInit {
   }
 
   removeStepAt(indexStep): void {
+    let positionOfStepDeleted = this.recipe.recipeSteps[indexStep].position;
     this.nbStepsTotal--;
     this.getFormSteps().removeAt(indexStep);
     this.recipe.steps.splice(indexStep, 1);
-    for (let index = indexStep; index < this.recipe.steps.length; index++) {
-      this.recipe.steps[index].position--;
+    for (let position of this.counter(this.nbStepsTotal + 1)) {
+      if (position > positionOfStepDeleted){
+        const step = this.getStepAtPosition(position);
+        const recipeStep = this.getRecipeStepAtPosition(position);
+        if (step){
+          step.position--;
+        } else if (recipeStep){
+          recipeStep.position--;
+        }
+      }
     }
   }
 
