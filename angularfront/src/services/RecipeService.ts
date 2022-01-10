@@ -34,7 +34,9 @@ export class RecipeService {
 
   create(recipe) {
     let image = recipe.image.split("\\")[2]
-    image = image.image.split("/")[2]
+    if (image == undefined) {
+      image = recipe.image.split("/")[2]
+    }
     return this.http.post(baseUrl, {
       name: recipe.name,
       nbDiners: recipe.nbDiners,
