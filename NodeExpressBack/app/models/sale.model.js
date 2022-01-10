@@ -13,6 +13,9 @@ module.exports = (sequelize, Sequelize) => {
             type: DataTypes.DATE,
             allowNull: false,
             defaultValue: DataTypes.NOW
+        },
+        price:{
+            type:DataTypes.REAL
         }
     });
 
