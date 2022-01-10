@@ -25,6 +25,10 @@ export class AddRecipeComponent implements OnInit {
   url = "https://webdav-nicolas-ig.alwaysdata.net";
   htmlOptions = {
     headers: new HttpHeaders({
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': 'true',
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
       'Content-Type': 'image',
       'Authorization': 'Basic ' + btoa('nicolas-ig:Nicolas.2000')
     })
