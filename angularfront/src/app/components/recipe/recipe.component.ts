@@ -13,7 +13,7 @@ import {response} from "express";
 @Component({
   selector: 'recipe',
   templateUrl: 'recipe.component.html',
-  styleUrls: ['../../../assets/css/home.css', '../../../assets/css/home_right.css', '../../../assets/css/font.css']
+  styleUrls: ['../../../assets/css/home.css','../../../assets/css/pop_up.css', '../../../assets/css/home_right.css', '../../../assets/css/font.css']
 })
 export class RecipeComponent implements OnInit {
   // COUTS
@@ -66,6 +66,7 @@ export class RecipeComponent implements OnInit {
 
   updateNbSales(increment: number) {
     if (!(increment == -1 && this.nbSales == 1)) {
+      this.dismissErrorMessage()
       for (let index = 0; index < this.quantities.length; index++) {
         this.quantities[index] = this.quantities[index] + ((this.quantities[index] / this.nbSales) * increment)
       }
@@ -88,7 +89,11 @@ export class RecipeComponent implements OnInit {
     console.log("sell")
     this._recipeService.sell(this.recipe.num, this.recipe.nbDiners, this.cost, this.cost * GeneralServiceInterface.sellingPriceMultiplierCoefficient).subscribe((response) => {
       console.log(response)
-      this.router.navigate(['home-recipe'])
+      if (response['sell']) {
+        this.router.navigate(['/sales'])
+      } else {
+        this.printErrorMessage()
+      }
     });
   }
 
@@ -100,8 +105,32 @@ export class RecipeComponent implements OnInit {
     return this.recipe.recipeSteps.find(recipe => recipe.position == position);
   }
 
-  downloadPDF() {
+  public downloadPDF() {
     this._fileService.downloadFile("recipe" + this.recipe.num + ".pdf").subscribe()
+  }
+
+  public delete() {
+    console.log("supp")
+    this._recipeService.delete(this.recipe.num).subscribe(response => {
+      console.log(response)
+      this.router.navigate(['/home-recipe'])
+    });
+  }
+
+  public printPopUp() {
+    document.getElementById("pop-up")!.setAttribute("style", "display: block")
+  }
+
+  public dismissPopUp() {
+    document.getElementById("pop-up")!.setAttribute("style", "display: none")
+  }
+
+  public printErrorMessage() {
+    document.getElementById("error-sell")!.setAttribute("style", "display: block")
+  }
+
+  public dismissErrorMessage() {
+    document.getElementById("pop-up")!.setAttribute("style", "display: none")
   }
 
   public counter(i: number): number[] {

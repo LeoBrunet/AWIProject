@@ -220,7 +220,7 @@ export class AddRecipeComponent implements OnInit {
 
   getRecipeDescription(): string {
     if (this.recipeFormGroup.get('desc')?.value == "") {
-      return "Lorem ipsum"
+      return "Description"
     }
     return this.recipeFormGroup.get('desc')?.value
   }

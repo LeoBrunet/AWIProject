@@ -1,8 +1,8 @@
 <left-menu></left-menu>
-<div class="split right" style="height: 84%" *ngIf="recipe">
+<div class="split right" style="height: 83vh" *ngIf="recipe">
   <div class="pdf-page">
     <div class="pdf-content">
-      <div style="display: flex; width: 98%; justify-content: space-between;">
+      <div style="display: flex; width: 98%; justify-content: space-between;height: fit-content">
         <div class="pdf-text-content fs25" style="width: 70%">
           <div class="new-recipe-page-title logo2 big">{{recipe.name}}</div>
           <span>Auteur : Léo Brunet</span>
@@ -10,16 +10,16 @@
           <div class="semibold">Pour {{getNbDiners()}}</div>
         </div>
         <img *ngIf="recipe.image" [src]="imagePath"
-             style="width: 30%; border-radius: 2%">
+             style="height: 15vw; border-radius: 2%; position: relative">
       </div>
     </div>
     <div style="display:flex;">
       <div style="width: 43%" class="semibold">Coûts</div>
       <div style="width: 55%" class="semibold">Ingrédients</div>
     </div>
-    <div style="display: flex; justify-content: space-between; width: 98%">
+    <div style="flex: auto; display: flex; justify-content: space-between; width: 98%">
       <div
-        style="height:fit-content;display:flex;align-content: center;align-items: flex-end;width: 40%; border: 1px solid #e3e3e3; border-radius: 6px;padding: 0.5vw 0.8vw; margin-top: 1%; margin-bottom: 1%">
+        style="height: 11.2vw;display:flex;align-content: center;align-items: flex-end;width: 40%; border: 1px solid #e3e3e3; border-radius: 6px;padding: 0.5vw 0.8vw; margin-top: 1%; margin-bottom: 1%">
         <div style="width: 95%">
           <pre class="semibold no-margin">Coût matière</pre>
           <pre class="classic-font">    Coût des ingrédients</pre>
@@ -41,9 +41,11 @@
         </div>
       </div>
       <div
-        style="width: 54%;background: #e3e3e370;border-radius: 6px;padding: 0.5vw 0.8vw; margin-top: 1%; margin-bottom: 1%; max-height: 14.878vw;overflow-y: auto">
+        style="height:11.2vw;position: relative;width: 54%;background: #e3e3e370;border-radius: 6px;padding: 0.5vw 0.8vw; margin-top: 1%; margin-bottom: 1%; overflow-y: auto;">
         <div *ngFor="let ingredient of ingredients; let index = index">
-          <div>{{quantities[index] + " " + ingredient.unit.name + " de " + ingredient.name}}</div>
+          <a href="/home-recipe">
+            <div>{{quantities[index] + " " + ingredient.unit.name + " de " + ingredient.name}}</div>
+          </a>
         </div>
       </div>
     </div>
@@ -55,15 +57,16 @@
       <div *ngIf="getStepAtPosition(position)">
         <div
           style="display: flex;justify-content: space-between;width: 96%; background: #e3e3e380; border-radius: 6px;padding: 1% 1% 0% 1%; margin-top: 1%">
-          <div>
+          <div style="width: 70%">
             <span>{{position}}. {{getStepAtPosition(position)!.name}}
               ({{getStepAtPosition(position)!.duration}} min)</span>
             <p>{{getStepAtPosition(position)!.description}}</p>
           </div>
-          <div>
-            <div *ngFor="let ingredient of getStepAtPosition(position)!.ingredients; let indexI = index">
-              <div
-                style="float: right">{{getStepAtPosition(position)!.quantities[indexI] + " " + ingredient.unit.name + " de " + ingredient.name}}
+          <div style="width: 30%">
+            <div *ngFor="let ingredient of getStepAtPosition(position)!.ingredients; let indexI = index"
+                 style="display: flex">
+              <div style="float: right">
+                {{getStepAtPosition(position)!.quantities[indexI] + " " + ingredient.unit.name + " de " + ingredient.name}}
               </div>
             </div>
           </div>
@@ -81,28 +84,40 @@
   </div>
 </div>
 <div
-  class="fs25 semibold fixedBottom" style="height:6%">
+  class="fs25 semibold bottomRecipe" style="height:6%">
   <div style="display: flex; width: 40%">
     <a>
-      <button class="fs25 semibold buttonFixedBottom">
-        Modifier la recette
+      <button class="fs25 semibold buttonFixedBottom" (click)="printPopUp()">
+        Supprimer la recette
       </button>
     </a>
 
-    <a href="https://nicolas-ig.alwaysdata.net/api/file/recipe{{this.recipe.num}}.pdf" download="[RECIPE_APP]{{this.recipe.name}}.pdf">
-      <button class="fs25 semibold buttonFixedBottom" style="margin-left: 2%" >
+    <a href="https://nicolas-ig.alwaysdata.net/api/file/recipe{{this.recipe.num}}.pdf"
+       download="[RECIPE_APP]{{this.recipe.name}}.pdf">
+      <button class="fs25 semibold buttonFixedBottom" style="margin-left: 2%">
         Télécharger en PDF
       </button>
     </a>
   </div>
 
-  <div style="display: flex; align-items: center; width: 50%; justify-content: flex-end">
+  <div style="display: flex; align-items: center; width: 70%; justify-content: flex-end">
+    <div id="error-sell" class="error-message" style="display: none">Impossible de vendre la recette, le <u><a
+      href="/home-ingredient">stock</a></u> est insuffisant !
+    </div>
     <button type="button" class="button-diners classic-font" (click)="updateNbSales(-1)">-</button>
     <pre class="classic-font">  {{nbSales}}  </pre>
     <button type="button" class="button-diners classic-font" (click)="updateNbSales(1)">+</button>
-    <button (click)="sell()" class="fs25 semibold bg-green white buttonFixedBottom" style="width: 50%; margin-left: 5%">
+    <button (click)="sell()" class="fs25 semibold bg-green white buttonFixedBottom"
+            style="width: 50%; margin-left: 5%">
       Vendre
     </button>
   </div>
 
+</div>
+<div id="pop-up" class="background" style="display: none">
+  <div class="pop-up">
+    <div class="fs25" style="width: 96%;text-align: center;padding: 2%;margin: 3% 0">Voulez vous vraiment supprimer la recette <br/>"<strong>{{recipe.name}}</strong>" ?</div>
+    <button (click)="dismissPopUp()" class="fs25 semibold buttonFixedBottom" style="margin: 0 3%;width: 94%">Annuler</button>
+    <button (click)="delete()" class="fs25 semibold buttonFixedBottom" style="margin: 3%;width: 94%;background: #ff3f3f;color: white">Supprimer</button>
+  </div>
 </div>

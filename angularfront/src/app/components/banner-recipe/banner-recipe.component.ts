@@ -6,7 +6,8 @@ import {GeneralServiceInterface} from "../../../services/GeneralService";
 @Component({
   selector: 'banner-recipe',
   templateUrl: 'banner-recipe.component.html',
-  styleUrls: ['../../../assets/css/home_right.css']
+  styleUrls: ['../../../assets/css/home_right.css',
+    '../../../assets/css/font.css']
 })
 export class BannerRecipeComponent implements OnInit {
   @Input() recipes: Recipe[];

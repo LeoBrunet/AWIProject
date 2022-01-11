@@ -6,8 +6,8 @@
     <pre class="menu-title">MENU</pre>
     <div class="menu-container">
       <a href="/home-recipe"><img src="../../../assets/images/home.png"/></a>
-      <img src="../../../assets/images/recipe.png">
-      <img src="../../../assets/images/stock.png">
+      <a href="/home-ingredient"><img src="../../../assets/images/recipe.png"></a>
+      <a href="/sales"><img src="../../../assets/images/stock.png"></a>
     </div>
     <div class="menu-container account">
       <img src="../../../assets/images/user.png">
@@ -193,8 +193,11 @@
       <!--<img (click)="setImage()" [src]="recipeImageLocalUrl" *ngIf="recipeImageLocalUrl"
            style="cursor: pointer;width: 30%; right: 0; margin: 2% 3%; border-radius: 2%">-->
       <div style="position:relative;cursor: pointer;width: 30%; right: 0; margin: 2% 3%; border-radius: 2%">
-        <div style="position:absolute;z-index: 1;right: 2%;top: 2%" *ngIf="progress != 0 && progress != 100">{{progress}}%</div>
-        <img style="position:absolute;z-index: 0; width: 100%" (click)="setImage()" [src]="recipeImageLocalUrl" *ngIf="recipeImageLocalUrl">
+        <div style="position:absolute;z-index: 1;right: 2%;top: 2%"
+             *ngIf="progress != 0 && progress != 100">{{progress}}%
+        </div>
+        <img style="position:absolute;z-index: 0; width: 100%" (click)="setImage()" [src]="recipeImageLocalUrl"
+             *ngIf="recipeImageLocalUrl">
       </div>
     </div>
     <div class="pdf-text-content fs25"
