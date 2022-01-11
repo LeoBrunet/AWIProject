@@ -100,6 +100,10 @@ export class RecipeComponent implements OnInit {
     return this.recipe.recipeSteps.find(recipe => recipe.position == position);
   }
 
+  downloadPDF() {
+    this._fileService.downloadFile("recipe" + this.recipe.num + ".pdf").subscribe()
+  }
+
   public counter(i: number): number[] {
     return Array.from({length: i}, (v, i) => i + 1);
   }

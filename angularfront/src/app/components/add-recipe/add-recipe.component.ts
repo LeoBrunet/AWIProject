@@ -17,6 +17,7 @@ import {GeneralStep} from "../../model/generalStep";
 import {HttpClient, HttpEventType, HttpHeaders, HttpResponse} from "@angular/common/http";
 import {FileService} from "../../../services/FileService";
 import {Router} from "@angular/router";
+import {response} from "express";
 
 @Component({
   selector: 'add-recipe',
@@ -104,7 +105,6 @@ export class AddRecipeComponent implements OnInit {
       this.recipe.nbDiners = this.recipeFormGroup.get('nbDiners')?.value;
       this.recipe.image = this.recipeFormGroup.get('image')?.value;
       this.uploadImageOnServ()
-      //this.uploadPDF('recipe'+this.recipe.num+'.pdf')
       this._recipeService.create(this.recipe).subscribe((data) => {
         this.recipe.num = data['numRecipe']
         for (let index = 0; index < this.recipe.steps.length; index++) {
@@ -113,7 +113,8 @@ export class AddRecipeComponent implements OnInit {
         for (let index = 0; index < this.recipe.recipeSteps.length; index++) {
           this._stepService.createStepRecipe(this.recipe.recipeSteps[index] as RecipeStep, this.recipe.num).subscribe()
         }
-        this.router.navigate(['/home-recipe'])
+        this.uploadPDF('recipe'+this.recipe.num+'.pdf')
+        //this.router.navigate(['/home-recipe'])
       })
     }
     //this.openPDF()
@@ -203,7 +204,8 @@ export class AddRecipeComponent implements OnInit {
           PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight)
           //PDF.save("test-recipe.pdf");
           let f = new File([PDF.output('blob')], fileName);
-          fileService.uploadFile(f);
+          console.log(f.name)
+          fileService.uploadFile(f).subscribe(response => {console.log(response)});
         }
       });
     }
@@ -265,9 +267,11 @@ export class AddRecipeComponent implements OnInit {
   }
 
   public removeRecipeStep(): void {
-    this.nbStepsTotal--;
-    this.getRecipeSteps().removeAt(this.getRecipeSteps().length - 1);
-    this.recipe.recipeSteps.pop();
+    if (this.nbStepsTotal > 0) {
+      this.nbStepsTotal--;
+      this.getRecipeSteps().removeAt(this.getRecipeSteps().length - 1);
+      this.recipe.recipeSteps.pop();
+    }
   }
 
   public removeRecipeStepAt(indexRecipeStep): void {
@@ -352,9 +356,11 @@ export class AddRecipeComponent implements OnInit {
   }
 
   removeStep(): void {
-    this.nbStepsTotal--;
-    this.getFormSteps().removeAt(this.getFormSteps().length - 1);
-    this.recipe.steps.pop();
+    if (this.nbStepsTotal > 0) {
+      this.nbStepsTotal--;
+      this.getFormSteps().removeAt(this.getFormSteps().length - 1);
+      this.recipe.steps.pop();
+    }
   }
 
   removeStepAt(indexStep): void {

@@ -82,9 +82,20 @@
 </div>
 <div
   class="fs25 semibold fixedBottom" style="height:6%">
-  <button class="fs25 semibold buttonFixedBottom">
-    Modifier
-  </button>
+  <div style="display: flex; width: 40%">
+    <a>
+      <button class="fs25 semibold buttonFixedBottom">
+        Modifier la recette
+      </button>
+    </a>
+
+    <a href="https://nicolas-ig.alwaysdata.net/api/file/recipe{{this.recipe.num}}.pdf" download="[RECIPE_APP]{{this.recipe.name}}.pdf">
+      <button class="fs25 semibold buttonFixedBottom" style="margin-left: 2%" >
+        Télécharger en PDF
+      </button>
+    </a>
+  </div>
+
   <div style="display: flex; align-items: center; width: 50%; justify-content: flex-end">
     <button type="button" class="button-diners classic-font" (click)="updateNbSales(-1)">-</button>
     <pre class="classic-font">  {{nbSales}}  </pre>
