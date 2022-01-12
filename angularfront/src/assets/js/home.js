@@ -41,7 +41,7 @@ $(document).ready(function() {
 
 
 	/* ADAPT MARGIN */
-	const catImgs = document.getElementsByClassName("category-img");
+	/*const catImgs = document.getElementsByClassName("category-img");
 	const catTexts = document.getElementsByClassName("category-text");
 	for (var i = catTexts.length - 1; i >= 0; i--) {
 		const height = catTexts[i].offsetHeight;
@@ -50,5 +50,5 @@ $(document).ready(function() {
 		if (heightInVW > 1.1) {
 			catImgs[i].style = "margin-top: 20%;";
 		}
-	}
+	}*/
 });

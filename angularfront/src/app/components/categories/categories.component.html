@@ -5,7 +5,9 @@
   </div>
   <div class="categories">
     <div id="cat{{index}}" class="category" *ngFor="let category of categories; let index = index" (click)="setSelectedCategory(index, category)">
-      <img class="category-img" [src]="'../../../assets/images/'+category.image">
+      <div class="category-img" style="height: 1.5vw;width: 1.5vw">
+        <img [src]="'../../../assets/images/'+category.image" style="height: 100%;width: 100%;">
+      </div>
       <p class="category-text">{{category.name}}</p>
     </div>
   </div>

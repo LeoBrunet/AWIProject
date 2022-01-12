@@ -24,20 +24,7 @@ export class RecipeCategoryService {
     return this.http.get(`${baseUrl}/${id}`);
   }
 
-  //TODO Check create
-  create(category: Category) {
-    return this.http.post(baseUrl, { id: category.id, name: category.name})
-  }
-
-  update(id, data) {
-    return this.http.put(`${baseUrl}/${id}`, data);
-  }
-
-  delete(id) {
-    return this.http.delete(`${baseUrl}/${id}`);
-  }
-
   public createCategory(data): Category {
-    return new Category(data['idCategory'], data['label'])
+    return new Category(data['idCategory'], data['label'], data['image'])
   }
 }

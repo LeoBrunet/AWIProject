@@ -35,6 +35,7 @@ label {
 .left {
   position: absolute;
   width: 20%;
+  height: 100%;
   left: 0;
   overflow: hidden;
 }
@@ -58,7 +59,6 @@ label {
 }
 
 .left-banner {
-  height: 20%;
   width: 80%;
   background: #0F0E2D;
   padding-top: 10%;
@@ -67,7 +67,6 @@ label {
 }
 
 .menu {
-  position: relative;
   height: 75%;
   box-shadow: inset -1px 0px 0px 0px #7070702B;
   padding-top: 5%;
@@ -83,13 +82,14 @@ label {
 .new-recipe {
   width: 100%;
   left: 10%;
-  height: 30%;
+  height: 4vw;
   background-color: #599442;
   border-radius: 10px;
   border-color: #00000000;
   font-size: 1.354vw;
   color: white;
-  margin-top: 15%;
+  margin-top: 10%;
+  margin-bottom: 10%;
 }
 
 .menu-title {
@@ -119,7 +119,7 @@ label {
 .account-menu {
   position: absolute;
   width: 90%;
-  bottom: 5%;
+  bottom: 3%;
 }
 .recipe-text p {
   margin: 0;

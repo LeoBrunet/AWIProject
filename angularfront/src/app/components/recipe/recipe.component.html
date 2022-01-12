@@ -43,7 +43,7 @@
       <div
         style="height:11.2vw;position: relative;width: 54%;background: #e3e3e370;border-radius: 6px;padding: 0.5vw 0.8vw; margin-top: 1%; margin-bottom: 1%; overflow-y: auto;">
         <div *ngFor="let ingredient of ingredients; let index = index">
-          <a href="/home-recipe">
+          <a href="/home-ingredient">
             <div>{{quantities[index] + " " + ingredient.unit.name + " de " + ingredient.name}}</div>
           </a>
         </div>
@@ -92,7 +92,8 @@
       </button>
     </a>
 
-    <a href="https://nicolas-ig.alwaysdata.net/api/file/recipe{{this.recipe.num}}.pdf"
+
+    <a *ngIf="this.recipe" href="https://nicolas-ig.alwaysdata.net/api/file/recipe{{this.recipe.num}}.pdf"
        download="[RECIPE_APP]{{this.recipe.name}}.pdf">
       <button class="fs25 semibold buttonFixedBottom" style="margin-left: 2%">
         Télécharger en PDF
@@ -114,7 +115,7 @@
   </div>
 
 </div>
-<div id="pop-up" class="background" style="display: none">
+<div *ngIf="this.recipe" id="pop-up" class="background" style="display: none">
   <div class="pop-up">
     <div class="fs25" style="width: 96%;text-align: center;padding: 2%;margin: 3% 0">Voulez vous vraiment supprimer la recette <br/>"<strong>{{recipe.name}}</strong>" ?</div>
     <button (click)="dismissPopUp()" class="fs25 semibold buttonFixedBottom" style="margin: 0 3%;width: 94%">Annuler</button>

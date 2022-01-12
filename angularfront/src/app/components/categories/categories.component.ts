@@ -26,7 +26,6 @@ export class CategoriesComponent implements OnInit {
     this.selectedCategory = category;
     const catElem = document.getElementById("cat"+index)
     const cats = document.getElementsByClassName("categories")
-
     if(catElem){
       catElem.setAttribute("class", catElem.getAttribute("class")+" selected-category")
     }
