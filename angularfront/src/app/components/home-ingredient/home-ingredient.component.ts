@@ -30,6 +30,7 @@ export class HomeIngredientComponent implements OnInit {
       let datas: any[] = data;
       for (const data1 of datas) {
         this.ingredients.push(await this._ingredientService.createIngredient(data1))
+        console.log(this.ingredients)
       }
       this.selectedIngredients = this.ingredients;
       if (!this.dataLoaded) {
