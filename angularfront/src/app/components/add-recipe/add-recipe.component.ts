@@ -113,7 +113,7 @@ export class AddRecipeComponent implements OnInit {
         for (let index = 0; index < this.recipe.recipeSteps.length; index++) {
           this._stepService.createStepRecipe(this.recipe.recipeSteps[index] as RecipeStep, this.recipe.num).subscribe()
         }
-        this.uploadPDF('recipe'+this.recipe.num+'.pdf')
+        this.uploadPDF('recipe' + this.recipe.num + '.pdf')
         //this.router.navigate(['/home-recipe'])
       })
     }
@@ -197,6 +197,7 @@ export class AddRecipeComponent implements OnInit {
         let fileHeight = canvas.height * fileWidth / canvas.width;
         var FILEURI = new Image()
         const fileService = this._fileService;
+        const router = this.router;
         FILEURI.src = canvas.toDataURL('image/png')
         FILEURI.onload = function () {
           let PDF = new jsPDF('p', 'mm', 'a4');
@@ -205,7 +206,10 @@ export class AddRecipeComponent implements OnInit {
           //PDF.save("test-recipe.pdf");
           let f = new File([PDF.output('blob')], fileName);
           console.log(f.name)
-          fileService.uploadFile(f).subscribe(response => {console.log(response)});
+          fileService.uploadFile(f).subscribe(response => {
+            console.log(response)
+            router.navigate(['/home-recipe'])
+          });
         }
       });
     }
