@@ -105,13 +105,24 @@ export class AddRecipeComponent implements OnInit {
       this.recipe.nbDiners = this.recipeFormGroup.get('nbDiners')?.value;
       this.recipe.image = this.recipeFormGroup.get('image')?.value;
       this.uploadImageOnServ()
-      this._recipeService.create(this.recipe).subscribe(async (data) => {
+      this._recipeService.create(this.recipe).subscribe( (data) => {
         this.recipe.num = data['numRecipe']
         for (let index = 0; index < this.recipe.steps.length; index++) {
-          await this._stepService.create(this.recipe.steps[index] as Step, this.recipe.num).toPromise()
+          this._stepService.create(this.recipe.steps[index] as Step, this.recipe.num).subscribe(response =>
+          {
+            if (this.recipe.recipeSteps.length == 0 && index == this.recipe.steps.length-1){
+              this.router.navigate(['/home-recipe'])
+            }
+          })
         }
         for (let index = 0; index < this.recipe.recipeSteps.length; index++) {
-          await this._stepService.createStepRecipe(this.recipe.recipeSteps[index] as RecipeStep, this.recipe.num).toPromise()
+          this._stepService.createStepRecipe(this.recipe.recipeSteps[index] as RecipeStep, this.recipe.num).subscribe(response =>
+          {
+            if (index == this.recipe.recipeSteps.length-1) {
+              console.log("bout")
+              this.router.navigate(['/home-recipe'])
+            }
+          })
         }
         this.uploadPDF('recipe' + this.recipe.num + '.pdf')
         //this.router.navigate(['/home-recipe'])
@@ -208,7 +219,7 @@ export class AddRecipeComponent implements OnInit {
           console.log(f.name)
           fileService.uploadFile(f).subscribe(response => {
             console.log(response)
-            router.navigate(['/home-recipe'])
+            //router.navigate(['/home-recipe'])
           });
         }
       });
