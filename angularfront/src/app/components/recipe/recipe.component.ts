@@ -49,6 +49,7 @@ export class RecipeComponent implements OnInit {
         this.flavoringCost = this.recipe.ingredientCost * 0.05;
         this.personnelCost = this.recipe.duration * GeneralServiceInterface.averageMinuteRate;
         this.fluidCost = this.recipe.duration * GeneralServiceInterface.averageMinuteRateFluid;
+        this.cost = +(this.recipe.ingredientCost + this.flavoringCost + this.personnelCost + this.fluidCost).toFixed(2);
         this.imagePath += this.recipe.image;
         console.log(this.recipe)
       });
@@ -69,10 +70,12 @@ export class RecipeComponent implements OnInit {
       this.dismissErrorMessage()
       for (let index = 0; index < this.quantities.length; index++) {
         this.quantities[index] = this.quantities[index] + ((this.quantities[index] / this.nbSales) * increment)
+        this.quantities[index] = Number(this.quantities[index].toFixed(3))
       }
       for (let step of this.recipe.steps) {
         for (let index = 0; index < step.quantities.length; index++) {
           step.quantities[index] = step.quantities[index] + ((step.quantities[index] / this.nbSales) * increment)
+          step.quantities[index] = Number(step.quantities[index].toFixed(3))
         }
       }
       this.recipe.nbDiners = this.recipe.nbDiners + ((this.recipe.nbDiners / this.nbSales) * increment)
@@ -130,7 +133,7 @@ export class RecipeComponent implements OnInit {
   }
 
   public dismissErrorMessage() {
-    document.getElementById("pop-up")!.setAttribute("style", "display: none")
+    document.getElementById("error-sell")!.setAttribute("style", "display: none")
   }
 
   public counter(i: number): number[] {
