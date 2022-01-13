@@ -66,6 +66,7 @@ exports.createGeneralAndDescriptionStep = (req, res) => {
         .catch(err => {
             check = false;
             dataToScend = err;
+            res.send(err);
         })
 }
 

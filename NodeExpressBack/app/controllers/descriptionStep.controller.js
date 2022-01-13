@@ -19,7 +19,8 @@ exports.create = (req, res) => {
         descriptionStep = {
             nameStep: req.body.nameStep,
             description: req.body.description,
-            image: req.body.image
+            image: req.body.image,
+            duration: req.body.duration
         };
         // Save DescriptionStep in the database
         DescriptionStep.create(descriptionStep)
@@ -38,7 +39,8 @@ exports.create = (req, res) => {
             nameStep: req.body.nameStep,
             description: req.body.description,
             image: req.body.image,
-            ingredients: req.body.ingredients
+            ingredients: req.body.ingredients,
+            duration: req.body.duration
         };
         // Save DescriptionStep and Ingredients in the database
         DescriptionStep.create(descriptionStep, {include: Ingredient})

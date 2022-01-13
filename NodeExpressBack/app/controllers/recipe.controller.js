@@ -25,8 +25,6 @@ exports.create = (req, res) => {
         image: req.body.image
     };
 
-    console.log(recipe);
-
     // Save Recipe in the database
     Recipe.create(recipe)
         .then(data => {
@@ -213,7 +211,9 @@ exports.sell = (req, res) => {
                             //Vente validé
                             const sale = {
                                 numRecipe: numRecipe,
-                                quantity: quantity
+                                quantity: quantity,
+                                price: req.body.price,
+                                cost : req.body.cost
                             }
                             Sale.create(sale)
                                 .then(data => {

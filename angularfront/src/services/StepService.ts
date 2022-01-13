@@ -5,7 +5,6 @@ import {Ingredient} from "../app/model/ingredients";
 import {IngredientService} from "./IngredientService";
 import {RecipeStep} from "../app/model/recipeStep";
 import {GeneralServiceInterface} from "./GeneralService";
-import {Observable} from "rxjs";
 
 const baseUrl = GeneralServiceInterface.baseUrl + '/generalStep';
 
@@ -28,14 +27,14 @@ export class StepService {
     return this.http.get(`${baseUrl}/${id}`);
   }
 
-  create(step: Step, recipeId: number): Observable<any> {
+  create(step: Step, recipeId: number) {
     let ingredients: string = "[";
     for (let index = 0; index < step.ingredients.length; index++) {
       ingredients += "{\"numIngredient\":" + step.ingredients[index].id + ",\"quantity\":" + step.quantities[index] + "},";
     }
     ingredients = ingredients.slice(0, ingredients.length - 1);
     ingredients += "]";
-    //console.log(step)
+    console.log(step)
     return this.http.post(`${baseUrl}/desc`, {
       position: step.position,
       proprietaryRecipe: recipeId,
@@ -46,7 +45,7 @@ export class StepService {
     })
   }
 
-  createStepRecipe(step: RecipeStep, recipeId: number): Observable<any> {
+  createStepRecipe(step: RecipeStep, recipeId: number) {
     return this.http.post(baseUrl, {position: step.position, recipeStep: step.recipeId, proprietaryRecipe: recipeId})
   }
 
