@@ -112,6 +112,7 @@ export class AddRecipeComponent implements OnInit {
           {
             if (this.recipe.recipeSteps.length == 0 && index == this.recipe.steps.length-1){
               this.router.navigate(['/home-recipe'])
+              this.uploadPDF('recipe' + this.recipe.num + '.pdf')
             }
           })
         }
@@ -120,11 +121,12 @@ export class AddRecipeComponent implements OnInit {
           {
             if (index == this.recipe.recipeSteps.length-1) {
               console.log("bout")
-              this.router.navigate(['/home-recipe'])
+              this.uploadPDF('recipe' + this.recipe.num + '.pdf')
+              //this.router.navigate(['/home-recipe'])
             }
           })
         }
-        this.uploadPDF('recipe' + this.recipe.num + '.pdf')
+
         //this.router.navigate(['/home-recipe'])
       })
     }
@@ -167,12 +169,18 @@ export class AddRecipeComponent implements OnInit {
   }
 
   updateViewOnErrors(ids: string[]): void {
-    Object.values(ids).forEach(id => {
+    for (let i = 0; i < ids.length; i++) {
+      const elem = document.getElementById(ids[i]);
+      if (elem) {
+        elem.setAttribute('style', elem.getAttribute("style") + ";box-shadow: inset 0 0 8px #ff00007a;")
+      }
+    }
+    /*Object.values(ids).forEach(id => {
       const elem = document.getElementById(id);
       if (elem) {
         elem.setAttribute('style', elem.getAttribute("style") + ";box-shadow: inset 0 0 8px #ff00007a;")
       }
-    })
+    })*/
     if (ids.length > 0) {
       this.printErrorMessage("Veuillez entrer toutes les informations de la recette.");
     }
@@ -206,6 +214,8 @@ export class AddRecipeComponent implements OnInit {
         let fileHeight = canvas.height * fileWidth / canvas.width;
         var FILEURI = new Image()
         const fileService = this._fileService;
+        const router = this.router
+        const recipe_id = this.recipe.num
         FILEURI.src = canvas.toDataURL('image/png')
         FILEURI.onload = function () {
           let PDF = new jsPDF('p', 'mm', 'a4');
@@ -214,6 +224,7 @@ export class AddRecipeComponent implements OnInit {
           let f = new File([PDF.output('blob')], fileName);
           fileService.uploadFile(f).subscribe(response => {
             console.log(response)
+            router.navigate(["/recipe/"+recipe_id])
           });
         }
       });
