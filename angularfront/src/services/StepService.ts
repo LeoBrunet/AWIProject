@@ -34,7 +34,6 @@ export class StepService {
     }
     ingredients = ingredients.slice(0, ingredients.length - 1);
     ingredients += "]";
-    console.log(step)
     return this.http.post(`${baseUrl}/desc`, {
       position: step.position,
       proprietaryRecipe: recipeId,

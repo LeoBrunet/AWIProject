@@ -111,7 +111,6 @@ export class AddRecipeComponent implements OnInit {
           await this._stepService.create(this.recipe.steps[index] as Step, this.recipe.num).toPromise().then(response =>
           {
             if (this.recipe.recipeSteps.length == 0 && index == this.recipe.steps.length-1){
-              this.router.navigate(['/home-recipe'])
               this.uploadPDF('recipe' + this.recipe.num + '.pdf')
             }
           })
@@ -120,17 +119,12 @@ export class AddRecipeComponent implements OnInit {
           await this._stepService.createStepRecipe(this.recipe.recipeSteps[index] as RecipeStep, this.recipe.num).toPromise().then(response =>
           {
             if (index == this.recipe.recipeSteps.length-1) {
-              console.log("bout")
               this.uploadPDF('recipe' + this.recipe.num + '.pdf')
-              //this.router.navigate(['/home-recipe'])
             }
           })
         }
-
-        //this.router.navigate(['/home-recipe'])
       })
     }
-    //this.openPDF()
   }
 
   getAllValidationErrors(): string[] {

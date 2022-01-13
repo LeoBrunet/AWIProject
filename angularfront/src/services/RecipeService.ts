@@ -58,7 +58,6 @@ export class RecipeService {
   }
 
   sell(recipeId, nbDiners, cost, price) {
-    console.log(recipeId, nbDiners, cost, price)
     return this.http.post(`${baseUrl}/sell/${recipeId}`, {quantity: nbDiners, price: price, cost: cost});
   }
 
