@@ -39,7 +39,7 @@ export class RecipeComponent implements OnInit {
       await this._recipeService.getAllIngredientsOfRecipe(params['id']).then(async (data: any) => {
         for (let ingredient of data as any[]) {
           this.ingredients.push(await this._ingredientService.createIngredient(ingredient))
-          this.quantities.push(ingredient.quantity)
+          this.quantities.push(ingredient.quantity.toFixed(3))
         }
       });
       await this._recipeService.get(params['id']).subscribe(async (data) => {

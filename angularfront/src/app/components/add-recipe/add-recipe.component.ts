@@ -105,10 +105,10 @@ export class AddRecipeComponent implements OnInit {
       this.recipe.nbDiners = this.recipeFormGroup.get('nbDiners')?.value;
       this.recipe.image = this.recipeFormGroup.get('image')?.value;
       this.uploadImageOnServ()
-      this._recipeService.create(this.recipe).subscribe( (data) => {
+      this._recipeService.create(this.recipe).subscribe( async (data) => {
         this.recipe.num = data['numRecipe']
         for (let index = 0; index < this.recipe.steps.length; index++) {
-          this._stepService.create(this.recipe.steps[index] as Step, this.recipe.num).subscribe(response =>
+          await this._stepService.create(this.recipe.steps[index] as Step, this.recipe.num).toPromise().then(response =>
           {
             if (this.recipe.recipeSteps.length == 0 && index == this.recipe.steps.length-1){
               this.router.navigate(['/home-recipe'])
@@ -117,7 +117,7 @@ export class AddRecipeComponent implements OnInit {
           })
         }
         for (let index = 0; index < this.recipe.recipeSteps.length; index++) {
-          this._stepService.createStepRecipe(this.recipe.recipeSteps[index] as RecipeStep, this.recipe.num).subscribe(response =>
+          await this._stepService.createStepRecipe(this.recipe.recipeSteps[index] as RecipeStep, this.recipe.num).toPromise().then(response =>
           {
             if (index == this.recipe.recipeSteps.length-1) {
               console.log("bout")
