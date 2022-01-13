@@ -45,7 +45,7 @@ exports.findAll = (req, res) => {
             let resultat = [];
             for (let i = 0; i < data.length; i++) {
                 let recipe = data[i];
-                let descriptionSteps = await getAllDescriptionStep(recipe)
+                let descriptionSteps = await getAllDescriptionStep(recipe);
                 recipe = recipe.dataValues
                 recipe["ingredientCost"] = await getTotalIngredientCost(descriptionSteps);
                 recipe["duration"] = await getTotalDuration(descriptionSteps);
@@ -254,8 +254,7 @@ exports.sell = (req, res) => {
 }
 
 async function getAllDescriptionStep(recipe) {
-
-    stepToProcess = await recipe.getProprietaryStep();
+    let stepToProcess = await recipe.getProprietaryStep();
     let allStep = [];
     while (stepToProcess.length > 0) {
         let step = stepToProcess.pop()
@@ -265,7 +264,7 @@ async function getAllDescriptionStep(recipe) {
         } else {
             let r = await step.getRecipeStep();
             let newSteps = await r.getProprietaryStep();
-            stepToProcess.concat(newSteps);
+            stepToProcess = stepToProcess.concat(newSteps);
         }
     }
     return allStep;
