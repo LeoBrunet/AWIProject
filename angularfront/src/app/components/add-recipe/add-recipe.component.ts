@@ -190,7 +190,6 @@ export class AddRecipeComponent implements OnInit {
       }
       reader.readAsDataURL(event.target.files[0]);
       this.selectedFile = event.target.files[0];
-      //this.uploadImageOnServ()
     }
   }
 
@@ -202,24 +201,19 @@ export class AddRecipeComponent implements OnInit {
   uploadPDF(fileName): void {
     let DATA = document.getElementById('recipeToPDF');
     if (DATA) {
-      //DATA.style = "display: block; width: 100%"
       html2canvas(DATA).then(canvas => {
         let fileWidth = 208;
         let fileHeight = canvas.height * fileWidth / canvas.width;
         var FILEURI = new Image()
         const fileService = this._fileService;
-        const router = this.router;
         FILEURI.src = canvas.toDataURL('image/png')
         FILEURI.onload = function () {
           let PDF = new jsPDF('p', 'mm', 'a4');
           let position = 0;
           PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight)
-          //PDF.save("test-recipe.pdf");
           let f = new File([PDF.output('blob')], fileName);
-          console.log(f.name)
           fileService.uploadFile(f).subscribe(response => {
             console.log(response)
-            //router.navigate(['/home-recipe'])
           });
         }
       });
@@ -277,7 +271,7 @@ export class AddRecipeComponent implements OnInit {
 
   public addRecipeStep(): void {
     this.nbStepsTotal++;
-    this.recipe.recipeSteps.push(new RecipeStep(this.nbStepsTotal, this.recipes[0].num));
+    this.recipe.recipeSteps.push(new RecipeStep(this.nbStepsTotal, this.recipes[0].num, this.recipes[0].name, this.recipes[0].desc));
     this.getRecipeSteps().push(this._fb.control(this.recipes[0]));
   }
 

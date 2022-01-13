@@ -1,9 +1,9 @@
 <div class="semibold" style="display: flex; width: 98%; margin-top: 2%;box-shadow: inset 0px -1px 0px 0px #7070702b;">
-  <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 32%;padding: 1%">Ingrédients</div>
+  <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 29%;padding: 1%">Ingrédients</div>
   <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 15%;padding: 1%">Catégories</div>
   <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 15%;padding: 1%">Allergènes</div>
   <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 7%;padding: 1%">Stock</div>
-  <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 7%;padding: 1%">Unités</div>
+  <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 10%;padding: 1%">Unités</div>
   <div style="box-shadow: inset -1px 0px 0px 0px #7070702b;width: 7%;padding: 1%">Prix U.</div>
   <div style="width: 3%;padding: 1%"></div>
 </div>
@@ -13,7 +13,7 @@
        *ngFor="let ingredient of ingredientsFormGroup.get('ingredientFormArray')!['controls']; let indexIngredient = index">
     <div [formGroupName]="indexIngredient" style="display: flex; width: 98%;" >
       <input id="nameIngredientInput{{indexIngredient}}" formControlName="name"
-             style="background:none;border-radius:0;border: none;font-size: 1.563vw;font-family: 'Segoe UI', sans-serif;box-shadow: inset -1px 0px 0px 0px #7070702b;width: 32%;padding: 1%"
+             style="background:none;border-radius:0;border: none;font-size: 1.563vw;font-family: 'Segoe UI', sans-serif;box-shadow: inset -1px 0px 0px 0px #7070702b;width: 29%;padding: 1%"
              value="{{ingredient.name}}"
              (change)="updateNameIngredient(indexIngredient)"
              placeholder="Nom de l'ingrédient">
@@ -32,9 +32,9 @@
              value="{{ingredient.stock}}"
              (change)="updateStockIngredient(indexIngredient)"
              placeholder="0">
-      <div class="custom-select" style="width: 7%">
+      <div class="custom-select" style="width: 10%">
         <select #unit (change)="updateUnitIngredient(indexIngredient, unit.value)">
-          <option *ngFor="let unit of units" [value]="unit.name">{{unit.name}}</option>
+          <option *ngFor="let unit of getAllUnits(indexIngredient)" [value]="unit.name">{{unit.name}}</option>
         </select>
       </div>
       <!--<input formControlName="unit"

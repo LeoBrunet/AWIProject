@@ -32,6 +32,7 @@ export class IngredientService {
   }
 
   update(id, ingredient) {
+    console.log(ingredient)
     return this.http.put(`${baseUrl}/${id}`, { numIngredient: ingredient.id, nameIngredient: ingredient.name, unitePrice: ingredient.unitePrice, codeAllergen: ingredient.allergen.codeAllergen, idType: ingredient.category.id, idUnit: ingredient.unit.id, stock: ingredient.stock});
   }
 

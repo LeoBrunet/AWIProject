@@ -19,6 +19,8 @@ export class HomeRecipeComponent implements OnInit {
   selectedRecipes: Recipe[] = [];
   imagesPath: string[] = [];
   selectedImagePath: string[] = [];
+  lastResearch: string;
+  nbResult: number;
 
   readonly loupe = "\uD83D\uDD0E";
 
@@ -64,9 +66,21 @@ export class HomeRecipeComponent implements OnInit {
 
   search(search: string) {
     if (search != "") {
+      this.lastResearch = search;
       this.selectedRecipes = this.selectedRecipes.filter(recipe => recipe.name.toLowerCase().includes(search.toLowerCase()))
+      this.nbResult = this.selectedRecipes.length
     } else {
+      this.lastResearch = "";
+      this.nbResult = 0;
       this.selectedRecipes = this.recipes
+    }
+  }
+
+  getNbResult() : string{
+    if (this.nbResult > 1) {
+      return this.nbResult + " recettes trouvées";
+    } else {
+      return this.nbResult + " recette trouvée";
     }
   }
 }

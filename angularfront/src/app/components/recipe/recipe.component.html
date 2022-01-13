@@ -75,8 +75,9 @@
       <div *ngIf="getRecipeStepAtPosition(position)">
         <a href="/recipe/{{getRecipeStepAtPosition(position)!.recipeId}}">
           <div
-            style="display: flex;justify-content: space-between;width: 96%; background: #e3e3e380; border-radius: 6px;padding: 1% 1% 1% 1%; margin-top: 1%;">
-            <span>{{position}}. {{getRecipeStepAtPosition(position)!.recipeId}}</span>
+            style="width: 96%; background: #e3e3e380; border-radius: 6px;padding: 1% 1% 0% 1%; margin-top: 1%;border: 1px solid #00000020">
+            <span>{{position}}. Recette à réaliser : {{getRecipeStepAtPosition(position)!.recipeName}}</span>
+            <p>{{getRecipeStepAtPosition(position)!.recipeDesc}}</p>
           </div>
         </a>
       </div>

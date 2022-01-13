@@ -8,5 +8,6 @@
   </div>
   <banner-recipe [recipes]="recipes" [imagesPath]="imagesPath"></banner-recipe>
   <categories [categories]="categories" (newCategoryEvent)="getSelectedCategory($event)"></categories>
+  <span *ngIf="lastResearch" class="welcome light-grey fs25" style="margin-top: 10px">Résultat de la recherche : {{lastResearch}} ({{getNbResult()}})</span>
   <recipes [recipes]="selectedRecipes" [imagesPath]="selectedImagePath"></recipes>
 </div>

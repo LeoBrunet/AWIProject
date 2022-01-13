@@ -84,6 +84,7 @@ export class IngredientsComponent implements OnInit {
     let unit = this.units.find(i => i.name == name);
     if (unit) {
       this.ingredients[index].unit = unit;
+      console.log(this.ingredients[index].unit)
       this.updateOrCreateIngredient(this.ingredients[index])
     }
   }
@@ -156,6 +157,21 @@ export class IngredientsComponent implements OnInit {
     return this.ingredients[index].category.id;
   }
 
+  public getAllUnits(index): Unit[]{
+    let returnedUnits: Unit[] = Object.assign([], this.units);
+    returnedUnits.splice(0, 1);
+    if (this.ingredients.length > index) {
+      returnedUnits.forEach((elementI, indexI) => {
+        if (elementI.name == this.ingredients[index].unit.name) returnedUnits.splice(indexI, 1);
+      });
+      returnedUnits.sort(function (a, b) {
+        return a.id - b.id
+      })
+      returnedUnits.unshift(this.ingredients[index].unit)
+    }
+    return returnedUnits;
+  }
+
   public getAllCategories(index): IngredientCategory[] {
     let returnedCategories: IngredientCategory[] = Object.assign([], this.categories);
     returnedCategories.splice(0, 1);
@@ -214,10 +230,11 @@ export class IngredientsComponent implements OnInit {
         ingredientFormArray: this._fb.array([])
       });
     for (let index: number = 0; index < this.ingredients.length; index++) {
+      console.log(this.ingredients[index])
       this.getIngredientsArray().push(this._fb.group({
         name: [this.ingredients[index].name],
         stock: [this.ingredients[index].stock],
-        unit: [this.ingredients[index].unit],
+        unit: [this.ingredients[index].unit.name],
         unitePrice: [this.ingredients[index].unitePrice],
       }));
     }
