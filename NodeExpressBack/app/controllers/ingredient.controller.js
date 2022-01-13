@@ -76,7 +76,7 @@ exports.update = (req, res) => {
         unitePrice: req.body.unitePrice,
         codeAllergen: req.body.codeAllergen,
         idType: req.body.idType,
-        idUnite: req.body.idUnite,
+        idUnit: req.body.idUnit,
         stock: req.body.stock
     };
 
