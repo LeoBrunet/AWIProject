@@ -10,10 +10,7 @@ module.exports = (sequelize, Sequelize) => {
             type: DataTypes.STRING
         },
         description:{
-            type: DataTypes.STRING
-        },
-        image: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING(5000)
         },
         duration:{
             type: DataTypes.INTEGER,

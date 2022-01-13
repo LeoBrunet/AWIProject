@@ -56,10 +56,10 @@ exports.createGeneralAndDescriptionStep = (req, res) => {
     };
 
     GeneralStep.create(generalStep, {include: [DescriptionStep]})
-        .then(data => {
+        .then(async data => {
             ingredients = JSON.parse(req.body.ingredients);
-            for(i=0; i<ingredients.length; i++){
-                data.descriptionStep.addIngredients(ingredients[i].numIngredient, {through: {quantity: ingredients[i].quantity}});
+            for (i = 0; i < ingredients.length; i++) {
+                await data.descriptionStep.addIngredients(ingredients[i].numIngredient, {through: {quantity: ingredients[i].quantity}});
             }
             res.send(data);
         })

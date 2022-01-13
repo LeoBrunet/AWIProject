@@ -6,7 +6,7 @@ const Op = db.Sequelize.Op;
 // Create and Save a new DescriptionStep
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.nameStep || !req.body.description || req.body.image) {
+    if (!req.body.nameStep || !req.body.description) {
         res.status(400).send({
             message: "Content can not be empty!"
         });
@@ -19,7 +19,6 @@ exports.create = (req, res) => {
         descriptionStep = {
             nameStep: req.body.nameStep,
             description: req.body.description,
-            image: req.body.image,
             duration: req.body.duration
         };
         // Save DescriptionStep in the database
@@ -38,7 +37,6 @@ exports.create = (req, res) => {
         descriptionStep = {
             nameStep: req.body.nameStep,
             description: req.body.description,
-            image: req.body.image,
             ingredients: req.body.ingredients,
             duration: req.body.duration
         };
